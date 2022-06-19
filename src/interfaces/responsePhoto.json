@@ -1,0 +1,38 @@
+{
+  "_bodyBlob": {
+    "_data": {
+      "__collector": [],
+      "blobId": "791408ad-b636-47a0-a0a3-b823e3d2cb8e",
+      "offset": 0,
+      "size": 2361
+    }
+  },
+  "_bodyInit": {
+    "_data": {
+      "__collector": [],
+      "blobId": "791408ad-b636-47a0-a0a3-b823e3d2cb8e",
+      "offset": 0,
+      "size": 2361
+    }
+  },
+  "bodyUsed": false,
+  "headers": {
+    "map": {
+      "cache-control": "no-cache",
+      "client-request-id": "61acd5cf-ac88-41c1-9e3d-9da39cfc8c68",
+      "content-type": "image/jpeg",
+      "date": "Sun, 03 Apr 2022 22:35:43 GMT",
+      "etag": "W/\"7ac73897f2d1fffc1b94e2ba5f1c35e43319a3860bf63327b6b4d198934a798c\"",
+      "request-id": "61acd5cf-ac88-41c1-9e3d-9da39cfc8c68",
+      "strict-transport-security": "max-age=31536000",
+      "transfer-encoding": "chunked",
+      "x-content-type-options": "nosniff",
+      "x-ms-ags-diagnostic": "{\"ServerInfo\":{\"DataCenter\":\"South Central US\",\"Slice\":\"E\",\"Ring\":\"5\",\"ScaleUnit\":\"000\",\"RoleInstance\":\"SN1PEPF0001009A\"}}"
+    }
+  },
+  "ok": true,
+  "status": 200,
+  "statusText": "",
+  "type": "default",
+  "url": "https://graph.microsoft.com/v1.0/me/photo/$value"
+}

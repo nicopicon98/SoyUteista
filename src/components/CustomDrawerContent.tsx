@@ -1,0 +1,126 @@
+import { DrawerContentScrollView } from "@react-navigation/drawer";
+import { GlobalStyles, colores } from '../theme/appTheme';
+import { View, Text, StyleSheet } from 'react-native';
+import { Image } from 'react-native-elements';
+import React, { FC } from "react";
+import { CustomDrawerContentProps } from '../types/customDrawerContent';
+import { TouchableLeftMenu } from './TouchableLeftMenu';
+
+export const CustomDrawerContent: FC<CustomDrawerContentProps> = (props: CustomDrawerContentProps) => (
+
+  <DrawerContentScrollView
+    {...props}
+    style={styles.menuGlobalContainer}
+  >
+    {/* Profile Image */}
+    <View style={GlobalStyles.profileView}>
+      <Image
+        source={{ uri: 'data:image/png;base64,' + props.userPhoto }}
+        resizeMode='contain'
+        style={GlobalStyles.profilePhoto}
+      />
+      <Text style={{
+        ...GlobalStyles.profileUserName,
+        marginTop: 10
+      }}>{props.userName}</Text>
+      <Text style={GlobalStyles.profileEmail}>{props.userEmail}</Text>
+    </View>
+    {/* End Profile Image */}
+
+    {/* Menu */}
+    <View style={{
+      ...styles.menuContainer,
+      height: props.height
+    }}>
+
+      {/* Inicio */}
+      <TouchableLeftMenu type="navigate" iconColor={colores.Cool_Gray_5_C} iconSize={30} iconName="home-sharp" menuText="Inicio" screenDestiny="Inicio" navigation={props.navigation} />
+
+      {/* Perfil */}
+      <TouchableLeftMenu type="navigate" iconColor={colores.Cool_Gray_5_C} iconSize={30} iconName="person-sharp" menuText="Perfil" screenDestiny="Calendario" navigation={props.navigation} />
+
+      {/* Calificaciones */}
+      <TouchableLeftMenu type="navigate" iconColor={colores.Cool_Gray_5_C} iconSize={30} iconName="newspaper-outline" menuText="Calificaciones" screenDestiny="Calendario" navigation={props.navigation} />
+
+      {/* Carne */}
+      <TouchableLeftMenu type="navigate" iconColor={colores.Cool_Gray_5_C} iconSize={30} iconName="albums" menuText="Carné" screenDestiny="Calendario" navigation={props.navigation} />
+
+      {/* Horario */}
+      <TouchableLeftMenu type="navigate" iconColor={colores.Cool_Gray_5_C} iconSize={30} iconName="calendar-sharp" menuText="Horario" screenDestiny="Horario" navigation={props.navigation} />
+
+      {/* Tutorias */}
+      <TouchableLeftMenu type="navigate" iconColor={colores.Cool_Gray_5_C} iconSize={30} iconName="people-sharp" menuText="Tutorías" screenDestiny="Calendario" navigation={props.navigation} />
+
+      {/* Cerrar sesion */}
+      <TouchableLeftMenu
+        type="signOut"
+        iconColor={"white"}
+        iconSize={30}
+        iconName="log-out-outline"
+        menuText="Cerrar sesión"
+        screenDestiny="Calendario"
+        navigation={props.navigation}
+        textStyles={styles.menuSignOutText}
+        buttonStyles={styles.backgroundMenuBTN}
+      />
+
+      {/* Logo */}
+      <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+        <Image
+          source={require("@resources/Images/Logo-UTS-1.png")}
+          resizeMode='contain'
+          style={GlobalStyles.logo}
+        />
+      </View>
+
+    </View>
+    {/*End Menu */}
+  </DrawerContentScrollView>
+);
+
+const styles = StyleSheet.create({
+  menuGlobalContainer: {
+    flex: 1,
+  },
+  menuContainer: {
+    flex: 1,
+    marginTop: 30,
+    marginHorizontal: 40
+  },
+  menuBtn: {
+    marginVertical: 8,
+    flexDirection: 'row'
+  },
+  menuText: {
+    fontSize: 20,
+    marginTop: 2,
+    marginLeft: 8,
+    textTransform: 'capitalize',
+  },
+  backgroundMenuBTN: {
+    position: 'relative',
+    top: 5,
+    backgroundColor: colores.Pantone_382_C,
+    color: 'white',
+    marginVertical: 8,
+    align: 'flex-end',
+    padding: 12,
+    flexDirection: 'row',
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 10,
+    },
+    shadowOpacity: 0.8,
+    shadowRadius: 7,
+    elevation: 9
+  },
+  menuSignOutText: {
+    fontSize: 20,
+    marginTop: 2,
+    marginLeft: 8,
+    textTransform: 'capitalize',
+    color: 'white'
+  },
+});

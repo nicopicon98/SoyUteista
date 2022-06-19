@@ -1,0 +1,43 @@
+import { StyleSheet } from "react-native";
+
+export const colores = {
+  //main
+  Pantone_382_C: '#C3D730',
+  Cool_Gray_5_C: '#B3B3B3',
+  Blue_Rey : '#0b4a75',
+
+  //Palette
+  Green_Grass  : '#70D730',
+  Green_Light  : '#30D744',
+  Green_Aqua   : '#30D798',
+  Blue_Dark    : '#3070D7',
+  Blue_Heaven  : '#30C3D7',
+  White        : '#FFFFFF'
+}
+
+export const GlobalStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  profileView: {
+    alignItems: 'center',
+    padding: 10,
+  },
+  profilePhoto: {
+    width: 120,
+    height: 120,
+    borderRadius: 100,
+  },
+  profileUserName: {
+    fontWeight: '700',
+    fontSize: 17
+  },
+  profileEmail: {
+    fontWeight: '700',
+    fontSize: 14,
+  },
+  logo: {
+    width: 120,
+    height: 120,
+  }
+});

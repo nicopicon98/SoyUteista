@@ -1,7 +1,8 @@
 import axios from 'axios';
 
-const baseURL = 'https://cafe-react-native-nicolas.herokuapp.com/api';
+const baseURL = 'http://webservice.uts.edu.co/endpoint/development';
+// const baseURL = 'http://webservice.uts.edu.co/endpoint/production';
 
-const cafeApi = axios.create({baseURL})
+const notasAPI = axios.create({ baseURL })
 
-export default cafeApi;
+export default notasAPI;

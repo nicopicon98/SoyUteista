@@ -4,15 +4,16 @@ export const colores = {
   //main
   Pantone_382_C: '#C3D730',
   Cool_Gray_5_C: '#B3B3B3',
-  Blue_Rey : '#0b4a75',
+  Blue_Rey: '#0b4a75',
+  Brown: '#5A4F4C',
 
   //Palette
-  Green_Grass  : '#70D730',
-  Green_Light  : '#30D744',
-  Green_Aqua   : '#30D798',
-  Blue_Dark    : '#3070D7',
-  Blue_Heaven  : '#30C3D7',
-  White        : '#FFFFFF'
+  Green_Grass: '#70D730',
+  Green_Light: '#30D744',
+  Green_Aqua: '#30D798',
+  Blue_Dark: '#3070D7',
+  Blue_Heaven: '#30C3D7',
+  White: '#FFFFFF'
 }
 
 export const GlobalStyles = StyleSheet.create({

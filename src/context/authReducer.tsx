@@ -1,30 +1,34 @@
-import { AuthState } from '../interfaces/AuthStateInterface';
+import { UserContextInterface } from "../interfaces/UserContextInterface";
 
+
+export type AuthState = {
+  status: 'checking' | 'authenticated' | 'not-authenticated';
+  user: UserContextInterface | null;
+  token: string | null;
+}
 
 type AuthAction =
-  { type: 'RESTORE_TOKEN', token: string | null; }
-  | { type: 'SIGN_IN', token: string | null; }
-  | { type: 'SIGN_OUT' }
+  | { type: 'signIn', payload: { token: string, user: UserContextInterface } }
+  | { type: 'notAuthenticated' } //esta accion se dispara revisando el token y falla
+  | { type: 'logOut' }
 
-export const authReducer = (prevState: AuthState, action: AuthAction) => {
+export const authReducer = (prevState: AuthState, action: AuthAction): AuthState => {
   switch (action.type) {
-    case 'RESTORE_TOKEN':
+    case 'signIn':
       return {
         ...prevState,
-        userToken: action.token,
-        isLoading: false,
+        status: 'authenticated',
+        user: action.payload.user,
+        token: action.payload.token
       };
-    case 'SIGN_IN':
+    case 'logOut':
+    case 'notAuthenticated':
       return {
         ...prevState,
-        isSignOut: false,
-        userToken: action.token,
+        status: 'not-authenticated',
+        token: null
       };
-    case 'SIGN_OUT':
-      return {
-        ...prevState,
-        isSignOut: true,
-        userToken: null,
-      };
+    default:
+      return prevState;
   }
 }

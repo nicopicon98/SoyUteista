@@ -1,29 +1,36 @@
-import React, { useContext } from 'react';
-import { Dimensions, FlatList, StyleSheet, Text, View } from 'react-native';
-import { UserContext } from '../context/UserContext';
-import { SkeletonNew } from '../components/SkeletonNew';
+import React, { useContext, useEffect } from 'react';
+import { Alert, FlatList, StyleSheet, Text, View } from 'react-native';
+
 import { useMantenteAlDia } from '../hooks/useMantenteAlDia';
 import { Noticia } from '../components/Noticia';
-import { SkeletonAnimation } from '../components/SkeletonAnimation';
 import { SkeletonNews } from '../components/SkeletonNews';
+import { AuthContext } from '../context/AuthContext';
 
 
 
-const HomeScreen = () => {
-  const userContext = useContext(UserContext);
+export const HomeScreen = () => {
   const { isLoading, noticias } = useMantenteAlDia();
+  const { authState: { user } } = useContext(AuthContext);
+
+  useEffect(() => {
+
+    if (user!.userResult !== 1) {
+      Alert.alert(
+        "Atencion",
+        user!.userError,
+        [
+          { text: "OK", onPress: () => console.log("OK Pressed") }
+        ]
+      );
+    }
+
+  }, [])
+
 
   return (
     <View style={styles.container}>
-      {/* <ActivityIndicator
-        color={colores.Pantone_382_C}
-        animating={userContext.userLoading}
-        size='large'
-      />
-      {!userContext.userLoading && <Text> Hello {userContext.userFirstName}!</Text>} */}
-      {(userContext.userLoading || isLoading) && <SkeletonNews />}
-      
-       {!userContext.userLoading && !isLoading &&
+      {(isLoading) && <SkeletonNews />}
+      {!isLoading &&
         <View style={{ alignItems: 'center' }}>
           <FlatList
             data={noticias}
@@ -60,5 +67,3 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   }
 });
-
-export default HomeScreen;

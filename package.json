@@ -1,5 +1,5 @@
 {
-  "name": "soyuteista",
+  "name": "soy_uteista",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -15,6 +15,7 @@
     "@react-native-async-storage/async-storage": "1.15.5",
     "@react-native-community/datetimepicker": "3.5.2",
     "@react-native-community/masked-view": "0.1.11",
+    "@react-native-picker/picker": "^2.4.2",
     "@react-navigation/drawer": "5.12.7",
     "@react-navigation/material-top-tabs": "^6.2.1",
     "@react-navigation/native": "5.9.6",
@@ -34,12 +35,17 @@
     "react-native-elements": "3.4.2",
     "react-native-gesture-handler": "1.10.3",
     "react-native-pager-view": "^5.4.24",
+    "react-native-progress": "^5.0.0",
     "react-native-pure-jwt": "^3.0.1",
+    "react-native-qrcode-svg": "^6.1.2",
+    "react-native-radio-buttons-group": "^2.2.11",
     "react-native-reanimated": "^2.5.0",
     "react-native-safe-area-context": "3.3.0",
     "react-native-screens": "3.5.0",
+    "react-native-svg": "^12.3.0",
     "react-native-tab-view": "^3.1.1",
     "react-native-vector-icons": "^9.1.0",
+    "reanimated-collapsible-helpers": "^1.0.0",
     "windows-iana": "^5.1.0"
   },
   "devDependencies": {

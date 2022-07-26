@@ -1,6 +1,6 @@
 import React from 'react'
 import { Text, View, StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native';
-import { NoticiaInterface } from '../interfaces/mantenteAlDiaInterface';
+import { NoticiaInterface } from '../interfaces/MantenteAlDiaInterface';
 import { Linking } from 'react-native';
 import { colores } from '../theme/appTheme';
 import Icon from 'react-native-vector-icons/Ionicons';

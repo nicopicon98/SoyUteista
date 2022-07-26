@@ -1,15 +1,10 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, View, } from 'react-native';
-import { NavigationProps } from '../types/navigation';
 import * as Animatable from 'react-native-animatable';
 
-const AuthLoadingScreen = ({ navigation }: NavigationProps) => {
+import { NavigationProps } from '../types/navigation';
 
-  useEffect(() => {
-    navigation.setOptions({
-      headerShown: false
-    });
-  }, [])
+export const AuthLoadingScreen = () => {
 
   return (
     <View style={styles.container}>
@@ -39,5 +34,3 @@ const styles = StyleSheet.create({
     height: 200
   }
 });
-
-export default AuthLoadingScreen;

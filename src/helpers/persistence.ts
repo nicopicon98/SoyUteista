@@ -1,4 +1,5 @@
-import { MateriaInterface } from "../interfaces/horarioInterface";
+import { CarnetInterface } from "../interfaces/CarnetInterface";
+import { MateriaInterface } from "../interfaces/HorarioInterface";
 
 export const materias: Array<MateriaInterface> = [
   {
@@ -32,3 +33,27 @@ export const materias: Array<MateriaInterface> = [
     DESCRIPCION: "SEDE PRINCIPAL"
   }
 ]
+
+export const carnet: any = {
+  data: {
+    C_ESTP_ID: 124623,
+    C_PEGE_DOCUMENTOIDENTIDAD: "1005108571",
+    C_PENG_PRIMERAPELLIDO: "GÓMEZ",
+    C_PENG_SEGUNDOAPELLIDO: "DELGADO",
+    C_PENG_PRIMERNOMBRE: "JOSE",
+    C_PENG_SEGUNDONOMBRE: "DAVID",
+    C_UNID_NOMBRE: "SEDE PRINCIPAL",
+    C_PROG_NOMBRE: "TECNOLOGIA EN DESARROLLO DE SISTEMAS INFORMATICOS",
+    C_FRAN_DESCRIPCION: "DIURNA",
+    C_PENS_DESCRIPCION: "PENSUM TSI2019-2",
+    C_PENS_TOTALCREDITOS: 108,
+    C_ESTP_CREDITOSAPROBADOS: 76,
+    C_AVANCE: 70.4,
+    C_CATE_DESCRIPCION: "ANTIGUO",
+    C_SITE_DESCRIPCION: "SOBRESALIENTE",
+    C_PENG_EMAILINSTITUCIONAL: "jdgomezdelgado@uts.edu.co",
+    C_ESTP_PROMEDIOGENERAL: 4.28,
+    C_PEUN_FECHAFIN: "2022-06-30T05:00:00.000Z"
+  },
+  iat: 1655509250
+}

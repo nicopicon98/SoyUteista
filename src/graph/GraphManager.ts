@@ -21,9 +21,14 @@ export class GraphManager {
   };
 
   static getPhotoAsync = async () => {
-    // const objectURL = URL.createObjectURL()
     return await graphClient
       .api('/me/photo/$value')
+      .get();
+  }
+
+  static getUserPhotoAsync = async (email: string) => {
+    return await graphClient
+      .api(`/users/${email}/photo/$value`)
       .get();
   }
 }

@@ -1,14 +1,12 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 // Temporary placeholder view
-const CalendarScreen = () => (
+export const CalendarScreen = () => (
   <View style={styles.container}>
     <Text>Calendar</Text>
   </View>
 );
-
-export default CalendarScreen;
 
 const styles = StyleSheet.create({
   container: {

@@ -14,7 +14,7 @@ interface TouchableLeftMenuProps {
   iconName: string;
   menuText: string;
   screenDestiny?: string;
-  navigation: DrawerNavigationHelpers;
+  navigation?: DrawerNavigationHelpers;
   textStyles?: any;
   buttonStyles?: any;
 }
@@ -34,7 +34,7 @@ export const TouchableLeftMenu = ({
     <TouchableOpacity
       onPress={
         type === "navigate"
-          ? () => navigation.navigate(screenDestiny)
+          ? () => navigation!.navigate(screenDestiny)
           : () => signOut()
       }
       style={buttonStyles}
@@ -54,7 +54,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginTop: 2,
     marginLeft: 8,
-    textTransform: 'capitalize',
   }
 });
 

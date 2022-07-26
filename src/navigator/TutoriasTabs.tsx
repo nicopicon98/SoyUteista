@@ -2,27 +2,26 @@ import React, { useEffect, useState } from 'react'
 import { Dimensions, ActivityIndicator, View, Text, StyleSheet } from 'react-native';
 
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import Icon from 'react-native-vector-icons/Ionicons';
+
 import { colores } from '../theme/appTheme';
 import { DayScreen } from '../screens/DayScreen';
-import { useHorario } from '../hooks/useHorario';
-import { MateriaInterface } from '../interfaces/horarioInterface';
-import { materias } from '../helpers/persistence';
+import { CrearCitaTutoriaScreen } from '../screens/CrearCitaTutoriaScreen';
+import { CitasTutoriasScreen } from '../screens/CitasTutoriasScreen';
+
 
 const Tab = createMaterialTopTabNavigator();
 const { width } = Dimensions.get('window');
 
-export const ScheduleTabs = () => {
+export const TutoriasTabs = () => {
 
-  // const { isLoading, materias } = useHorario();
-
-  //Simulating
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 2000);
-  })
+    }, 1500);
+  }, [])
 
 
   return (
@@ -36,40 +35,40 @@ export const ScheduleTabs = () => {
           sceneContainerStyle={{
             backgroundColor: 'white'
           }}
-          screenOptions={() => ({
-            tabBarLabelStyle: { fontSize: width * 0.04, fontWeight: '700' },
+          screenOptions={({ route }) => ({
+            tabBarLabelStyle: { fontSize: width * 0.035, fontWeight: '700' },
             tabBarPressColor: colores.Cool_Gray_5_C,
             tabBarShowIcon: true,
             tabBarIndicatorStyle: {
-              backgroundColor: colores.Cool_Gray_5_C
+              backgroundColor: colores.Pantone_382_C
             },
             tabBarStyle: {
               borderTopColor: colores.Cool_Gray_5_C,
               borderTopWidth: 0,
               elevation: 0,
               shadowColor: 'transparent',
-            }
+            },
+            tabBarIcon: ({ focused, color }) => {
+              
+              let iconName: string = "create-outline";
+
+              if (route.name === 'Crear Tutoria') {
+                iconName = focused
+                  ? 'create'
+                  : 'create-outline';
+              } else if (route.name === 'Tutorias Agendadas') {
+                iconName = focused ? 'list' : 'list-outline';
+              }
+
+              // You can return any component that you like here!
+              return <Icon name={iconName} size={25} color={colores.Pantone_382_C} />;
+            },
+            tabBarActiveTintColor: 'black',
+            tabBarInactiveTintColor: colores.Cool_Gray_5_C,
           })}
         >
-
-          <Tab.Screen name="Lun">
-            {() => <DayScreen materias={materias.filter(e => e.DIA == 1)} />}
-          </Tab.Screen>
-          <Tab.Screen name="Mar">
-            {() => <DayScreen materias={materias.filter(e => e.DIA == 2)} />}
-          </Tab.Screen>
-          <Tab.Screen name="Mie">
-            {() => <DayScreen materias={materias.filter(e => e.DIA == 3)} />}
-          </Tab.Screen>
-          <Tab.Screen name="Jue">
-            {() => <DayScreen materias={materias.filter(e => e.DIA == 4)} />}
-          </Tab.Screen>
-          <Tab.Screen name="Vie">
-            {() => <DayScreen materias={materias.filter(e => e.DIA == 5)} />}
-          </Tab.Screen>
-          <Tab.Screen name="Sab">
-            {() => <DayScreen materias={materias.filter(e => e.DIA == 6)} />}
-          </Tab.Screen>
+          <Tab.Screen name="Crear Tutoria" component={CrearCitaTutoriaScreen} />
+          <Tab.Screen name="Tutorias Agendadas"      component={CitasTutoriasScreen}/>
         </Tab.Navigator>
       }
     </View>

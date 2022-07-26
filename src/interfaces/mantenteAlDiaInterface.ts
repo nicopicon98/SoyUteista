@@ -1,13 +1,9 @@
-export interface mantenteAlDiaInterface {
-  result:   number;
-  noticias: NoticiaInterface[];
-}
-
-export interface NoticiaInterface {
-  categoria:   string;
-  titulo:      string;
-  descripcion: string;
+export interface MantenteAlDiaInterface {
+  id:          number;
   fecha:       string;
-  foto:        string;
+  titulo:      string;
   url:         string;
+  foto:        string;
+  descripcion: string;
+  categoria:   string;
 }

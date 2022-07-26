@@ -21,8 +21,8 @@ export class AuthManager {
     //here the magic occurrs
     const result = await authorize(config);
 
-    console.log(result)
-    console.log(result.accessToken); // Aca estoy mostrando el token
+    // Aca estoy mostrando el token
+    // console.log(result.accessToken); 
 
     // Store the access token, refresh token, and expiration time in storage
     await AsyncStorage.setItem('userToken', result.accessToken);

@@ -1,15 +1,19 @@
 import { useState, useEffect } from 'react';
 import mantenteAlDiaAPI from '../api/mantenteAlDiaAPI';
-import { NoticiaInterface, mantenteAlDiaInterface } from '../interfaces/mantenteAlDiaInterface';
+import { MantenteAlDiaInterface } from '../interfaces/MantenteAlDiaInterface';
 
 export const useMantenteAlDia = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [noticias, setNoticias] = useState<NoticiaInterface[]>([]);
+  const [noticias, setNoticias] = useState<MantenteAlDiaInterface[]>([]);
 
   const loadNoticia = async () => {
-    const rep = await mantenteAlDiaAPI.get<mantenteAlDiaInterface>('/getNews.php');
-    setNoticias(rep.data.noticias);
-    setIsLoading(false);
+    try {
+      const rep = await mantenteAlDiaAPI.get<MantenteAlDiaInterface[]>('/2/numberposts/12');
+      setNoticias(rep.data);
+      setIsLoading(false);
+    } catch (error: any) {
+      console.log(error);
+    }
   }
 
   //Disparamos la peticion http

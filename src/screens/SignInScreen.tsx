@@ -1,45 +1,32 @@
 import React, { useContext, useEffect } from 'react';
 import { Button, StyleSheet, View, ActivityIndicator } from 'react-native';
-import { colores } from '../theme/appTheme';
-import { NavigationProps } from '../types/navigation';
-import { UserContext } from '../context/UserContext';
-import { AuthContext } from '../context/AuthContext';
 import { Image } from 'react-native-elements';
 
-type signInNavigation = NavigationProps & {
-  loginState: {
-    loading: boolean;
-  }
-}
+import { colores } from '../theme/appTheme';
+import { NavigationProps } from '../types/navigation';
+import { AuthContext } from '../context/AuthContext';
 
-export const SignInScreen = ({ navigation, loginState }: signInNavigation) => {
+export const SignInScreen = ({ navigation }: NavigationProps) => {
 
-  const { loading } = loginState;
-  const { signIn } = useContext(AuthContext);
+  const { signIn, authState: { user } } = useContext(AuthContext);
 
-  const _signInAsync = async () => {
+  const signInAsync = async () => {
     await signIn();
   }
 
-  useEffect(() => {
-    navigation.setOptions({
-      headerShown: false
-    });
-  }, [])
-
   return (
     <View style={styles.container}>
-      <Image 
+      <Image
         source={require('@resources/Images/Logo.png')}
         resizeMode='contain'
         style={styles.profilePhoto}
       />
       {
-        loading
-          ?
-          <ActivityIndicator color={colores.Pantone_382_C} size='large' />
-          :
-          <Button onPress={_signInAsync} color={colores.Pantone_382_C} title='iniciar sesión' />
+        // loading
+        //   ?
+        //   <ActivityIndicator color={colores.Pantone_382_C} size='large' />
+        //   :
+        <Button onPress={signInAsync} color={colores.Pantone_382_C} title='iniciar sesión' />
       }
     </View>
   )

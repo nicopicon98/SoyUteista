@@ -55,11 +55,11 @@ export const SkeletonNew = () => {
       </View>
 
       {/* Author */}
-      <View style={{...styles.row}}>
+      <View style={{ ...styles.row }}>
         <View style={{ marginTop: 10, marginLeft: 20 }}>
           <SkeletonAnimation variant='circle' height={20} width={20} />
         </View>
-        <View style={{ marginTop: 10, marginLeft: 6}}>
+        <View style={{ marginTop: 10, marginLeft: 6 }}>
           <SkeletonAnimation height={authorHeight} width={authorWidth} />
         </View>
       </View>

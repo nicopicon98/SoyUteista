@@ -17,8 +17,7 @@ export const StackNavigator = () => {
   useEffect(() => {
     setTimeout(() => {
       setLoadingSplash(false);
-    }, 2000);
-    console.log("Desde stack screen -> " + authState);
+    }, 3000);
   }, [authState.status])
 
   if (loadingSplash === true || authState.status === 'checking') return (<AuthLoadingScreen />)

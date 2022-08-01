@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Text, View, StyleSheet, useWindowDimensions, TextInput, Alert, ActivityIndicator } from 'react-native';
+import { Text, View, StyleSheet, useWindowDimensions, TextInput, Alert, ActivityIndicator, Dimensions, Appearance } from 'react-native';
 
 import RadioGroup from 'react-native-radio-buttons-group';
 import { Picker } from '@react-native-picker/picker';
@@ -19,10 +19,12 @@ import tutoriasApi from '../api/tutoriasAPI';
 import { AuthContext } from '../context/AuthContext';
 import { NavigationProps } from '../types/navigation';
 
+const colorScheme = Appearance.getColorScheme();
 
 export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
 
   const { width, height } = useWindowDimensions();
+
 
   //Formulario generico
   const {
@@ -195,7 +197,11 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
         <ScrollView >
           <View style={styles.container}>
             {/* Seleccion tipo Busqueda */}
-            <Text style={{ ...styles.label, marginLeft: width * 0.05 }}>
+            <Text style={{
+              ...styles.label,
+              marginLeft: width * 0.05,
+              color: colorScheme === 'dark' ? 'white' : 'black'
+            }}>
               Seleccione el tipo de consulta <Text style={styles.mandatory}>*</Text></Text>
             <View style={{ flexDirection: 'row', alignSelf: 'auto', marginLeft: width * 0.02 }}>
               <RadioGroup
@@ -339,11 +345,19 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
             {
               !isLoadingInfoTutor && !isCanceled && (
                 <>
-                  <Text style={{ ...styles.label, marginLeft: width * 0.06 }}>
+                  <Text style={{ 
+                    ...styles.label, 
+                    marginLeft: width * 0.06,
+                    color: colorScheme === 'dark' ? 'white' : 'black'
+                    }}>
                     Número de celular <Text style={styles.mandatory}>*</Text></Text>
                   <TextInput
                     placeholder='+57 3012456578'
-                    style={{ ...styles.textInput, marginHorizontal: width * 0.05 }}
+                    style={{ 
+                      ...styles.textInput, 
+                      marginHorizontal: width * 0.05,
+                      borderColor: colorScheme === 'dark' ? colores.Cool_Gray_5_C : ''
+                    }}
                     value={celular}
                     onChangeText={(value) => onChange(value, 'celular')}
                     keyboardType="numeric"
@@ -355,12 +369,20 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
             {/* Input Tema */}
             {!isLoadingInfoTutor && !isCanceled && (
               <>
-                <Text style={{ ...styles.label, marginLeft: width * 0.06 }}>
+                <Text style={{
+                  ...styles.label,
+                  marginLeft: width * 0.06,
+                  color: colorScheme === 'dark' ? 'white' : 'black'
+                }}>
                   Escriba el tema del que desea la tutoría <Text style={styles.mandatory}>*</Text>
                 </Text>
                 <TextInput
                   placeholder='Ecuaciones diferenciales'
-                  style={{ ...styles.textInput, marginHorizontal: width * 0.05 }}
+                  style={{ 
+                    ...styles.textInput, 
+                    marginHorizontal: width * 0.05,
+                    borderColor: colorScheme === 'dark' ? colores.Cool_Gray_5_C : '' 
+                  }}
                   value={tema}
                   onChangeText={(value) => onChange(value, 'tema')}
                   numberOfLines={4}
@@ -372,10 +394,18 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
             {/* Input Comentarios adicionales */}
             {!isLoadingInfoTutor && !isCanceled && (
               <>
-                <Text style={{ ...styles.label, marginLeft: width * 0.06 }}>Comentarios adicionales</Text>
+                <Text style={{
+                  ...styles.label,
+                  marginLeft: width * 0.06,
+                  color: colorScheme === 'dark' ? 'white' : 'black'
+                }}>Comentarios adicionales</Text>
                 <TextInput
                   placeholder=''
-                  style={{ ...styles.textInput, marginHorizontal: width * 0.05 }}
+                  style={{ 
+                    ...styles.textInput, 
+                    marginHorizontal: width * 0.05,
+                    borderColor: colorScheme === 'dark' ? colores.Cool_Gray_5_C : ''
+                  }}
                   value={comentarios}
                   onChangeText={(value) => onChange(value, 'comentarios')}
                 />
@@ -451,7 +481,8 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 10
+    marginTop: 10,
+    backgroundColor: colorScheme === 'dark' ? 'black' : 'white'
   },
   createTutoriaButton: {
     backgroundColor: colores.Pantone_382_C,

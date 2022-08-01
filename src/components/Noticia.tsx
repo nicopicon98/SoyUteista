@@ -38,21 +38,23 @@ export const Noticia = ({ item }: Props) => {
           <Text style={{
             fontSize: width * 0.04,
             fontWeight: 'bold',
-            textTransform: 'capitalize'
+            textTransform: 'capitalize',
+            fontFamily: fonts.regular
           }}>
             {item.titulo}
           </Text>
 
           {/* Descripcion */}
           <Text style={{
-            marginTop: width * 0.01
+            marginTop: width * 0.01,
+            fontFamily: fonts.regular
           }}>{item.descripcion}...</Text>
 
           {/* Fecha de publicacion */}
           <View style={{
             flexDirection: 'row',
             marginTop: width * 0.016,
-            alignItems: 'center'
+            alignItems: 'center',
           }}>
             <Text style={{
               marginRight: width * 0.01
@@ -63,9 +65,7 @@ export const Noticia = ({ item }: Props) => {
                 color={colores.Pantone_383_C}
               />
             </Text>
-            <Text style={{
-              fontWeight: '800',
-            }}>
+            <Text style={{ fontFamily: fonts.semibold_italic }}>
               {item.fecha}
             </Text>
           </View>
@@ -81,9 +81,7 @@ export const Noticia = ({ item }: Props) => {
             }}>
               <Icon name={'person-sharp'} size={20} color={colores.Pantone_383_C} />
             </Text>
-            <Text style={{
-              fontWeight: '800',
-            }}>
+            <Text style={{ fontFamily: fonts.semibold_italic }}>
               Oficina de comunicaciones
             </Text>
           </View>

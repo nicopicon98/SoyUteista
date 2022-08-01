@@ -46,10 +46,10 @@ export const CustomDrawerContent: FC<CustomDrawerContentProps> = (props: CustomD
       {props.userResult === 1 && (<TouchableLeftMenu type="navigate" iconColor={colores.Cool_Gray_5_C} iconSize={30} iconName="albums" menuText="Carnet" screenDestiny="Carnet" navigation={props.navigation} />)}
       
       {/* Horario */}
-      {props.userResult === 1 && (<TouchableLeftMenu type="navigate" iconColor={colores.Cool_Gray_5_C} iconSize={30} iconName="calendar-sharp" menuText="Horario" screenDestiny="Horario" navigation={props.navigation} />)}
+      {props.userResult === 1 && props.userFranDesc.toLowerCase() !== 'virtual' && (<TouchableLeftMenu type="navigate" iconColor={colores.Cool_Gray_5_C} iconSize={30} iconName="calendar-sharp" menuText="Horario" screenDestiny="Horario" navigation={props.navigation} />)}
       
       {/* Notas actuales */}
-      {props.userResult === 1 && (<TouchableLeftMenu type="navigate" iconColor={colores.Cool_Gray_5_C} iconSize={30} iconName="newspaper-outline" menuText="Notas actuales" screenDestiny="Notas" navigation={props.navigation} />)}
+      {props.userResult === 1 && props.userFranDesc.toLowerCase() !== 'virtual' && (<TouchableLeftMenu type="navigate" iconColor={colores.Cool_Gray_5_C} iconSize={30} iconName="newspaper-outline" menuText="Notas actuales" screenDestiny="Notas" navigation={props.navigation} />)}
 
       {/* Tutorias */}
       {props.userResult === 1 && (<TouchableLeftMenu type="navigate" iconColor={colores.Cool_Gray_5_C} iconSize={30} iconName="people-sharp" menuText="Tutorías" screenDestiny="Tutorias" navigation={props.navigation} />)}

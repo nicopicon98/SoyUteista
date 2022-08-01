@@ -38,7 +38,7 @@ export const GradesScreen = () => {
       {isLoading
         ? <ActivityIndicator
           style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
-          color={colores.Pantone_382_C}
+          color={colorScheme === 'dark' ? 'white' : colores.Pantone_382_C}
           size='large'
         />
         :

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Dimensions, ActivityIndicator, View, Text, StyleSheet } from 'react-native';
+import { Dimensions, ActivityIndicator, View, Text, StyleSheet, Appearance } from 'react-native';
 
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -11,6 +11,7 @@ import { CitasTutoriasScreen } from '../screens/CitasTutoriasScreen';
 
 const Tab = createMaterialTopTabNavigator();
 const { width } = Dimensions.get('window');
+const colorScheme = Appearance.getColorScheme();
 
 export const TutoriasTabs = () => {
 
@@ -24,18 +25,18 @@ export const TutoriasTabs = () => {
 
 
   return (
-    <View style={{ flex: 1 }}>
-      {isLoading && <ActivityIndicator style={styles.loader} color={colores.Pantone_382_C} animating={isLoading} size='large' />}
+    <View style={{ flex: 1, backgroundColor: colorScheme === 'dark' ? 'black' : 'white' }}>
+      {isLoading && <ActivityIndicator style={styles.loader} color={colorScheme === 'dark' ? 'white' : colores.Pantone_382_C} animating={isLoading} size='large' />}
       {!isLoading &&
         <Tab.Navigator
           style={{
             paddingTop: 0
           }}
           sceneContainerStyle={{
-            backgroundColor: 'white'
+            backgroundColor: colorScheme === 'dark' ? 'black' : 'white',
           }}
           screenOptions={({ route }) => ({
-            tabBarLabelStyle: { fontSize: width * 0.035, fontWeight: '700' },
+            tabBarLabelStyle: { fontSize: width * 0.035, fontWeight: '700', color: 'black' },
             tabBarPressColor: colores.Cool_Gray_5_C,
             tabBarShowIcon: true,
             tabBarIndicatorStyle: {
@@ -46,27 +47,28 @@ export const TutoriasTabs = () => {
               borderTopWidth: 0,
               elevation: 0,
               shadowColor: 'transparent',
+              backgroundColor: colorScheme === 'dark' ? 'black' : 'white',
             },
             tabBarIcon: ({ focused, color }) => {
               
               let iconName: string = "create-outline";
 
-              if (route.name === 'Crear Tutoria') {
+              if (route.name === 'Crear Tutoría') {
                 iconName = focused
                   ? 'create'
                   : 'create-outline';
-              } else if (route.name === 'Tutorias Agendadas') {
+              } else if (route.name === 'Tutorías Agendadas') {
                 iconName = focused ? 'list' : 'list-outline';
               }
 
               // You can return any component that you like here!
-              return <Icon name={iconName} size={25} color={colores.Pantone_382_C} />;
+              return <Icon name={iconName} size={25} color={colorScheme === 'dark' ? 'white' : colores.Pantone_382_C} />;
             },
-            tabBarActiveTintColor: 'black',
+            tabBarActiveTintColor: colores.White,
             tabBarInactiveTintColor: colores.Cool_Gray_5_C,
           })}
         >
-          <Tab.Screen name="Crear Tutoría" component={CrearCitaTutoriaScreen} />
+          <Tab.Screen name="Crear Tutoría"        component={CrearCitaTutoriaScreen}/>
           <Tab.Screen name="Tutorías Agendadas"   component={CitasTutoriasScreen}/>
         </Tab.Navigator>
       }

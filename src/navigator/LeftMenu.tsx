@@ -48,6 +48,7 @@ export const LeftMenu = () => {
           userPhotoError={user!.userPhotoError}
           userResult={user!.userResult}
           darkMode={colorScheme}
+          userFranDesc={user!.userMoreInfo.C_FRAN_DESCRIPCION}
         />
       )}>
 

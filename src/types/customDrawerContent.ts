@@ -8,4 +8,5 @@ export type CustomDrawerContentProps = DrawerContentComponentProps & {
   userResult      : number;
   height?         : number;
   darkMode        : string | null | undefined;
+  userFranDesc    : string;
 };

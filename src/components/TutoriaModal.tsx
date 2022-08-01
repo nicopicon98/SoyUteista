@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Alert, Modal, Text, StyleSheet, View, Pressable } from 'react-native';
+import { Alert, Modal, Text, StyleSheet, View, Pressable, Appearance } from 'react-native';
 import { } from 'react-native-animatable';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
@@ -12,6 +12,8 @@ interface Props {
   setModalVisible: (visible: boolean) => void;
   infoTutoria: TutoriasAllInterface;
 }
+
+const colorScheme = Appearance.getColorScheme();
 
 export const TutoriaModal = ({ modalVisible, setModalVisible, infoTutoria }: Props) => {
   return (
@@ -42,38 +44,38 @@ export const TutoriaModal = ({ modalVisible, setModalVisible, infoTutoria }: Pro
             </Pressable>
             {/* Nombre tutor */}
             <View style={{ ...styles.modalText, marginTop: 10, flexDirection: 'row' }}>
-              <Text style={{ fontWeight: 'bold' }}>Nombre tutor: </Text>
-              <Text style={{ textTransform: 'capitalize' }}>{infoTutoria.nombre_tutor}</Text>
+              <Text style={{ fontWeight: 'bold', color: 'black' }}>Nombre tutor: </Text>
+              <Text style={{ textTransform: 'capitalize', color: 'black' }}>{infoTutoria.nombre_tutor}</Text>
             </View>
             {/* Asignatura */}
             <View style={{ ...styles.modalText, flexDirection: 'row' }}>
-              <Text style={{ fontWeight: 'bold' }}>Asignatura: </Text>
-              <Text style={{ textTransform: 'capitalize' }}>{infoTutoria.nombre_asignatura}</Text>
+              <Text style={{ fontWeight: 'bold', color: 'black' }}>Asignatura: </Text>
+              <Text style={{ textTransform: 'capitalize', color: 'black' }}>{infoTutoria.nombre_asignatura}</Text>
             </View>
             {/* Tema */}
             <View style={{ ...styles.modalText, flexDirection: 'row' }}>
-              <Text style={{ fontWeight: 'bold' }}>Tema: </Text>
-              <Text style={{ textTransform: 'capitalize' }}>{infoTutoria.tema}</Text>
+              <Text style={{ fontWeight: 'bold', color: 'black' }}>Tema: </Text>
+              <Text style={{ textTransform: 'capitalize', color: 'black' }}>{infoTutoria.tema}</Text>
             </View>
             {/* Lugar */}
             <View style={{ ...styles.modalText, flexDirection: 'row' }}>
-              <Text style={{ fontWeight: 'bold' }}>Lugar: </Text>
-              <Text style={{ textTransform: 'capitalize' }}>{infoTutoria.lugar}</Text>
+              <Text style={{ fontWeight: 'bold', color: 'black' }}>Lugar: </Text>
+              <Text style={{ textTransform: 'capitalize', color: 'black' }}>{infoTutoria.lugar}</Text>
             </View>
             {/* Dia */}
             <View style={{ ...styles.modalText, flexDirection: 'row' }}>
-              <Text style={{ fontWeight: 'bold' }}>Dia: </Text>
-              <Text style={{ textTransform: 'capitalize' }}>{infoTutoria.dia}</Text>
+              <Text style={{ fontWeight: 'bold', color: 'black' }}>Dia: </Text>
+              <Text style={{ textTransform: 'capitalize', color: 'black' }}>{infoTutoria.dia}</Text>
             </View>
             {/* Franja Horaria */}
             <View style={{ ...styles.modalText, flexDirection: 'row' }}>
-              <Text style={{ fontWeight: 'bold' }}>Hora: </Text>
-              <Text style={{ textTransform: 'capitalize' }}>{infoTutoria.franja_nombre}</Text>
+              <Text style={{ fontWeight: 'bold', color: 'black' }}>Hora: </Text>
+              <Text style={{ textTransform: 'capitalize', color: 'black' }}>{infoTutoria.franja_nombre}</Text>
             </View>
             {/* Fecha Solicitud */}
             <View style={{ ...styles.modalText, flexDirection: 'row' }}>
-              <Text style={{ fontWeight: 'bold' }}>Fecha de la solicitud: </Text>
-              <Text style={{ textTransform: 'capitalize' }}>{infoTutoria.fecha_solicitud}</Text>
+              <Text style={{ fontWeight: 'bold', color: 'black' }}>Fecha de la solicitud: </Text>
+              <Text style={{ textTransform: 'capitalize', color: 'black' }}>{infoTutoria.fecha_solicitud}</Text>
             </View>
           </View>
         </View>

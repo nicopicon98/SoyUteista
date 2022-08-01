@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, StyleSheet, useWindowDimensions, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, StyleSheet, useWindowDimensions, TouchableWithoutFeedback, Appearance } from 'react-native';
 
 import { Image } from 'react-native-elements';
 
@@ -12,6 +12,8 @@ import { TutoriaModal } from './TutoriaModal';
 interface Props {
   item: TutoriasAllInterface
 }
+
+const colorScheme = Appearance.getColorScheme();
 
 export const Tutoria = ({ item }: Props) => {
   const imageLogo: string = "https://avatarairlines.com/wp-content/uploads/2020/05/Male-placeholder.jpeg";

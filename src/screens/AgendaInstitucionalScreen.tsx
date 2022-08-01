@@ -1,21 +1,28 @@
 import React, { useContext } from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { Appearance, FlatList, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 
 import { Noticia } from '../components/Noticia';
 import { SkeletonNews } from '../components/SkeletonNews';
 import { useAgendaInstitucional } from '../hooks/useAgendaInstitucional';
+import { fonts } from '../theme/appTheme';
 
 
 
 export const AgendaInstitucionalScreen = () => {
   const { isLoading, agendas } = useAgendaInstitucional();
+  const colorScheme = Appearance.getColorScheme();
+  const { width } = useWindowDimensions();
 
   return (
-    <View style={styles.container}>
+    <View style={{ ...styles.container, backgroundColor: colorScheme === 'dark' ? 'black' : 'white' }}>
       {isLoading && <SkeletonNews />}
 
       {!isLoading &&
-        <View style={{ alignItems: 'center' }}>
+        <View style={{ 
+          alignItems: 'center',
+          backgroundColor: colorScheme === 'dark' ? 'black' : 'white',
+          marginHorizontal: width * 0.06 
+          }}>
           <FlatList
             data={agendas}
             keyExtractor={(noticia) => noticia.url}
@@ -24,12 +31,10 @@ export const AgendaInstitucionalScreen = () => {
             ListHeaderComponent={(
               <Text style={{
                 ...styles.title,
-                ...styles.globalMargin,
-                marginBottom: 20,
-                marginHorizontal: 20,
-                top: 20,
-                paddingBottom: 10,
-                alignItems: 'center'
+                marginBottom: width * 0.04,
+                top: width * 0.05,
+                paddingBottom: width * 0.03,
+                fontSize: width * 0.09,
               }}>Agenda institucional</Text>
             )}
             renderItem={({ item, index }) => <Noticia item={item} />}
@@ -48,6 +53,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 35,
-    fontWeight: 'bold'
+    fontFamily: fonts.semibold_italic
   }
 });

@@ -99,7 +99,6 @@ const styles = StyleSheet.create({
   },
   noticiaCard: {
     alignItems: 'center',
-    marginHorizontal: 20,
     marginBottom: 25,
   }
 });

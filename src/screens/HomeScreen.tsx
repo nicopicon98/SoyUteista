@@ -27,7 +27,7 @@ export const HomeScreen = () => {
   }, [])
 
   return (
-    <View style={styles.container}>
+    <View style={{...styles.container,  backgroundColor: colorScheme === 'dark' ? 'black' : 'white'}}>
       {(isLoading) && <SkeletonNews />}
       {!isLoading &&
         <View style={{
@@ -60,7 +60,6 @@ export const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white'
   },
   title: {
     fontFamily: fonts.semibold,

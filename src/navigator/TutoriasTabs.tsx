@@ -5,7 +5,6 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import { colores } from '../theme/appTheme';
-import { DayScreen } from '../screens/DayScreen';
 import { CrearCitaTutoriaScreen } from '../screens/CrearCitaTutoriaScreen';
 import { CitasTutoriasScreen } from '../screens/CitasTutoriasScreen';
 
@@ -67,8 +66,8 @@ export const TutoriasTabs = () => {
             tabBarInactiveTintColor: colores.Cool_Gray_5_C,
           })}
         >
-          <Tab.Screen name="Crear Tutoria" component={CrearCitaTutoriaScreen} />
-          <Tab.Screen name="Tutorias Agendadas"      component={CitasTutoriasScreen}/>
+          <Tab.Screen name="Crear Tutoría" component={CrearCitaTutoriaScreen} />
+          <Tab.Screen name="Tutorías Agendadas"   component={CitasTutoriasScreen}/>
         </Tab.Navigator>
       }
     </View>

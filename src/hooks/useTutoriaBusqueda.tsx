@@ -2,14 +2,12 @@ import React, { useState } from 'react'
 
 import RadioGroup, { RadioButtonProps } from 'react-native-radio-buttons-group';
 import { useBringTutor } from './useBringTutor';
+import { useCoursesAll } from './useCoursesAll';
 
 export const useTutoriaBusqueda = () => {
 
   const { loadTutores, isLoadingTutor, setIsLoadingTutor, tutores } = useBringTutor();
-
-  const bringCursos = () => {
-    console.log("Trayendo cursos");
-  }
+  const { courses, isLoadingCourses, loadCursos, clickCourses, setClickCourses } = useCoursesAll();
 
   const radioButtonsData: RadioButtonProps[] = [
     {
@@ -17,6 +15,7 @@ export const useTutoriaBusqueda = () => {
       label: 'Docente',
       value: 'docente',
       onPress: function () {
+        setClickCourses(false);
         loadTutores(this.value)
       }
     },
@@ -25,6 +24,7 @@ export const useTutoriaBusqueda = () => {
       label: 'Estudiante Monitor',
       value: 'monitor',
       onPress: function () {
+        setClickCourses(false);
         loadTutores(this.value)
       }
     },
@@ -32,7 +32,10 @@ export const useTutoriaBusqueda = () => {
       id: '3',
       label: 'Curso',
       value: 'curso',
-      onPress: bringCursos
+      onPress: async function (){
+        setClickCourses(true);
+        await loadCursos();
+      }
     }
   ]
 
@@ -48,6 +51,9 @@ export const useTutoriaBusqueda = () => {
     tutores,
     isLoadingTutor,
     loadTutores,
-    setIsLoadingTutor
+    setIsLoadingTutor,
+    courses,
+    isLoadingCourses,
+    clickCourses
   }
 }

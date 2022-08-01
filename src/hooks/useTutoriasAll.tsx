@@ -13,7 +13,7 @@ export const useTutoriasAll = () => {
   const { authState: { user } } = useContext(AuthContext);
 
   const loadTutorias = async () => {
-    const rep = await tutoriasAPI.get<TutoriasAllInterface>(`/listar_tutorias_todas_estudiante.php?documento=${1098813165}`);
+    const rep = await tutoriasAPI.get<TutoriasAllInterface>(`/listar_tutorias_todas_estudiante.php?documento=${user!.userMoreInfo.C_PEGE_DOCUMENTOIDENTIDAD}`);
     setTutorias(replaceNull(rep.data))
     setIsLoading(false);
   }
@@ -25,6 +25,7 @@ export const useTutoriasAll = () => {
 
   return {
     isLoading,
-    tutorias
+    tutorias,
+    loadTutorias
   }
 }

@@ -7,4 +7,5 @@ export type CustomDrawerContentProps = DrawerContentComponentProps & {
   userPhotoError  : boolean;
   userResult      : number;
   height?         : number;
+  darkMode        : string | null | undefined;
 };

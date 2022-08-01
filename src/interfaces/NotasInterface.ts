@@ -1,6 +1,7 @@
 export interface NotasInterface {
     result: number;
     data:   Materias[];
+    error:  string;
 }
 
 export interface Materias {
@@ -10,8 +11,7 @@ export interface Materias {
 
 export interface InfoMateria {
     corte:         Corte;
-    infoCorte?:    InfoCorte[];
-    N_CALF_VALOR?: number;
+    infoCorte:    InfoCorte[] | number;
 }
 
 export interface InfoCorte {
@@ -27,18 +27,11 @@ export interface InfoCorte {
     N_MATE_NOMBRE?:             string;
     N_GRUP_NOMBRE?:             string;
     N_EVAC_DESCRIPCION?:        Corte;
-    N_NOTA_DESCRIPCION:         NotaDescripcion;
+    N_NOTA_DESCRIPCION:         NNotaDescripcion;
     N_NOTA_PESO?:               number;
     N_CALF_VALOR:               number;
     N_DOCENTE?:                 string;
     N_EVAC_ID?:                 number;
-}
-
-export enum NotaDescripcion {
-    Autoevaluacion = "AUTOEVALUACIÓN",
-    DefinitivaCorte = "DEFINITIVA CORTE",
-    EvalulacionDelCorte = "EVALULACIÓN DEL CORTE",
-    TareasTiempoIndependiente = "TAREAS TIEMPO INDEPENDIENTE",
 }
 
 export enum Corte {
@@ -46,4 +39,11 @@ export enum Corte {
     PrimerCorte = "PRIMER CORTE",
     SegundoCorte = "SEGUNDO CORTE",
     TercerCorte = "TERCER CORTE",
+}
+
+export enum NNotaDescripcion {
+    Autoevaluación = "AUTOEVALUACIÓN",
+    DefinitivaCorte = "DEFINITIVA CORTE",
+    EvalulaciónDelCorte = "EVALULACIÓN DEL CORTE",
+    TareasTiempoIndependiente = "TAREAS TIEMPO INDEPENDIENTE",
 }

@@ -1,41 +1,57 @@
 import React from 'react'
-import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, Text, Appearance, useWindowDimensions } from 'react-native';
 import { AnimatedSection, useCollapsible } from 'reanimated-collapsible-helpers';
-import { Definitiva, Notas } from '../interfaces/NotasInterface';
-import { colores } from '../theme/appTheme';
 
-type infoCorte =
-	| "PRIMER CORTE"
-	| "SEGUNDO CORTE"
-	| "TERCER CORTE"
-	| "definitiva"
-	| string
+import { colores } from '../theme/appTheme';
+import { Corte, InfoMateria, InfoCorte } from '../interfaces/NotasInterface';
 
 interface Props {
-	materia?: string;
-	infoMateria: any;
+	materia: string;
+	infoMateria: InfoMateria[];
 }
-
-type CorteValor = Definitiva & Notas;
 
 interface Props2 {
-	evaluacion: infoCorte;
-	notas: Array<CorteValor> | number;
+	corte: Corte;
+	infoCorte: Array<InfoCorte> | number;
 }
 
-const MateriaNotaInfo = ({ evaluacion, notas }: Props2) => {
+const MateriaNotaInfo = ({ corte, infoCorte }: Props2) => {
+
+	const { width } = useWindowDimensions();
+
 	return (
-		<View style={{ ...styles.card }}>
-			<Text style={styles.evaluacion}>{evaluacion}</Text>
-			{typeof (notas) === "number" && <Text>{notas}</Text>}
-			{typeof (notas) !== "number" && notas.map(e => {
-				return <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
-					<Text style={{ fontSize: 16, textTransform: 'capitalize' }}>
+		<View style={{
+			borderColor: colores.Pantone_382_C,
+			padding: width * 0.02,
+			borderWidth: width * 0.004,
+			marginBottom: width * 0.013
+		}}>
+			<Text style={{
+				...styles.evaluacion,
+				fontSize: width * 0.039,
+				borderBottomWidth: 1,
+			}}>{corte}</Text>
+			{typeof (infoCorte) === "number" && (
+				<Text style={{
+					fontWeight: 'bold',
+					color: 'black',
+					fontSize: width * 0.034
+				}}>
+					{infoCorte}
+				</Text>
+			)}
+			{typeof (infoCorte) !== "number" && infoCorte.map(e => {
+				return <View style={{
+					flexDirection: 'row',
+					alignItems: 'center',
+					marginTop: width * 0.013
+				}}>
+					<Text style={{ fontSize: width * 0.039, textTransform: 'capitalize', color: 'black' }}>
 						{e.N_NOTA_DESCRIPCION === 'EVALULACIÓN DEL CORTE'
 							? 'EVALUACIÓN DEL CORTE'
 							: e.N_NOTA_DESCRIPCION} {e.N_NOTA_PESO && (`${e.N_NOTA_PESO}%`)}:
 					</Text>
-					<Text style={{ fontWeight: 'bold' }}> {e.N_CALF_VALOR}</Text>
+					<Text style={{ fontWeight: 'bold', color: 'black' }}> {e.N_CALF_VALOR.toFixed(1)}</Text>
 				</View>
 			})}
 		</View>
@@ -44,23 +60,45 @@ const MateriaNotaInfo = ({ evaluacion, notas }: Props2) => {
 
 export const MateriaNota = ({ materia, infoMateria }: Props) => {
 
-	const { animatedHeight, height, onPress, onLayout, state } = useCollapsible();
+	const { animatedHeight, onPress, onLayout, state } = useCollapsible();
+	const colorScheme = Appearance.getColorScheme();
+	const { width } = useWindowDimensions();
 
 	return (
-		<View style={styles.background}>
-			<View style={styles.overflow}>
-				<TouchableOpacity onPress={onPress} style={styles.button}>
-					<Text style={styles.buttonText}>{materia}</Text>
+		<View style={{
+			flex: 1,
+			backgroundColor: colorScheme === 'dark' ? 'black' : 'white',
+			padding: width * 0.03,
+		}}>
+			<View style={{
+				...styles.overflow,
+				borderRadius: width * 0.02,
+			}}>
+				<TouchableOpacity onPress={onPress} style={{
+					...styles.button,
+					padding: width * 0.03,
+				}}>
+					<Text style={{
+						fontSize: width * 0.048,
+						marginLeft: width * 0.01,
+						...styles.buttonText
+					}}>
+						{materia}
+					</Text>
 				</TouchableOpacity>
 				<AnimatedSection
 					animatedHeight={animatedHeight}
 					onLayout={onLayout}
 					state={state}
 				>
-					<View style={styles.textContainer}>
+					<View style={{
+						paddingHorizontal: width * 0.041,
+						paddingTop: width * 0.01,
+						paddingBottom: width * 0.02
+					}}>
 						{
-							Object.keys(infoMateria).map(e => {
-								return <MateriaNotaInfo evaluacion={e} notas={infoMateria[e]} />
+							infoMateria.map(e => {
+								return <MateriaNotaInfo corte={e.corte} infoCorte={e.infoCorte} />
 							})
 						}
 					</View>
@@ -73,37 +111,20 @@ export const MateriaNota = ({ materia, infoMateria }: Props) => {
 
 
 const styles = StyleSheet.create({
-	background: {
-		flex: 1,
-		backgroundColor: '#efefef',
-		padding: 10,
-	},
 	overflow: {
 		overflow: 'hidden',
-		backgroundColor: 'white',
-		borderRadius: 6,
+		backgroundColor: '#efefef',
 	},
 	button: {
-		padding: 10,
 		textAlign: 'center',
 	},
 	buttonText: {
-		fontSize: 18,
-		marginLeft: 5
-	},
-	textContainer: {
-		padding: 15,
-	},
-	card: {
-		borderColor: colores.Blue_Dark,
-		padding: 3,
-		borderWidth: 1,
-		marginBottom: 7
+		color: 'black',
+		fontWeight: 'bold'
 	},
 	evaluacion: {
-		fontSize: 16,
-		borderBottomWidth: 1,
-		borderColor: colores.Blue_Dark,
-		color: colores.Blue_Dark
+		borderColor: colores.Pantone_382_C,
+		color: colores.Pantone_382_C,
+		fontWeight: 'bold'
 	}
 });

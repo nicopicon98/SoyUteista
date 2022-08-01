@@ -10,12 +10,15 @@ export const CustomDrawerContent: FC<CustomDrawerContentProps> = (props: CustomD
 
   <DrawerContentScrollView
     {...props}
-    style={styles.menuGlobalContainer}
+    style={{
+      ...styles.menuGlobalContainer,
+      backgroundColor: props.darkMode === 'dark' ? 'black' : 'white'
+    }}
   >
     {/* Profile Image */}
     <View style={GlobalStyles.profileView}>
       <Image
-        source={{ uri: props.userPhotoError ? props.userPhoto :  'data:image/png;base64,' + props.userPhoto }}
+        source={{ uri: props.userPhotoError ? props.userPhoto : 'data:image/png;base64,' + props.userPhoto }}
         resizeMode='contain'
         style={GlobalStyles.profilePhoto}
       />
@@ -34,31 +37,31 @@ export const CustomDrawerContent: FC<CustomDrawerContentProps> = (props: CustomD
     }}>
 
       {/* Inicio */}
-      <TouchableLeftMenu type="navigate" iconColor={colores.Cool_Gray_5_C} iconSize={30} iconName="home-sharp" menuText="Inicio" screenDestiny="Inicio" navigation={props.navigation} />
+      <TouchableLeftMenu type="navigate" iconColor={colores.Cool_Gray_5_C} iconSize={30} iconName="home-sharp" menuText="Noticias" screenDestiny="Inicio" navigation={props.navigation} />
 
       {/* Perfil */}
-      { props.userResult === 1 && ( <TouchableLeftMenu type="navigate" iconColor={colores.Cool_Gray_5_C} iconSize={30} iconName="person-sharp" menuText="Perfil" screenDestiny="Perfil" navigation={props.navigation} />) }
-      
-      {/* Calificaciones */}
-      { props.userResult === 1 && (<TouchableLeftMenu type="navigate" iconColor={colores.Cool_Gray_5_C} iconSize={30} iconName="newspaper-outline" menuText="Calificaciones" screenDestiny="Notas" navigation={props.navigation} />) }
+      {props.userResult === 1 && (<TouchableLeftMenu type="navigate" iconColor={colores.Cool_Gray_5_C} iconSize={30} iconName="person-sharp" menuText="Perfil" screenDestiny="Perfil" navigation={props.navigation} />)}
 
       {/* Carnet */}
-      { props.userResult === 1 && (<TouchableLeftMenu type="navigate" iconColor={colores.Cool_Gray_5_C} iconSize={30} iconName="albums" menuText="Carnet" screenDestiny="Carnet" navigation={props.navigation} />) }
-
+      {props.userResult === 1 && (<TouchableLeftMenu type="navigate" iconColor={colores.Cool_Gray_5_C} iconSize={30} iconName="albums" menuText="Carnet" screenDestiny="Carnet" navigation={props.navigation} />)}
+      
       {/* Horario */}
-      { props.userResult === 1 && (<TouchableLeftMenu type="navigate" iconColor={colores.Cool_Gray_5_C} iconSize={30} iconName="calendar-sharp" menuText="Horario" screenDestiny="Horario" navigation={props.navigation} />) }
+      {props.userResult === 1 && (<TouchableLeftMenu type="navigate" iconColor={colores.Cool_Gray_5_C} iconSize={30} iconName="calendar-sharp" menuText="Horario" screenDestiny="Horario" navigation={props.navigation} />)}
+      
+      {/* Notas actuales */}
+      {props.userResult === 1 && (<TouchableLeftMenu type="navigate" iconColor={colores.Cool_Gray_5_C} iconSize={30} iconName="newspaper-outline" menuText="Notas actuales" screenDestiny="Notas" navigation={props.navigation} />)}
 
       {/* Tutorias */}
-      { props.userResult === 1 && (<TouchableLeftMenu type="navigate" iconColor={colores.Cool_Gray_5_C} iconSize={30} iconName="people-sharp" menuText="Tutorías" screenDestiny="Tutorias" navigation={props.navigation} />) }
+      {props.userResult === 1 && (<TouchableLeftMenu type="navigate" iconColor={colores.Cool_Gray_5_C} iconSize={30} iconName="people-sharp" menuText="Tutorías" screenDestiny="Tutorias" navigation={props.navigation} />)}
 
-      {/* Revista */}
-      <TouchableLeftMenu type="navigate" iconColor={colores.Cool_Gray_5_C} iconSize={30} iconName="book-sharp" menuText="Revista" screenDestiny="Revista" navigation={props.navigation} />
-      
       {/* Agenda */}
       <TouchableLeftMenu type="navigate" iconColor={colores.Cool_Gray_5_C} iconSize={30} iconName="bookmark-sharp" menuText="Agenda UTS" screenDestiny="Agenda" navigation={props.navigation} />
+      
+      {/* Revista */}
+      <TouchableLeftMenu type="navigate" iconColor={colores.Cool_Gray_5_C} iconSize={30} iconName="book-sharp" menuText="Revista" screenDestiny="Revista" navigation={props.navigation} />
 
       {/* Cerrar sesion */}
-      <TouchableLeftMenu type="signOut" iconColor={colores.Cool_Gray_5_C} iconSize={30} iconName="log-out-sharp" menuText="Cerrar sesión"/>
+      <TouchableLeftMenu type="signOut" iconColor={colores.Cool_Gray_5_C} iconSize={30} iconName="log-out-sharp" menuText="Cerrar sesión" />
 
       {/* Logo */}
       <View style={{ justifyContent: 'center', alignItems: 'center' }}>
@@ -70,6 +73,16 @@ export const CustomDrawerContent: FC<CustomDrawerContentProps> = (props: CustomD
       </View>
 
     </View>
+    {/* Franja */}
+    <View style={{
+        marginTop: props.height! * 0.00001,
+        backgroundColor: colores.Pantone_382_C,
+        width: '100%',
+        borderWidth: props.height! * 0.00001,
+        height: props.height! * 0.1
+      }}
+    />
+
     {/*End Menu */}
   </DrawerContentScrollView>
 );

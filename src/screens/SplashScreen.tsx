@@ -1,21 +1,29 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, View, } from 'react-native';
+import { ImageBackground, StyleSheet, View, } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 
 import { NavigationProps } from '../types/navigation';
 
 export const AuthLoadingScreen = () => {
 
+  const imageBackground: string = "../resources/Images/loginBackground.jpg";
+
   return (
     <View style={styles.container}>
-      <Animatable.Image
-        animation="fadeInUp"
-        iterationCount={1}
-        direction="alternate"
-        source={require('@resources/Images/Logo.png')}
-        resizeMode='contain'
-        style={styles.imageDimension}
-      />
+      <ImageBackground
+        source={require(imageBackground)}
+        resizeMode="cover"
+        style={styles.image}
+      >
+        <Animatable.Image
+          animation="fadeInUp"
+          iterationCount={1}
+          direction="alternate"
+          source={require('@resources/Images/Logo.png')}
+          resizeMode='contain'
+          style={styles.imageDimension}
+        />
+      </ImageBackground>
     </View>
   );
 }
@@ -23,8 +31,6 @@ export const AuthLoadingScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   statusText: {
     marginTop: 10,
@@ -32,5 +38,10 @@ const styles = StyleSheet.create({
   imageDimension: {
     width: 200,
     height: 200
-  }
+  },
+  image: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: 'center'
+  },
 });

@@ -10,22 +10,22 @@ interface Props {
 
 export const MateriaHorario = ({ materia }: Props) => {
 
-  const { height, width } = useWindowDimensions();
+  const { width } = useWindowDimensions();
 
   return (
     <View style={styles.component}>
       <View style={styles.card}>
         {/* Hora */}
         <View style={styles.row}>
-          <Text style={{...styles.textHighlited, maxWidth: width*0.85}}>{materia.HORA_INICIO.slice(0, 2) + ":" + materia.HORA_INICIO.slice(2)} - </Text>
-          <Text style={{...styles.textHighlited, maxWidth: width*0.85}}>{materia.HORA_FINAL.slice(0, 2) + ":" + materia.HORA_FINAL.slice(2)}</Text>
+          <Text style={{ ...styles.textHighlited, maxWidth: width * 0.85 }}>{materia.HORA_INICIO.slice(0, 2) + ":" + materia.HORA_INICIO.slice(2)} - </Text>
+          <Text style={{ ...styles.textHighlited, maxWidth: width * 0.85 }}>{materia.HORA_FINAL.slice(0, 2) + ":" + materia.HORA_FINAL.slice(2)}</Text>
         </View>
         {/* Materia - Grupo */}
         <View style={styles.row}>
-          <Text style={{...styles.text, maxWidth: width*0.85}}>{materia.NOMBRE_MATERIA} ({materia.CODIGO_MATERIA}) - {materia.GRUPO}</Text>
+          <Text style={{ ...styles.text, maxWidth: width * 0.85 }}>{materia.NOMBRE_MATERIA} ({materia.CODIGO_MATERIA}) - {materia.GRUPO}</Text>
         </View>
         {/* Descripcion - Salon */}
-        <Text style={{...styles.text, maxWidth: width*0.85}}>{materia.DESCRIPCION} - {materia.SALON}</Text>
+        <Text style={{ ...styles.text, maxWidth: width * 0.85 }}>{materia.DESCRIPCION} - {materia.SALON}</Text>
       </View>
     </View>
   )

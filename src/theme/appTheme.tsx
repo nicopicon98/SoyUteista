@@ -2,7 +2,8 @@ import { StyleSheet } from "react-native";
 
 export const colores = {
   //main
-  Pantone_382_C: '#C3D730',
+  Pantone_383_C: '#C3D730',
+  Pantone_382_C: '#002A14',
   Cool_Gray_5_C: '#B3B3B3',
   Blue_Rey: '#0b4a75',
   Brown: '#5A4F4C',
@@ -14,6 +15,12 @@ export const colores = {
   Blue_Dark: '#3070D7',
   Blue_Heaven: '#30C3D7',
   White: '#FFFFFF'
+}
+
+export const fonts = {
+  regular: 'MyriadPro-Regular',
+  semibold: 'MyriadPro-Semibold',
+  semibold_italic: 'MyriadPro-SemiboldItalic'
 }
 
 export const GlobalStyles = StyleSheet.create({

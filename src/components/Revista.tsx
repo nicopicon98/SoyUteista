@@ -47,7 +47,7 @@ export const Revista = ({ item }: Props) => {
             <Text style={{
               marginRight: 2
             }}>
-              <Icon name={'calendar-sharp'} size={20} color={colores.Pantone_382_C} />
+              <Icon name={'calendar-sharp'} size={20} color={colores.Pantone_383_C} />
             </Text>
             <Text style={{
               fontWeight: '800',
@@ -66,7 +66,7 @@ export const Revista = ({ item }: Props) => {
             <Text style={{
               marginRight: 2
             }}>
-              <Icon name={'person-sharp'} size={20} color={colores.Pantone_382_C} />
+              <Icon name={'person-sharp'} size={20} color={colores.Pantone_383_C} />
             </Text>
             <Text style={{
               fontWeight: '800',

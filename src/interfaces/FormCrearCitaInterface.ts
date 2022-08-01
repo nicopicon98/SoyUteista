@@ -1,6 +1,13 @@
 export interface FormCrearCitaInterface {
-  id_tutor: string;
-  id_asignatura: string;
-  dia: string;
-  franja: string;
+  id_tipo_tutor? : string;
+  documento     : string;
+  nombre        : string;
+  programa      : string;
+  sexo          : 'M';
+  jornada       : string;
+  correo        : string;
+  celular       : string;
+  comentarios?  : string;
+  tema          : string;
+  franja        : string;
 }

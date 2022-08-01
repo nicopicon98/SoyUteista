@@ -61,18 +61,14 @@ export const AuthProvider = ({ children }: any) => {
 
   //Two options, or no matriculado or matriculado
   const signIn = async () => {
-    try {
-      //Guarda token
-      await AuthManager.signInAsync();
-      //leemos token
-      const tokenReceived = await AuthManager.getAccessTokenAsync();
-      //A este punto, ya tenemos el token, ahora evaluamos respuesta de perfil
-      const rep = await authValidatorRole(tokenReceived!);
-      if (rep.user!.userResult !== 2 && rep.user!.userResult !== 69) {
-        dispatch({ type: 'signIn', payload: { token: rep.token!, user: rep.user! } })
-      }
-    } catch (error) {
-      console.log("error aqui -> " + error);
+    //Guarda token
+    await AuthManager.signInAsync();
+    //leemos token
+    const tokenReceived = await AuthManager.getAccessTokenAsync();
+    //A este punto, ya tenemos el token, ahora evaluamos respuesta de perfil
+    const rep = await authValidatorRole(tokenReceived!);
+    if (rep.user!.userResult !== 2 && rep.user!.userResult !== 69) {
+      dispatch({ type: 'signIn', payload: { token: rep.token!, user: rep.user! } })
     }
   }
 

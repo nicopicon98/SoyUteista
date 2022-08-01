@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { View, Text, StyleSheet, Image, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, Image, ActivityIndicator, Appearance, useWindowDimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as Progress from 'react-native-progress';
 
-import { colores } from '../theme/appTheme';
+import { colores, fonts } from '../theme/appTheme';
 import { AuthContext } from '../context/AuthContext';
 
 export const PerfilScreen = () => {
@@ -11,6 +11,8 @@ export const PerfilScreen = () => {
   const [loadProgress, setLoadProgress] = useState(true);
   const [progress, setProgress] = useState(0);
   const { authState: { user } } = useContext(AuthContext);
+  const colorScheme = Appearance.getColorScheme();
+  const { height, width } = useWindowDimensions();
 
   useEffect(() => {
     setTimeout(() => {
@@ -20,7 +22,7 @@ export const PerfilScreen = () => {
   })
 
   return (
-    <View style={styles.container}>
+    <View style={{ ...styles.container, backgroundColor: colorScheme === 'dark' ? 'black' : 'white' }}>
       {/* Progress Bar */}
       {/* Divider */}
       <View style={styles.section1} />
@@ -30,30 +32,36 @@ export const PerfilScreen = () => {
           <Image
             source={{ uri: user!.userPhotoError ? user!.userPhoto : 'data:image/png;base64,' + user!.userPhoto }}
             resizeMode='cover'
-            style={{ ...styles.profilePhoto }}
+            style={{
+              ...styles.profilePhoto,
+              width: width * 0.4,
+              height: width * 0.4,
+              borderRadius: width,
+              borderWidth: width * 0.01,
+            }}
           />
         </View>
 
         {/* /* Nombre */}
-        <Text style={{ ...styles.textName, fontSize: 26 }}>{user!.userFullName}</Text>
+        <Text style={{ ...styles.textName, fontSize: height * 0.03, marginTop: height * 0.008 }}>{user!.userFullName}</Text>
         <View style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'center' }}>
-          <Text style={{ marginTop: 1 }}><Icon name={'mail'} size={20} color={colores.Pantone_382_C} /></Text>
-          <Text style={{ fontSize: 13 }}>  {user!.userMoreInfo.C_PENG_EMAILINSTITUCIONAL}</Text>
+          <Text style={{ marginTop: 1 }}><Icon name={'mail'} size={width * 0.05} color={colores.Pantone_383_C} /></Text>
+          <Text style={{ fontSize: height * 0.018, fontFamily: fonts.semibold_italic }}>  {user!.userMoreInfo.C_PENG_EMAILINSTITUCIONAL}</Text>
         </View>
 
         {/* Info */}
-        <View style={{ ...styles.basicInfo, marginTop: 40 }}>
+        <View style={{ ...styles.basicInfo, marginTop: height*0.046 }}>
           <View style={{ alignItems: 'center', }}>
-            <Text style={{ fontWeight: 'bold', fontSize: 16, marginBottom: 1 }}>{user!.userMoreInfo.C_FRAN_DESCRIPCION}</Text>
+            <Text style={{ fontWeight: 'bold', fontSize: height*0.02, marginBottom: 1 }}>{user!.userMoreInfo.C_FRAN_DESCRIPCION}</Text>
             <Text style={{ color: colores.Cool_Gray_5_C }}>Jornada</Text>
           </View>
           <View style={{ alignItems: 'center' }}>
-            <Text style={{ fontWeight: 'bold', fontSize: 16, marginBottom: 1 }}>{user!.userMoreInfo.C_SITE_DESCRIPCION}</Text>
-            <Text style={{ color: colores.Cool_Gray_5_C }}>Situacion</Text>
+            <Text style={{ fontWeight: 'bold', fontSize: height*0.02, marginBottom: 1 }}>{user!.userMoreInfo.C_SITE_DESCRIPCION}</Text>
+            <Text style={{ color: colores.Cool_Gray_5_C }}>Situación</Text>
           </View>
           <View style={{ alignItems: 'center' }}>
-            <Text style={{ fontWeight: 'bold', fontSize: 16, marginBottom: 1 }}>{user!.userMoreInfo.C_CATE_DESCRIPCION}</Text>
-            <Text style={{ color: colores.Cool_Gray_5_C }}>Categoria</Text>
+            <Text style={{ fontWeight: 'bold', fontSize: height*0.02, marginBottom: 1 }}>{user!.userMoreInfo.C_CATE_DESCRIPCION}</Text>
+            <Text style={{ color: colores.Cool_Gray_5_C }}>Categoría</Text>
           </View>
         </View>
 
@@ -67,34 +75,46 @@ export const PerfilScreen = () => {
                 progress={progress}
                 width={175}
                 height={11}
-                color={colores.Pantone_382_C}
+                color={colores.Pantone_383_C}
                 indeterminate={loadProgress}
                 animationType={'timing'}
               />
             </View>
-            <Text style={{ color: colores.Cool_Gray_5_C }}>Creditos Aprobados {user!.userMoreInfo.C_ESTP_CREDITOSAPROBADOS}/{user!.userMoreInfo.C_PENS_TOTALCREDITOS}</Text>
+            <Text style={{ color: colores.Cool_Gray_5_C }}>Créditos Aprobados {user!.userMoreInfo.C_ESTP_CREDITOSAPROBADOS}/{user!.userMoreInfo.C_PENS_TOTALCREDITOS}</Text>
           </View>
           <View style={{ alignItems: 'center' }}>
-            <Text style={{ fontWeight: 'bold', fontSize: 16, marginBottom: 1 }}>{user!.userMoreInfo.C_ESTP_PROMEDIOGENERAL.toFixed(2)}</Text>
+            <Text style={{ fontWeight: 'bold', fontSize: height*0.02, marginBottom: 1 }}>{user!.userMoreInfo.C_ESTP_PROMEDIOGENERAL.toFixed(2)}</Text>
             <Text style={{ color: colores.Cool_Gray_5_C }}>Promedio Acumulado</Text>
           </View>
         </View>
 
         <View style={{ alignItems: 'center', marginTop: 30 }}>
-          <Text style={{ fontWeight: 'bold', fontSize: 16, marginBottom: 1, textAlign: 'center' }}>{user!.userMoreInfo.C_PROG_NOMBRE}</Text>
+          <Text style={{ fontWeight: 'bold', fontSize: height*0.02, marginBottom: 1, textAlign: 'center' }}>{user!.userMoreInfo.C_PROG_NOMBRE}</Text>
           <Text style={{ color: colores.Cool_Gray_5_C }}>Programa</Text>
         </View>
 
         <View style={{ ...styles.basicInfo, marginTop: 30 }}>
           <View style={{ alignItems: 'center', }}>
-            <Text style={{ fontWeight: 'bold', fontSize: 16, marginBottom: 1 }}>{user!.userMoreInfo.C_UNID_NOMBRE}</Text>
+            <Text style={{ fontWeight: 'bold', fontSize: height*0.02, marginBottom: 1 }}>{user!.userMoreInfo.C_UNID_NOMBRE}</Text>
             <Text style={{ color: colores.Cool_Gray_5_C }}>Sede</Text>
           </View>
           <View style={{ alignItems: 'center' }}>
-            <Text style={{ fontWeight: 'bold', fontSize: 16, marginBottom: 1 }}>{user!.userMoreInfo.C_PENS_DESCRIPCION.slice(6, user!.userMoreInfo.C_PENS_DESCRIPCION.length)}</Text>
+            <Text style={{ fontWeight: 'bold', fontSize: height*0.02, marginBottom: 1 }}>{user!.userMoreInfo.C_PENS_DESCRIPCION.slice(6, user!.userMoreInfo.C_PENS_DESCRIPCION.length)}</Text>
             <Text style={{ color: colores.Cool_Gray_5_C }}>Pensum</Text>
           </View>
         </View>
+
+        {/* Franja */}
+        <View style={{
+          marginTop: height * 0.06,
+          backgroundColor: colorScheme === 'dark' ? colores.White : colores.Cool_Gray_5_C ,
+          width: '60%',
+          borderWidth: height * 0.00001,
+          height: height * 0.002,
+          alignSelf: 'center'
+        }}
+        />
+        
 
       </View>
     </View>
@@ -123,17 +143,11 @@ const styles = StyleSheet.create({
     elevation: 10,
   },
   profilePhoto: {
-    width: 160,
-    height: 160,
-    borderRadius: 100,
-    borderWidth: 3,
     borderColor: '#f2f2f2',
   },
   textName: {
     alignSelf: 'center',
-    fontSize: 17,
     fontWeight: 'bold',
-    marginTop: 7
   },
   separator: {
     top: '10%',

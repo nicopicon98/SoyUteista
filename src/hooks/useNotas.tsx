@@ -29,6 +29,8 @@ export const useNotas = () => {
 
   return {
     isLoading,
-    notasEstudiante
+    notasEstudiante,
+    loadInfoEstudiante,
+    setIsLoading
   }
 }

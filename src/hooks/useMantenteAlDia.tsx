@@ -24,6 +24,7 @@ export const useMantenteAlDia = () => {
 
   return {
     isLoading,
-    noticias
+    noticias,
+    loadNoticia
   }
 }

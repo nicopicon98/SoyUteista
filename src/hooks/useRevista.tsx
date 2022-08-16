@@ -21,6 +21,7 @@ export const useRevista = () => {
 
   return {
     isLoading,
-    revistas
+    revistas,
+    loadRevista
   }
 }

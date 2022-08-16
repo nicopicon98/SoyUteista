@@ -103,7 +103,7 @@ export const Noticia = ({ item }: Props) => {
 
 const styles = StyleSheet.create({
   noticiaImageFeature: {
-    width: width * 0.9,
+    width: width * 0.90,
     height: height * 0.25,
     alignSelf: 'center',
     marginTop: width * 0.01,

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import { ActivityIndicator, View, LogBox, Text, Alert, StyleSheet, Appearance } from 'react-native';
+import { ActivityIndicator, View, LogBox, Text, Alert, StyleSheet, Appearance, RefreshControl } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
 import { MateriaNota } from '../components/MateriaNota';
@@ -12,9 +12,12 @@ LogBox.ignoreLogs(["EventEmitter.removeListener"]);
 LogBox.ignoreAllLogs();
 export const GradesScreen = () => {
 
-  const { isLoading, notasEstudiante } = useNotas();
+  const { isLoading, notasEstudiante, loadInfoEstudiante, setIsLoading } = useNotas();
   const [isEmpty, setIsEmpty] = useState(true);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
   const colorScheme = Appearance.getColorScheme();
+
   if (isLoading === false) console.log(notasEstudiante);
 
   useEffect(() => {
@@ -33,6 +36,18 @@ export const GradesScreen = () => {
     }
   }, [isLoading])
 
+  //pull to refresh
+  const loadNotasFromBackend = async () => {
+    //primero, ponemos la pantalla en modo de carga
+    setIsRefreshing(true);
+    setIsLoading(true);
+    //cargamos la info
+    await loadInfoEstudiante();
+    //finalmente, ponemos la pantalla en modo false
+    setIsRefreshing(false);
+    setIsLoading(false);
+  }
+
   return (
     <View style={{ flex: 1, backgroundColor: colorScheme === 'dark' ? 'black' : 'white' }}>
       {isLoading
@@ -44,12 +59,26 @@ export const GradesScreen = () => {
         :
         (isEmpty && !Array.isArray(notasEstudiante)
           ? (
-            <View style={styles.noInfo}>
+            <ScrollView
+              refreshControl={
+                <RefreshControl
+                  refreshing={isRefreshing}
+                  onRefresh={loadNotasFromBackend}
+                />}
+              contentContainerStyle={styles.noInfo}
+            >
               <Text>No hay notas del semestre actual disponibles, podrás observarlas después de las evaluaciones del corte 1.</Text>
-            </View>
+            </ScrollView>
           )
           :
-          (<ScrollView>
+          (<ScrollView
+            refreshControl={
+              <RefreshControl
+                refreshing={isRefreshing}
+                onRefresh={loadNotasFromBackend}
+              />
+            }
+          >
             {
               notasEstudiante!.map(e => {
                 return <MateriaNota materia={e.materia} infoMateria={e.infoMateria} />

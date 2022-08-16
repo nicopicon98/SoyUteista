@@ -24,6 +24,7 @@ export const useAgendaInstitucional = () => {
 
   return {
     isLoading,
-    agendas
+    agendas,
+    loadNoticia
   }
 }

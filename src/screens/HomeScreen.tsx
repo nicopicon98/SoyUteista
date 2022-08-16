@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from 'react';
-import { Alert, Appearance, FlatList, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { Alert, Appearance, FlatList, StyleSheet, Text, View, useWindowDimensions, RefreshControl } from 'react-native';
 
 import { Noticia } from '../components/Noticia';
 import { SkeletonNews } from '../components/SkeletonNews';
@@ -9,11 +9,12 @@ import { fonts } from '../theme/appTheme';
 
 
 export const HomeScreen = () => {
-  const { isLoading, noticias } = useMantenteAlDia();
+  const { isLoading, noticias, loadNoticia } = useMantenteAlDia();
   const { authState: { user } } = useContext(AuthContext);
   const { width } = useWindowDimensions();
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  
   const colorScheme = Appearance.getColorScheme();
-
   useEffect(() => {
     if (user!.userResult !== 1) {
       Alert.alert(
@@ -26,14 +27,24 @@ export const HomeScreen = () => {
     }
   }, [])
 
+    //pull to refresh
+    const loadNoticiasFromBackend = async () => {
+      //primero, ponemos la pantalla en modo de carga
+      setIsRefreshing(true);
+      //cargamos la info
+      await loadNoticia();
+      //finalmente, ponemos la pantalla en modo false
+      setIsRefreshing(false);
+    }
+
   return (
-    <View style={{...styles.container,  backgroundColor: colorScheme === 'dark' ? 'black' : 'white'}}>
+    <View style={{ ...styles.container, backgroundColor: colorScheme === 'dark' ? 'black' : 'white' }}>
       {(isLoading) && <SkeletonNews />}
       {!isLoading &&
         <View style={{
           alignItems: 'center',
           backgroundColor: colorScheme === 'dark' ? 'black' : 'white',
-          marginHorizontal: width * 0.06
+          marginHorizontal: width * 0.037
         }}>
           <FlatList
             data={noticias}
@@ -50,6 +61,12 @@ export const HomeScreen = () => {
               }}>Últimas Noticias</Text>
             )}
             renderItem={Noticia}
+            refreshControl={
+              <RefreshControl
+                refreshing={isRefreshing}
+                onRefresh={loadNoticiasFromBackend}
+              />
+            }
           />
         </View>
       }

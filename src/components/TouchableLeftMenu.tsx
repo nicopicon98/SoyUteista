@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Text, StyleSheet } from 'react-native';
+import { Text, StyleSheet, Dimensions } from 'react-native';
 import { DrawerNavigationHelpers } from '@react-navigation/drawer/lib/typescript/src/types';
 import { AuthContext } from '../context/AuthContext';
 
@@ -18,6 +18,8 @@ interface TouchableLeftMenuProps {
   textStyles?: any;
   buttonStyles?: any;
 }
+
+const { height, width } = Dimensions.get('window');
 
 export const TouchableLeftMenu = ({
   type,
@@ -47,7 +49,7 @@ export const TouchableLeftMenu = ({
 
 const styles = StyleSheet.create({
   menuBtn: {
-    marginVertical: 8,
+    marginVertical: width*0.02,
     flexDirection: 'row'
   },
   menuText: {

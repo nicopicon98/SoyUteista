@@ -13,7 +13,7 @@ import { useInfoTutor } from '../hooks/useInfoTutor';
 import { useTutoriasAll } from '../hooks/useTutoriasAll';
 import { FormCrearCitaInterface } from '../interfaces/FormCrearCitaInterface';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
-import { colores } from '../theme/appTheme';
+import { colores, fonts } from '../theme/appTheme';
 import { CreateCitaInterface, RespCreateCitaInterface } from '../interfaces/CreateCitaInterface';
 import tutoriasApi from '../api/tutoriasAPI';
 import { AuthContext } from '../context/AuthContext';
@@ -114,7 +114,6 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
       jornada,
       correo,
       celular,
-      comentarios,
       tema,
       franja
     } = obj;
@@ -192,287 +191,293 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
 
   return (
     <>
-      {!insertTutoriaLoader
-        ?
-        <ScrollView >
-          <View style={styles.container}>
-            {/* Seleccion tipo Busqueda */}
-            <Text style={{
-              ...styles.label,
-              marginLeft: width * 0.05,
-              color: colorScheme === 'dark' ? 'white' : 'black'
-            }}>
-              Seleccione el tipo de consulta <Text style={styles.mandatory}>*</Text></Text>
-            <View style={{ flexDirection: 'row', alignSelf: 'auto', marginLeft: width * 0.02 }}>
-              <RadioGroup
-                radioButtons={radioButtons}
-                onPress={onPressRadioButton}
-                layout='row'
-              />
-            </View>
-            {/*Seleccion cursos*/}
-            {clickCourses && !isLoadingCourses &&
-              <Picker
-                onFocus={() => { setDefaultDisableTutor(false) }}
-                selectedValue={id_asignatura}
-                onValueChange={async (itemValue) => {
-                  onChange(itemValue, 'id_asignatura')
-                }}
-                style={{ width: width * 0.97, alignSelf: 'center' }}
-              >
-                <Picker.Item
-                  key={'unselectable'}
-                  label={"Seleccione un curso"}
-                  value={0}
-                  enabled={defaultDisableTutor}
-                />
-                {courses!.map(e => (
-                  <Picker.Item
-                    label={`${e.curso} - ${e.nombre}`}
-                    value={e.id_curso}
-                    key={e.id_curso}
-                  />
-                ))}
-              </Picker>
-            }
-            {/* Seleccion Tutor */}
-            {!isLoadingTutor && !clickCourses && (
-              <Picker
-                onFocus={() => { setDefaultDisableTutor(false) }}
-                selectedValue={id_tutor}
-                onValueChange={async (itemValue) => {
-                  onChange(itemValue, 'id_tutor')
-                }}
-                style={{ width: width * 0.97, alignSelf: 'center' }}
-              >
-                <Picker.Item
-                  key={'unselectable'}
-                  label={"Seleccione un tutor"}
-                  value={0}
-                  enabled={defaultDisableTutor}
-                />
-                {tutores!.map(e => (
-                  <Picker.Item
-                    label={e.nombre}
-                    value={e.id_tutor}
-                    key={e.id_tutor}
-                  />
-                ))}
-              </Picker>
-            )}
-            {/* Seleccion Materia por tutor */}
-            {
-              (form.id_tutor.length > 0 && !isLoadingCursoByTutor) && (
-                <Picker
-                  onFocus={() => { setDefaultDisableAsignatura(false) }}
-                  selectedValue={id_asignatura}
-                  onValueChange={(itemValue) => {
-                    onChange(itemValue, 'id_asignatura')
-
-                  }}
-                  style={{ width: width * 0.97, alignSelf: 'center' }}
-                >
-                  <Picker.Item
-                    key={'unselectable'}
-                    label={"Seleccione un curso"}
-                    value={0}
-                    enabled={defaultDisableAsignatura}
-                  />
-                  {cursosByTutor!.map(e => (
-                    <Picker.Item
-                      label={e.curso}
-                      value={e.id_asignatura}
-                      key={e.id_asignatura}
-                    />
-                  ))}
-                </Picker>)
-            }
-
-            {/* Seleccion Dia por materia */}
-            {
-              (form.id_asignatura.length > 0 && !isLoadingDiaByAsignatura) && (
-                <Picker
-                  onFocus={() => { setDefaultDisableDia(false) }}
-                  selectedValue={dia}
-                  onValueChange={(itemValue) => onChange(itemValue, 'dia')}
-                  style={{ width: width * 0.97, alignSelf: 'center' }}
-                >
-                  <Picker.Item
-                    key={'unselectable'}
-                    label={"Seleccione un día"}
-                    value={0}
-                    enabled={defaultDisableDia}
-                  />
-                  {diaByAsignatura!.map(e => (
-                    <Picker.Item
-                      label={e.dia}
-                      value={e.dia}
-                      key={e.dia}
-                    />
-                  ))}
-                </Picker>)
-            }
-
-            {/* Seleccion Franja por dia y materia */}
-            {
-              (form.dia.length > 0 && !isLoadingFranjaByDiaAsignatura) && (
-                <Picker
-                  onFocus={() => { setDefaultDisableFranja(false) }}
-                  selectedValue={franja}
-                  onValueChange={(itemValue) => {
-                    onChange(itemValue, 'franja')
-                    setIsCanceled(false);
-                  }}
-                  style={{ width: width * 0.97, alignSelf: 'center' }}
-                >
-                  <Picker.Item
-                    key={'unselectable'}
-                    label={"Seleccione una franja"}
-                    value={0}
-                    enabled={defaultDisableFranja}
-                  />
-                  {franjaByDiaAsignatura!.map(e => (
-                    <Picker.Item
-                      label={e.nombre_franja}
-                      value={e.franja}
-                      key={e.franja}
-                    />
-                  ))}
-                </Picker>)
-            }
-
-            {/* Input Celular */}
-            {
-              !isLoadingInfoTutor && !isCanceled && (
-                <>
-                  <Text style={{ 
-                    ...styles.label, 
-                    marginLeft: width * 0.06,
-                    color: colorScheme === 'dark' ? 'white' : 'black'
-                    }}>
-                    Número de celular <Text style={styles.mandatory}>*</Text></Text>
-                  <TextInput
-                    placeholder='+57 3012456578'
-                    style={{ 
-                      ...styles.textInput, 
-                      marginHorizontal: width * 0.05,
-                      borderColor: colorScheme === 'dark' ? colores.Cool_Gray_5_C : ''
-                    }}
-                    value={celular}
-                    onChangeText={(value) => onChange(value, 'celular')}
-                    keyboardType="numeric"
-                  />
-                </>
-              )
-            }
-
-            {/* Input Tema */}
-            {!isLoadingInfoTutor && !isCanceled && (
-              <>
+      {
+        isLoadingTutor && isLoadingCourses
+          ?
+          <ActivityIndicator style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }} color={colores.Pantone_382_C} size='large' />
+          :
+          (!insertTutoriaLoader)
+            ?
+            <ScrollView>
+              <View style={styles.container}>
+                {/* Seleccion tipo Busqueda */}
                 <Text style={{
                   ...styles.label,
-                  marginLeft: width * 0.06,
+                  marginLeft: width * 0.05,
                   color: colorScheme === 'dark' ? 'white' : 'black'
                 }}>
-                  Escriba el tema del que desea la tutoría <Text style={styles.mandatory}>*</Text>
-                </Text>
-                <TextInput
-                  placeholder='Ecuaciones diferenciales'
-                  style={{ 
-                    ...styles.textInput, 
-                    marginHorizontal: width * 0.05,
-                    borderColor: colorScheme === 'dark' ? colores.Cool_Gray_5_C : '' 
-                  }}
-                  value={tema}
-                  onChangeText={(value) => onChange(value, 'tema')}
-                  numberOfLines={4}
-                />
-              </>
-            )
-            }
+                  Seleccione el tipo de consulta <Text style={styles.mandatory}>*</Text></Text>
+                <View style={{ flexDirection: 'row', alignSelf: 'auto', marginLeft: width * 0.02 }}>
+                  <RadioGroup
+                    radioButtons={radioButtons}
+                    onPress={onPressRadioButton}
+                    layout='row'
+                  />
+                </View>
+                {/*Seleccion cursos*/}
+                {clickCourses && !isLoadingCourses &&
+                  <Picker
+                    onFocus={() => { setDefaultDisableTutor(false) }}
+                    selectedValue={id_asignatura}
+                    onValueChange={async (itemValue) => {
+                      onChange(itemValue, 'id_asignatura')
+                    }}
+                    style={{ width: width * 0.97, alignSelf: 'center', overflow: 'scroll' }}
+                  >
+                    <Picker.Item
+                      key={'unselectable'}
+                      label={"Seleccione un curso"}
+                      value={0}
+                      enabled={defaultDisableTutor}
+                    />
+                    {courses!.map(e => (
+                      <Picker.Item
+                        label={`${e.curso} - ${e.nombre}`}
+                        value={e.id_curso}
+                        key={e.id_curso}
+                        style={{ fontSize: width * 0.03 }}
+                      />
+                    ))}
+                  </Picker>
+                }
+                {/* Seleccion Tutor */}
+                {!isLoadingTutor && !clickCourses && (
+                  <Picker
+                    onFocus={() => { setDefaultDisableTutor(false) }}
+                    selectedValue={id_tutor}
+                    onValueChange={async (itemValue) => {
+                      onChange(itemValue, 'id_tutor')
+                    }}
+                    style={{ width: width * 0.97, alignSelf: 'center' }}
+                  >
+                    <Picker.Item
+                      key={'unselectable'}
+                      label={"Seleccione un tutor"}
+                      value={0}
+                      enabled={defaultDisableTutor}
+                    />
+                    {tutores!.map(e => (
+                      <Picker.Item
+                        label={e.nombre}
+                        value={e.id_tutor}
+                        key={e.id_tutor}
+                      />
+                    ))}
+                  </Picker>
+                )}
+                {/* Seleccion Materia por tutor */}
+                {
+                  (form.id_tutor.length > 0 && !isLoadingCursoByTutor) && (
+                    <Picker
+                      onFocus={() => { setDefaultDisableAsignatura(false) }}
+                      selectedValue={id_asignatura}
+                      onValueChange={(itemValue) => {
+                        onChange(itemValue, 'id_asignatura')
 
-            {/* Input Comentarios adicionales */}
-            {!isLoadingInfoTutor && !isCanceled && (
-              <>
-                <Text style={{
-                  ...styles.label,
-                  marginLeft: width * 0.06,
-                  color: colorScheme === 'dark' ? 'white' : 'black'
-                }}>Comentarios adicionales</Text>
-                <TextInput
-                  placeholder=''
-                  style={{ 
-                    ...styles.textInput, 
-                    marginHorizontal: width * 0.05,
-                    borderColor: colorScheme === 'dark' ? colores.Cool_Gray_5_C : ''
-                  }}
-                  value={comentarios}
-                  onChangeText={(value) => onChange(value, 'comentarios')}
-                />
-              </>
-            )
-            }
+                      }}
+                      style={{ width: width * 0.97, alignSelf: 'center' }}
+                    >
+                      <Picker.Item
+                        key={'unselectable'}
+                        label={"Seleccione un curso"}
+                        value={0}
+                        enabled={defaultDisableAsignatura}
+                      />
+                      {cursosByTutor!.map(e => (
+                        <Picker.Item
+                          label={e.curso}
+                          value={e.id_asignatura}
+                          key={e.id_asignatura}
+                        />
+                      ))}
+                    </Picker>)
+                }
 
-            {/* Informacion de confirmacion del tutor */}
-            {!isLoadingInfoTutor && !isCanceled && (
-              <View style={{ paddingHorizontal: width * 0.06, maxWidth: width }}>
-                <View style={{ flexDirection: 'column' }}>
-                  <Text style={{ fontWeight: 'bold', fontSize: 19 }}>Lugar de la tutoria: </Text>
-                  <Text style={{ fontSize: 18 }}>{infoTutor!.lugar}</Text>
-                </View>
-                <View style={{ flexDirection: 'column' }}>
-                  <Text style={{ fontWeight: 'bold', fontSize: 19 }}>Sede de la tutoria: </Text>
-                  <Text style={{ fontSize: 18 }}>{infoTutor!.sede}</Text>
-                </View>
-                <View style={{ flexDirection: 'column' }}>
-                  <Text style={{ fontWeight: 'bold', fontSize: 19 }}>Correo del tutor: </Text>
-                  <Text style={{ fontSize: 18 }}>{infoTutor!.correo}</Text>
-                </View>
+                {/* Seleccion Dia por materia */}
+                {
+                  (form.id_asignatura.length > 0 && !isLoadingDiaByAsignatura) && (
+                    <Picker
+                      onFocus={() => { setDefaultDisableDia(false) }}
+                      selectedValue={dia}
+                      onValueChange={(itemValue) => onChange(itemValue, 'dia')}
+                      style={{ width: width * 0.97, alignSelf: 'center' }}
+                    >
+                      <Picker.Item
+                        key={'unselectable'}
+                        label={"Seleccione un día"}
+                        value={0}
+                        enabled={defaultDisableDia}
+                      />
+                      {diaByAsignatura!.map(e => (
+                        <Picker.Item
+                          label={e.dia}
+                          value={e.dia}
+                          key={e.dia}
+                        />
+                      ))}
+                    </Picker>)
+                }
+
+                {/* Seleccion Franja por dia y materia */}
+                {
+                  (form.dia.length > 0 && !isLoadingFranjaByDiaAsignatura) && (
+                    <Picker
+                      onFocus={() => { setDefaultDisableFranja(false) }}
+                      selectedValue={franja}
+                      onValueChange={(itemValue) => {
+                        onChange(itemValue, 'franja')
+                        setIsCanceled(false);
+                      }}
+                      style={{ width: width * 0.97, alignSelf: 'center' }}
+                    >
+                      <Picker.Item
+                        key={'unselectable'}
+                        label={"Seleccione una franja"}
+                        value={0}
+                        enabled={defaultDisableFranja}
+                      />
+                      {franjaByDiaAsignatura!.map(e => (
+                        <Picker.Item
+                          label={e.nombre_franja}
+                          value={e.franja}
+                          key={e.franja}
+                        />
+                      ))}
+                    </Picker>)
+                }
+
+                {/* Input Celular */}
+                {
+                  !isLoadingInfoTutor && !isCanceled && (
+                    <>
+                      <Text style={{
+                        ...styles.label,
+                        marginLeft: width * 0.06,
+                        color: colorScheme === 'dark' ? 'white' : 'black'
+                      }}>
+                        Número de celular <Text style={styles.mandatory}>*</Text></Text>
+                      <TextInput
+                        placeholder='+57 3012456578'
+                        style={{
+                          ...styles.textInput,
+                          marginHorizontal: width * 0.05,
+                          borderColor: colorScheme === 'dark' ? colores.Cool_Gray_5_C : ''
+                        }}
+                        value={celular}
+                        onChangeText={(value) => onChange(value, 'celular')}
+                        keyboardType="numeric"
+                      />
+                    </>
+                  )
+                }
+
+                {/* Input Tema */}
+                {!isLoadingInfoTutor && !isCanceled && (
+                  <>
+                    <Text style={{
+                      ...styles.label,
+                      marginLeft: width * 0.06,
+                      color: colorScheme === 'dark' ? 'white' : 'black'
+                    }}>
+                      Escriba el tema del que desea la tutoría <Text style={styles.mandatory}>*</Text>
+                    </Text>
+                    <TextInput
+                      placeholder='Ecuaciones diferenciales'
+                      style={{
+                        ...styles.textInput,
+                        marginHorizontal: width * 0.05,
+                        borderColor: colorScheme === 'dark' ? colores.Cool_Gray_5_C : ''
+                      }}
+                      value={tema}
+                      onChangeText={(value) => onChange(value, 'tema')}
+                      numberOfLines={4}
+                    />
+                  </>
+                )
+                }
+
+                {/* Input Comentarios adicionales */}
+                {!isLoadingInfoTutor && !isCanceled && (
+                  <>
+                    <Text style={{
+                      ...styles.label,
+                      marginLeft: width * 0.06,
+                      color: colorScheme === 'dark' ? 'white' : 'black'
+                    }}>Comentarios adicionales</Text>
+                    <TextInput
+                      placeholder=''
+                      style={{
+                        ...styles.textInput,
+                        marginHorizontal: width * 0.05,
+                        borderColor: colorScheme === 'dark' ? colores.Cool_Gray_5_C : ''
+                      }}
+                      value={comentarios}
+                      onChangeText={(value) => onChange(value, 'comentarios')}
+                    />
+                  </>
+                )
+                }
+
+                {/* Informacion de confirmacion del tutor */}
+                {!isLoadingInfoTutor && !isCanceled && (
+                  <View style={{ paddingHorizontal: width * 0.06, maxWidth: width }}>
+                    <View style={{ flexDirection: 'column' }}>
+                      <Text style={{ fontWeight: 'bold', fontSize: 19 }}>Lugar de la tutoria: </Text>
+                      <Text style={{ fontSize: 18 }}>{infoTutor!.lugar}</Text>
+                    </View>
+                    <View style={{ flexDirection: 'column' }}>
+                      <Text style={{ fontWeight: 'bold', fontSize: 19 }}>Sede de la tutoria: </Text>
+                      <Text style={{ fontSize: 18 }}>{infoTutor!.sede}</Text>
+                    </View>
+                    <View style={{ flexDirection: 'column' }}>
+                      <Text style={{ fontWeight: 'bold', fontSize: 19 }}>Correo del tutor: </Text>
+                      <Text style={{ fontSize: 18 }}>{infoTutor!.correo}</Text>
+                    </View>
+                  </View>
+                )
+                }
+
+                {/* Button crear nueva tutoria */}
+                {!isLoadingInfoTutor && !isCanceled && (
+                  <View style={{ alignItems: 'center', marginTop: height * 0.01, marginBottom: height * 0.01 }}>
+                    <TouchableOpacity
+                      activeOpacity={0.8}
+                      onPress={() => {
+                        return crearCita({
+                          id_tipo_tutor: infoTutor!.id_crearCitas,
+                          documento: user!.userMoreInfo.C_PEGE_DOCUMENTOIDENTIDAD,
+                          nombre: user!.userFullName,
+                          programa: user!.userMoreInfo.C_PROG_NOMBRE,
+                          sexo: 'M',
+                          jornada: user!.userMoreInfo.C_FRAN_DESCRIPCION,
+                          correo: user!.userEmail,
+                          celular: celular,
+                          comentarios: comentarios,
+                          tema: tema,
+                          franja: franja,
+                        });
+                      }}
+                      style={{ ...styles.createTutoriaButton, width: width * 0.3 }}
+                    >
+                      <Text style={{ ...styles.createTutoriaButtonText, fontSize: height * 0.021 }}>Solicitar</Text>
+                    </TouchableOpacity>
+                  </View>
+                )
+                }
+
+
+                {/* Para mostrar los valores actuales del form */}
+                {/* <Text>{JSON.stringify(form, null, 5)}</Text> */}
               </View>
-            )
-            }
-
-            {/* Button crear nueva tutoria */}
-            {!isLoadingInfoTutor && !isCanceled && (
-              <View style={{ alignItems: 'center', marginTop: height * 0.01, marginBottom: height * 0.01 }}>
-                <TouchableOpacity
-                  activeOpacity={0.8}
-                  onPress={() => {
-                    return crearCita({
-                      id_tipo_tutor: infoTutor!.id_crearCitas,
-                      documento: user!.userMoreInfo.C_PEGE_DOCUMENTOIDENTIDAD,
-                      nombre: user!.userFullName,
-                      programa: user!.userMoreInfo.C_PROG_NOMBRE,
-                      sexo: 'M',
-                      jornada: user!.userMoreInfo.C_FRAN_DESCRIPCION,
-                      correo: user!.userEmail,
-                      celular: celular,
-                      comentarios: comentarios,
-                      tema: tema,
-                      franja: franja,
-                    });
-                  }}
-                  style={{ ...styles.createTutoriaButton, width: width * 0.3 }}
-                >
-                  <Text style={{ ...styles.createTutoriaButtonText, fontSize: height * 0.021 }}>Solicitar</Text>
-                </TouchableOpacity>
-              </View>
-            )
-            }
-
-
-            {/* Para mostrar los valores actuales del form */}
-            {/* <Text>{JSON.stringify(form, null, 5)}</Text> */}
-          </View>
-        </ScrollView>
-        :
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <ActivityIndicator
-            size={40}
-            color={colores.Pantone_383_C}
-          />
-          <Text>Insertando tutoria...</Text>
-        </View>
+            </ScrollView>
+            :
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+              <ActivityIndicator
+                size={40}
+                color={colores.Pantone_383_C}
+              />
+              <Text>Insertando tutoria...</Text>
+            </View>
       }
     </>
   )

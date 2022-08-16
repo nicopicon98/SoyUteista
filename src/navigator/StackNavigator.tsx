@@ -34,9 +34,9 @@ export const StackNavigator = () => {
       {
         (authState.status !== 'authenticated')
           ?
-          <Stack.Screen name="SignInScreen" options={{ title: "Pagina SignInScreen" }} component={SignInScreen} />
+          <Stack.Screen name="SignInScreen" component={SignInScreen} />
           :
-          <Stack.Screen name="Main" options={{ title: "Pagina 3" }} component={LeftMenu} />
+          <Stack.Screen name="Main" component={LeftMenu} />
       }
 
     </Stack.Navigator>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Dimensions, ActivityIndicator, View, Text, StyleSheet } from 'react-native';
+import { Dimensions, ActivityIndicator, View, Text, StyleSheet, Appearance } from 'react-native';
 
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { colores } from '../theme/appTheme';
@@ -12,6 +12,7 @@ const { width } = Dimensions.get('window');
 export const ScheduleTabs = () => {
 
   const { isLoading, materias } = useHorario();
+  const colorScheme = Appearance.getColorScheme();
 
   return (
     <View style={{ flex: 1 }}>
@@ -22,21 +23,25 @@ export const ScheduleTabs = () => {
             paddingTop: 0
           }}
           sceneContainerStyle={{
-            backgroundColor: 'white'
+            backgroundColor: colorScheme === 'dark' ? 'black' : 'white'
           }}
           screenOptions={() => ({
-            tabBarLabelStyle: { fontSize: width * 0.04, fontWeight: '700' },
-            tabBarPressColor: colores.Cool_Gray_5_C,
-            tabBarShowIcon: true,
+            tabBarLabelStyle: {
+              fontSize: width * 0.04,
+              fontWeight: '700',
+            },
+            tabBarPressColor: colores.Pantone_382_C,
             tabBarIndicatorStyle: {
-              backgroundColor: colores.Cool_Gray_5_C
+              backgroundColor: colorScheme === 'dark' ? 'white' : colores.Pantone_382_C
             },
             tabBarStyle: {
               borderTopColor: colores.Cool_Gray_5_C,
               borderTopWidth: 0,
               elevation: 0,
               shadowColor: 'transparent',
-            }
+              backgroundColor: colorScheme === 'dark' ? 'black' : 'white',
+            },
+            tabBarActiveTintColor: colorScheme === 'dark' ? 'white' : 'black'
           })}
         >
 

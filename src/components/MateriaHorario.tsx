@@ -1,12 +1,15 @@
 import React from 'react'
-import { StyleSheet, View, Text, useWindowDimensions } from 'react-native';
+import { StyleSheet, View, Text, useWindowDimensions, Dimensions, Appearance } from 'react-native';
 
 import { MateriaInterface } from '../interfaces/HorarioInterface';
-import { colores } from '../theme/appTheme';
+import { colores, fonts } from '../theme/appTheme';
 
 interface Props {
   materia: MateriaInterface;
 }
+
+const {width} = Dimensions.get('window');
+const colorScheme = Appearance.getColorScheme();
 
 export const MateriaHorario = ({ materia }: Props) => {
 
@@ -35,7 +38,7 @@ const styles = StyleSheet.create({
   component: {
     flex: 1,
     margin: 10,
-    borderColor: colores.Blue_Rey,
+    borderColor: colorScheme === 'dark' ? colores.Cool_Gray_5_C : colores.Pantone_382_C,
     borderWidth: 1,
   },
   card: {
@@ -44,10 +47,14 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   text: {
-    color: colores.Cool_Gray_5_C
+    color: colores.Cool_Gray_5_C,
+    fontFamily: fonts.regular,
+    fontSize: width*0.04
   },
   textHighlited: {
-    color: colores.Blue_Rey
+    fontFamily: fonts.regular,
+    color: colorScheme === 'dark' ? 'white' : colores.Pantone_382_C,
+    fontSize: width*0.04
   },
   row: {
     flexDirection: 'row'

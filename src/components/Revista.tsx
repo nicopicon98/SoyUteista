@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, Image, Dimensions, TouchableOpacity } from 'rea
 import { Linking } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import { colores } from '../theme/appTheme';
+import { colores, fonts } from '../theme/appTheme';
 import { RevistaInterface } from '../interfaces/RevistaInterface';
 
 interface Props {
@@ -22,9 +22,9 @@ export const Revista = ({ item }: Props) => {
         <View>
           {/* Titulo */}
           <Text style={{
-            fontSize: 18,
-            fontWeight: 'bold',
-            textTransform: 'capitalize'
+            fontSize: width * 0.04,
+            textTransform: 'capitalize',
+            fontFamily: fonts.semibold_italic
           }}>
             Edición {item.edicion}
           </Text>
@@ -37,12 +37,11 @@ export const Revista = ({ item }: Props) => {
             style={{ ...styles.noticiaImageFeature, }}
           />
 
-
           {/* Fecha de publicacion */}
           <View style={{
             flexDirection: 'row',
-            marginTop: 3,
-            alignItems: 'center'
+            marginTop: width * 0.016,
+            alignItems: 'center',
           }}>
             <Text style={{
               marginRight: 2
@@ -50,8 +49,8 @@ export const Revista = ({ item }: Props) => {
               <Icon name={'calendar-sharp'} size={20} color={colores.Pantone_383_C} />
             </Text>
             <Text style={{
-              fontWeight: '800',
-              textTransform: 'capitalize'
+              textTransform: 'capitalize',
+              fontFamily: fonts.semibold_italic
             }}>
               {item.date}
             </Text>
@@ -60,8 +59,8 @@ export const Revista = ({ item }: Props) => {
           {/* Autor */}
           <View style={{
             flexDirection: 'row',
-            marginTop: 3,
-            alignItems: 'center'
+            marginTop: width * 0.016,
+            alignItems: 'center',
           }}>
             <Text style={{
               marginRight: 2
@@ -69,7 +68,8 @@ export const Revista = ({ item }: Props) => {
               <Icon name={'person-sharp'} size={20} color={colores.Pantone_383_C} />
             </Text>
             <Text style={{
-              fontWeight: '800',
+              textTransform: 'capitalize',
+              fontFamily: fonts.semibold_italic
             }}>
               Oficina de comunicaciones
             </Text>

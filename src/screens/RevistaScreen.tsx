@@ -1,5 +1,5 @@
-import React from 'react'
-import { View, ActivityIndicator, StyleSheet, FlatList, useWindowDimensions, Appearance } from 'react-native';
+import React, { useState } from 'react'
+import { View, ActivityIndicator, StyleSheet, FlatList, useWindowDimensions, Appearance, RefreshControl } from 'react-native';
 import { Text } from 'react-native-animatable';
 import { Revista } from '../components/Revista';
 
@@ -7,12 +7,24 @@ import { useRevista } from '../hooks/useRevista';
 import { colores, fonts } from '../theme/appTheme';
 
 export const RevistaScreen = () => {
-  const { height, width } = useWindowDimensions();
-  const { isLoading, revistas } = useRevista();
+  const { width } = useWindowDimensions();
+  const { isLoading, revistas, loadRevista } = useRevista();
   const colorScheme = Appearance.getColorScheme();
 
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  //pull to refresh
+  const loadNoticiasFromBackend = async () => {
+    //primero, ponemos la pantalla en modo de carga
+    setIsRefreshing(true);
+    //cargamos la info
+    await loadRevista();
+    //finalmente, ponemos la pantalla en modo false
+    setIsRefreshing(false);
+  }
+
   return (
-    <View style={{...styles.container, backgroundColor: colorScheme === 'dark' ? 'black' : 'white'}}>
+    <View style={{ ...styles.container, backgroundColor: colorScheme === 'dark' ? 'black' : 'white' }}>
       {isLoading
         ? <ActivityIndicator style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }} color={colores.Pantone_382_C} size='large' />
         : <View style={{ alignItems: 'center' }}>
@@ -30,7 +42,13 @@ export const RevistaScreen = () => {
                 left: -(width * 0.005)
               }}>Revista SoyUteísta</Text>
             )}
-            renderItem={({ item, index }) => <Revista item={item} />}
+            renderItem={Revista}
+            refreshControl={
+              <RefreshControl
+                refreshing={isRefreshing}
+                onRefresh={loadNoticiasFromBackend}
+              />
+            }
           />
         </View>
       }
@@ -47,7 +65,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 20
   },
   title: {
-    fontSize: 35,
     fontFamily: fonts.semibold
   }
 });

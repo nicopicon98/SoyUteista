@@ -161,3 +161,28 @@ const respuesta7 = {
 /**-------- */
 // 7.  Revista
 //    -> Queda cargando el spinner si timeout es alto
+
+
+const resp = [
+  {
+    "N_ESTP_ID": 124623,
+    "N_PEGE_DOCUMENTOIDENTIDAD": "1005108571",
+    "N_PENG_PRIMERAPELLIDO": "GÓMEZ",
+    "N_PENG_SEGUNDOAPELLIDO": "DELGADO",
+    "N_PENG_PRIMERNOMBRE": "JOSE",
+    "N_PENG_SEGUNDONOMBRE": "DAVID",
+    "N_PROG_NOMBRE": "TECNOLOGIA EN DESARROLLO DE SISTEMAS INFORMATICOS",
+    "N_UNID_NOMBRE": "SEDE PRINCIPAL",
+    "N_MATE_CODIGOMATERIA": "DDI010",
+    "N_MATE_NOMBRE": "INGLES II",
+    "N_GRUP_NOMBRE": "B191",
+    "N_EVAC_DESCRIPCION": "PRIMER CORTE",
+    "N_NOTA_DESCRIPCION": "AUTOEVALUACIÓN",
+    "N_NOTA_PESO": 15,
+    "N_CALF_VALOR": 0,
+    "N_DOCENTE": "VALDIVIESO MOTTA ERIK ALFREDO",
+    "N_EVAC_ID": 64
+  },
+  {},
+  {}
+]

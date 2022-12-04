@@ -5,14 +5,14 @@ import { TutoriasBringCursoByTutorInterface } from '../interfaces/TutoriasBringC
 
 export const useCursoByTutor = () => {
 
-  const [isLoadingCursoByTutor, setIsLoadingCursoByTutor] = useState(true);
-  const [cursosByTutor, setCursosByTutor] = useState<TutoriasBringCursoByTutorInterface[]>();
+  const [isLoadingCursoByTutor, setIsLoadingCursoByTutor] = useState(false);
+  const [cursosByTutor, setCursosByTutor] = useState<TutoriasBringCursoByTutorInterface[]>([]);
 
   const onLoadCursoByTutor = async (id_tutor: string) => {
-    const rep = await tutoriasAPI.get<TutoriasBringCursoByTutorInterface[]>(`/load_curso_tutor.php?id_tutor=${id_tutor}`);
+    setIsLoadingCursoByTutor(true);
+    const { data } = await tutoriasAPI.get<TutoriasBringCursoByTutorInterface[]>(`/load_curso_tutor.php?id_tutor=${id_tutor}`);
+    setCursosByTutor(data)
     setIsLoadingCursoByTutor(false);
-    setCursosByTutor(rep.data)
-    console.log(rep.data);
   }
 
   return {

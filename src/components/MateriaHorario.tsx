@@ -48,11 +48,11 @@ const styles = StyleSheet.create({
   },
   text: {
     color: colores.Cool_Gray_5_C,
-    fontFamily: fonts.regular,
+    // fontFamily: fonts.regular,
     fontSize: width*0.04
   },
   textHighlited: {
-    fontFamily: fonts.regular,
+    // fontFamily: fonts.regular,
     color: colorScheme === 'dark' ? 'white' : colores.Pantone_382_C,
     fontSize: width*0.04
   },

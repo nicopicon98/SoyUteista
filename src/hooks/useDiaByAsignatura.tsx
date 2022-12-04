@@ -11,7 +11,7 @@ export const useDiaByAsignatura = () => {
   const onLoadDiaByAsignatura = async (id_asignatura: string) => {
     const rep = await tutoriasAPI.get<TutoriasDiaByAsignaturaInterface[]>(`/buscar_dias.php?id_asignatura=${id_asignatura}`);
     console.log(rep.data);
-    setDiaByAsignatura(rep.data)
+    setDiaByAsignatura(rep.data);
     setIsLoadingDiaByAsignatura(false);
   }
 

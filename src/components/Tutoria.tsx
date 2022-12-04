@@ -38,6 +38,7 @@ export const Tutoria = ({ item }: Props) => {
       setTutorPhoto(imageLogo);
     }
   }
+  
   return (
     <View>
       <TutoriaModal

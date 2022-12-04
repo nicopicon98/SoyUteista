@@ -93,6 +93,7 @@ export const AuthProvider = ({ children }: any) => {
       const userImage: Blob = await GraphManager.getPhotoAsync();
       const answerBase64: any = await blobToBase64(userImage);
       const Fullphoto: string[] = answerBase64.split(',');
+      console.log(Fullphoto)
       photo = Fullphoto[1];
     } catch (error) {
       userPhotoError = true;

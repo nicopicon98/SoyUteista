@@ -17,7 +17,6 @@ const colorScheme = Appearance.getColorScheme();
 
 export const TutoriaModal = ({ modalVisible, setModalVisible, infoTutoria }: Props) => {
   return (
-    <View style={styles.centeredView}>
       <Modal
         animationType="fade"
         hardwareAccelerated={true}
@@ -80,7 +79,6 @@ export const TutoriaModal = ({ modalVisible, setModalVisible, infoTutoria }: Pro
           </View>
         </View>
       </Modal>
-    </View>
   );
 }
 

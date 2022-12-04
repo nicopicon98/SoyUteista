@@ -1,40 +1,63 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 
-import RadioGroup, { RadioButtonProps } from 'react-native-radio-buttons-group';
+import { RadioButtonProps } from 'react-native-radio-buttons-group';
 import { useBringTutor } from './useBringTutor';
 import { useCoursesAll } from './useCoursesAll';
 
-export const useTutoriaBusqueda = () => {
+
+export const useTutoriaBusqueda = (size: number) => {
 
   const { loadTutores, isLoadingTutor, setIsLoadingTutor, tutores } = useBringTutor();
-  const { courses, isLoadingCourses, loadCursos, clickCourses, setClickCourses } = useCoursesAll();
+  const {
+    courses,
+    isLoadingCourses,
+    loadCursos,
+    clickCourses,
+    setClickCourses } = useCoursesAll();
+
+    const [currentValue, setCurrentValue] = useState("");
 
   const radioButtonsData: RadioButtonProps[] = [
     {
       id: '1', // acts as primary key, should be unique and non-empty string
       label: 'Docente',
       value: 'docente',
-      onPress: function () {
+      onPress: async function () {
+        setCurrentValue(this.value)
         setClickCourses(false);
-        loadTutores(this.value)
-      }
+        await loadTutores(this.value)
+      },
+      size,
+      labelStyle: {
+        fontSize: size * 0.6,
+      },
     },
     {
       id: '2',
       label: 'Estudiante Monitor',
       value: 'monitor',
-      onPress: function () {
+      onPress: async function () {
+        setCurrentValue(this.value)
         setClickCourses(false);
-        loadTutores(this.value)
+        await loadTutores(this.value)
+      },
+      size,
+      labelStyle: {
+        fontSize: size * 0.6,
       }
     },
     {
       id: '3',
       label: 'Curso',
       value: 'curso',
-      onPress: async function (){
+      onPress: async function () {
+        setCurrentValue(this.value)
         setClickCourses(true);
         await loadCursos();
+      },
+      size,
+      labelStyle: {
+        fontSize: size * 0.6,
       }
     }
   ]
@@ -54,6 +77,7 @@ export const useTutoriaBusqueda = () => {
     setIsLoadingTutor,
     courses,
     isLoadingCourses,
-    clickCourses
+    clickCourses,
+    currentValue
   }
 }

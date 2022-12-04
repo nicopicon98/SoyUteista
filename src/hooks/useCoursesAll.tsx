@@ -6,21 +6,17 @@ import { replaceNull } from '../helpers/functions';
 import { CoursesAllInterface } from '../interfaces/CoursesAllInterface';
 
 export const useCoursesAll = () => {
-  const [isLoadingCourses, setIsLoadingCourses] = useState(true);
+  const [isLoadingCourses, setIsLoadingCourses] = useState(false);
   const [courses, setCourses] = useState<CoursesAllInterface[]>();
   const [clickCourses, setClickCourses] = useState(false);
 
   const loadCursos = async () => {
+    setIsLoadingCourses(true);
     const rep = await tutoriasAPI.get<CoursesAllInterface[]>('load_curso.php');
     console.log(rep.data);
-    setCourses(rep.data)
+    setCourses(rep.data);
     setIsLoadingCourses(false);
   }
-
-  //Disparamos la peticion http
-  useEffect(() => {
-    loadCursos();
-  }, [])
 
   return {
     isLoadingCourses,

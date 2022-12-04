@@ -9,9 +9,9 @@ export const useFranjaByDiaAsignatura = () => {
   const [franjaByDiaAsignatura, setFranjaByDiaAsignatura] = useState<TutoriasFranjaByDiaAsignaturaInterface[]>()
 
   const onLoadFranjaByDiaAsignatura = async (id_asignatura: string, dia: string) => {
-    const rep = await tutoriasAPI.get<TutoriasFranjaByDiaAsignaturaInterface[]>(`/buscar_hora.php?id_asignatura=${id_asignatura}&dia=${dia}`);
-    console.log(rep.data);
-    setFranjaByDiaAsignatura(rep.data)
+    const {data} = await tutoriasAPI.get<TutoriasFranjaByDiaAsignaturaInterface[]>(`/buscar_hora.php?id_asignatura=${id_asignatura}&dia=${dia}`);
+    console.log(data);
+    setFranjaByDiaAsignatura(data)
     setisLoadingFranjaByDiaAsignatura(false);
   }
 

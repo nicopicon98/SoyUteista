@@ -6,12 +6,16 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import { AuthProvider } from './src/context/AuthContext';
 import { StackNavigator } from './src/navigator/StackNavigator';
+import { AlertNotificationRoot } from 'react-native-alert-notification';
+
+import { Provider as PaperProvider } from 'react-native-paper';
 
 import SpInAppUpdates, {
   NeedsUpdateResponse,
   IAUUpdateKind,
   StartUpdateOptions,
 } from 'sp-react-native-in-app-updates';
+import { colores } from './src/theme/appTheme';
 
 const inAppUpdates = new SpInAppUpdates(
   true // isDebug
@@ -45,7 +49,29 @@ const App = () => {
   return (
     <NavigationContainer>
       <AppState>
-        <StackNavigator />
+        <PaperProvider>
+          <AlertNotificationRoot
+            colors={[{
+              label: 'white',
+              card: 'black',
+              overlay: 'red',
+              success: colores.Pantone_383_C,
+              danger: 'red',
+              warning: colores.Blue_Rey,
+            },
+            {
+              label: 'labelExampleLight',
+              card: 'cardExampleLight',
+              overlay: 'overlayExampleLight',
+              success: 'red',
+              danger: 'red',
+              warning: 'yellow',
+            }]}
+            theme='light'
+          >
+            <StackNavigator />
+          </AlertNotificationRoot>
+        </PaperProvider>
       </AppState>
     </NavigationContainer>
   )

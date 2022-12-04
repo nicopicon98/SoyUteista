@@ -22,7 +22,7 @@ export const Noticia = ({ item }: Props) => {
         <View>
           {/* Categoria */}
           <Text style={{
-            fontFamily: fonts.semibold_italic,
+            //fontFamily: fonts.semibold_italic,
             fontSize: width * 0.04
           }}>{item.categoria}</Text>
 
@@ -39,7 +39,7 @@ export const Noticia = ({ item }: Props) => {
             fontSize: width * 0.04,
             fontWeight: 'bold',
             textTransform: 'capitalize',
-            fontFamily: fonts.regular
+            // fontFamily: fonts.regular
           }}>
             {item.titulo}
           </Text>
@@ -47,7 +47,7 @@ export const Noticia = ({ item }: Props) => {
           {/* Descripcion */}
           <Text style={{
             marginTop: width * 0.01,
-            fontFamily: fonts.regular
+            // fontFamily: fonts.regular
           }}>{item.descripcion}...</Text>
 
           {/* Fecha de publicacion */}
@@ -65,7 +65,8 @@ export const Noticia = ({ item }: Props) => {
                 color={colores.Pantone_383_C}
               />
             </Text>
-            <Text style={{ fontFamily: fonts.semibold_italic }}>
+            {/* <Text style={{ fontFamily: /*fonts.semibold_italic }}> */}
+            <Text>
               {item.fecha}
             </Text>
           </View>
@@ -81,6 +82,7 @@ export const Noticia = ({ item }: Props) => {
             }}>
               <Icon name={'person-sharp'} size={20} color={colores.Pantone_383_C} />
             </Text>
+            {/* <Text style={{ fontFamily: fonts.semibold_italic }}> */}
             <Text style={{ fontFamily: fonts.semibold_italic }}>
               Oficina de comunicaciones
             </Text>

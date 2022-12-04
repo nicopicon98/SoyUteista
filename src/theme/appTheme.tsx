@@ -19,8 +19,8 @@ export const colores = {
 
 export const fonts = {
   regular: 'MyriadPro-Regular',
-  semibold: 'MyriadPro-Semibold',
-  semibold_italic: 'MyriadPro-SemiboldItalic'
+  semibold: 'helvetica',
+  semibold_italic: 'helvetica'
 }
 
 export const GlobalStyles = StyleSheet.create({

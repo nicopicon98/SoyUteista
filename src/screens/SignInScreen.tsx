@@ -68,7 +68,7 @@ export const SignInScreen = ({ navigation }: NavigationProps) => {
                       paddingHorizontal: height * 0.03,
                       paddingVertical: height * 0.0001,
                       fontSize: height * 0.043,
-                      fontFamily: fonts.regular,
+                      // fontFamily: fonts.regular,
                     }}>
                       Iniciar Sesión
                     </Text>
@@ -77,7 +77,7 @@ export const SignInScreen = ({ navigation }: NavigationProps) => {
                 <Text style={{
                   color: colores.Cool_Gray_5_C,
                   alignSelf: 'center',
-                  fontFamily: fonts.regular,
+                  // fontFamily: fonts.regular,
                   marginTop: width * 0.018,
                   fontSize: height * 0.02
                 }}>con cuenta de correo institucional</Text>

@@ -5,11 +5,13 @@ import { TutoriasBringTutorInterface } from '../interfaces/TutoriasBringTutorInt
 
 
 export const useBringTutor = () => {
-  const [isLoadingTutor, setIsLoadingTutor] = useState(true);
+  const [isLoadingTutor, setIsLoadingTutor] = useState(false);
   const [tutores, setTutores] = useState<TutoriasBringTutorInterface[]>();
 
   const loadTutores = async (tipo_listado: string) => {
-    const rep = await tutoriasAPI.get<TutoriasBringTutorInterface[]>(`/load_tutor.php?tipo_listado=${tipo_listado}`);
+    setIsLoadingTutor(true)
+    const rep = await tutoriasAPI.get<TutoriasBringTutorInterface[]>(`/load_tutor.php?tipo_listado=${tipo_listado}&sede=SEDE PRINCIPAL`);
+    console.log(rep.data);
     setTutores(rep.data)
     setIsLoadingTutor(false);
   }

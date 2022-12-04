@@ -11,7 +11,6 @@ export const useInfoTutor = () => {
 
   const onLoadInfoTutor = async (id_asignatura: string, dia: string, franja: string) => {
     const rep = await tutoriasAPI.get<TutoriasInfoTutorInterface[]>(`/buscar_info_tutor.php?id_asignatura=${id_asignatura}&dia=${dia}&franja=${franja}`);
-    console.log(rep.data);
     setInfoTutor(rep.data[0])
     setisLoadingInfoTutor(false);
   }

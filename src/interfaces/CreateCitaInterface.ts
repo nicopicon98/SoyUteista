@@ -1,5 +1,5 @@
 export interface CreateCitaInterface {
-  id_tipo_tutor : string;
+  id_crear_cita : string;
   documento     : string;
   nombre        : string;
   programa      : string;
@@ -10,6 +10,7 @@ export interface CreateCitaInterface {
   comentarios   : string;
   tema          : string;
   franja        : string;
+  fecha_tutoria : string;
 }
 
 export interface RespCreateCitaInterface {

@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   Text,
   View,
@@ -13,54 +13,55 @@ import {
   Modal,
   Platform,
 } from 'react-native';
-import {Image} from 'react-native-elements';
+import { Image } from 'react-native-elements';
 import RadioGroup from 'react-native-radio-buttons-group';
 
-import {useTutoriaBusqueda} from '../hooks/useTutoriaBusqueda';
+import { useTutoriaBusqueda } from '../hooks/useTutoriaBusqueda';
 // import { useForm } from '../hooks/useForm';
-import {useCursoByTutor} from '../hooks/useCursoByTutor';
-import {useDiaByAsignatura} from '../hooks/useDiaByAsignatura';
-import {useFranjaByDiaAsignatura} from '../hooks/useFranjaByDiaAsignatura';
-import {useInfoTutor} from '../hooks/useInfoTutor';
-import {useTutoriasAll} from '../hooks/useTutoriasAll';
-import {FormCrearCitaInterface} from '../interfaces/FormCrearCitaInterface';
-import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
-import {colores, fonts, GlobalStyles} from '../theme/appTheme';
+import { useCursoByTutor } from '../hooks/useCursoByTutor';
+import { useDiaByAsignatura } from '../hooks/useDiaByAsignatura';
+import { useFranjaByDiaAsignatura } from '../hooks/useFranjaByDiaAsignatura';
+import { useInfoTutor } from '../hooks/useInfoTutor';
+import { useTutoriasAll } from '../hooks/useTutoriasAll';
+import { FormCrearCitaInterface } from '../interfaces/FormCrearCitaInterface';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { colores, fonts, GlobalStyles } from '../theme/appTheme';
 import tutoriasApi from '../api/tutoriasAPI';
-import {AuthContext} from '../context/AuthContext';
-import {NavigationProps} from '../types/navigation';
+import { AuthContext } from '../context/AuthContext';
+import { NavigationProps } from '../types/navigation';
 
 //Examples
-import {useForm, Controller, SubmitErrorHandler} from 'react-hook-form';
+import { useForm, Controller, SubmitErrorHandler } from 'react-hook-form';
 
-import DropDownPicker, {ItemType} from 'react-native-dropdown-picker';
-import {DateData, LocaleConfig} from 'react-native-calendars';
-import {CustomCalendarComponent} from '../components/CustomCalendarComponent';
+import DropDownPicker, { ItemType } from 'react-native-dropdown-picker';
+import { DateData, LocaleConfig } from 'react-native-calendars';
+import { CustomCalendarComponent } from '../components/CustomCalendarComponent';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {CustomImageTutoresCrearCita} from '../components/CustomImageTutoresCrearCita';
-import {useBringTutor} from '../hooks/useBringTutor';
-import {GraphManager} from '../graph/GraphManager';
-import {blobToBase64} from '../helpers/blobToBase64';
-import {TutoriasBringCursoByTutorInterface} from '../interfaces/TutoriasBringCursoByTutorInterface';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {dayOfTheWeek, inverseDayOfTheWeek} from '../helpers/functions';
-import {Capitalize} from '../helpers/Capitalize';
+import { CustomImageTutoresCrearCita } from '../components/CustomImageTutoresCrearCita';
+import { useBringTutor } from '../hooks/useBringTutor';
+import { GraphManager } from '../graph/GraphManager';
+import { blobToBase64 } from '../helpers/blobToBase64';
+import { TutoriasBringCursoByTutorInterface } from '../interfaces/TutoriasBringCursoByTutorInterface';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { dayOfTheWeek, inverseDayOfTheWeek } from '../helpers/functions';
+import { Capitalize } from '../helpers/Capitalize';
 import {
   ALERT_TYPE,
   Dialog,
   AlertNotificationRoot,
   Toast,
 } from 'react-native-alert-notification';
-import {TextInput} from 'react-native-paper';
-import {errorTutoriasCrearInterface} from '../interfaces/errorTutoriasCrearInterface';
+import { TextInput } from 'react-native-paper';
+import { errorTutoriasCrearInterface } from '../interfaces/errorTutoriasCrearInterface';
 import tutoriasAPI from '../api/tutoriasAPI';
-import {useTutoriasInsert} from '../hooks/useTutoriasInsert';
+import { useTutoriasInsert } from '../hooks/useTutoriasInsert';
 import { TutoriasInfoTutorInterface } from '../interfaces/TutoriasInfoTutorInterface';
 import { CreateCitaInterface, RespCreateCitaInterface } from '../interfaces/CreateCitaInterface';
+import { getInfoTutor, postInsertTutoria } from '../services/services';
 
 //Global values
 const colorScheme = Appearance.getColorScheme();
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 const d = new Date();
 
 //Interfaces
@@ -77,14 +78,17 @@ export type FormData = {
 
 DropDownPicker.setLanguage('ES');
 
-export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
+export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
+
+  //Insert Cita
+  const [insert, setInsert] = useState(false);
+
   //Tutor
-  const imageLogo: string =
-    'https://avatarairlines.com/wp-content/uploads/2020/05/Male-placeholder.jpeg';
+  const imageLogo: string = 'https://avatarairlines.com/wp-content/uploads/2020/05/Male-placeholder.jpeg';
   const [tutorPhoto, setTutorPhoto] = useState(imageLogo);
 
   //Calendar
-  const [dayWeek, setDayWeek] = useState(d.getDay() === 0 ? 0 : d.getDay() - 1); //FIX THIS
+  const [dayWeek, setDayWeek] = useState(d.getDay() === 0 ? 0 : d.getDay() - 1);
   const [markedDay, setMarkedDay] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -126,7 +130,7 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
   const [calendarioVisible, setCalendarioVisible] = useState(true);
 
   /**Global Context */
-  const { authState: {user} } = useContext(AuthContext);
+  const { authState: { user } } = useContext(AuthContext);
 
   const {
     register,
@@ -134,7 +138,7 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
     handleSubmit,
     control,
     reset,
-    formState: {errors},
+    formState: { errors },
   } = useForm<FormData>({
     defaultValues: {
       id_tutor: '',
@@ -160,10 +164,10 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
     currentValue,
   } = useTutoriaBusqueda(width * 0.06);
 
-  const {cursosByTutor, onLoadCursoByTutor, isLoadingCursoByTutor} =
+  const { cursosByTutor, onLoadCursoByTutor, isLoadingCursoByTutor } =
     useCursoByTutor();
 
-  const {diaByAsignatura, isLoadingDiaByAsignatura, onLoadDiaByAsignatura} =
+  const { diaByAsignatura, isLoadingDiaByAsignatura, onLoadDiaByAsignatura } =
     useDiaByAsignatura();
 
   const {
@@ -172,21 +176,13 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
     onLoadFranjaByDiaAsignatura,
   } = useFranjaByDiaAsignatura();
 
-  const {infoTutor, onLoadInfoTutor, isLoadingInfoTutor} = useInfoTutor();
+  const { infoTutor, onLoadInfoTutor, isLoadingInfoTutor } = useInfoTutor();
 
-  const {insertTutoria} = useTutoriasInsert();
+  const { insertTutoria } = useTutoriasInsert();
   useInfoTutor();
   //Effects
   useEffect(() => {
-    /**Reseteamos el form */
-    onReset();
-    /**We hide the rest */
-    //Cursos by tutor
-    setCursosByTutorVisible(false);
-    setClickTutorDropdown(false);
-    //Calendario
-    setCalendarioVisible(false);
-    setClickCoursesByTutorDropdown(false);
+    onResetEverything();
   }, [currentValue]);
 
   //On change previous value effect
@@ -218,7 +214,7 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
   useEffect(() => {
     onHandleSetFranja();
   }, [isLoadingFranjaByDiaAsignatura, franjaByDiaAsignatura]); //depende de los dos por que el modal nose actualiza por si solo
-  
+
 
   //Get Tutor Photo
   const getTutorPhoto = async (id_tutor: string) => {
@@ -317,14 +313,13 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
     if (!isLoadingTutor && tutores) {
       setTutorItems(
         tutores.map(e => ({
-          label: `${Capitalize(e.nombre)}${
-            e.sede === 'EDUCACION VIRTUAL' ? '\nEducacion Virtual' : ''
-          }`,
+          label: `${Capitalize(e.nombre)}${e.sede === 'EDUCACION VIRTUAL' ? '\nEducacion Virtual' : ''
+            }`,
           value: e.id_tutor,
           testID: e.id_tutor,
           icon: () => {
             return e.sede === 'EDUCACION VIRTUAL' ? (
-              <View style={{flexDirection: 'row'}}>
+              <View style={{ flexDirection: 'row' }}>
                 <Icon name="people-circle-outline" size={25} />
                 <Icon name="desktop-outline" size={12} />
               </View>
@@ -387,14 +382,11 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
 
   //part 2
   const onSubmitFinal = async () => {
-    const {_formValues : {id_asignatura, dia, franja, celular, comentarios, tema, fecha_tutoria }} = control;
+    console.log("click")
+    const { _formValues: { id_asignatura, dia, franja, celular, comentarios, tema, fecha_tutoria } } = control;
     const diaValue = inverseDayOfTheWeek(Number(dia))
-    console.log(id_asignatura)
-    console.log(dia)
-    console.log(diaValue)
-    console.log(franja)
-    const rep = await tutoriasAPI.get<TutoriasInfoTutorInterface>(`/buscar_info_tutor.php?id_asignatura=${id_asignatura}&dia=${diaValue}&franja=${franja}`);
-    const {data} = rep;
+    const rep = await getInfoTutor(id_asignatura, diaValue, franja)
+    const { data } = rep;
     crearCita({
       id_crear_cita: data[0].id_crearCitas,
       documento: user!.userMoreInfo.C_PEGE_DOCUMENTOIDENTIDAD,
@@ -411,7 +403,7 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
     });
   };
 
-  const crearCita = async(obj: CreateCitaInterface) => {
+  const crearCita = async (obj: CreateCitaInterface) => {
     const {
       id_crear_cita,
       documento,
@@ -424,24 +416,75 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
       tema,
       franja
     } = obj;
-    const resp = await tutoriasAPI.post<RespCreateCitaInterface>('/crear_cita.php', obj);
-    console.log(resp)
+    const { data: { result, error } } = await postInsertTutoria(obj)
+    console.log(result)
+    console.log(error)
+    setModalFinalVisible(false);
+    onHandleSuccessInsercionTutoria(result, error);
   }
 
-    //findFranja by id_franja
-    const franjaValue = (id_franja: string = '') => {
-      if (franjaByDiaAsignatura) {
-        const franja = franjaByDiaAsignatura?.find(e => e.franja === id_franja);
-        return franja?.nombre_franja;
-      }
-    };
+  const onResetEverything = () => {
+    /**Reseteamos el form */
+    onReset();
+    /**We hide the rest */
+    //Cursos by tutor
+    setCursosByTutorVisible(false);
+    setClickTutorDropdown(false);
+    //Calendario
+    setCalendarioVisible(false);
+    setClickCoursesByTutorDropdown(false);
+  }
+
+  const onHandleSuccessInsercionTutoria = (result: number, error: string) => {
+    if (result == 1) {
+      console.log("insertada")
+      navigation.navigate("Tutorías Agendadas");
+      Dialog.show({
+        type: ALERT_TYPE.SUCCESS,
+        title: 'Felicitaciones',
+        textBody: 'Tu cita ha sido creada con exito',
+        button: 'cerrar',
+        closeOnOverlayTap: true,
+        onPressButton: () => {
+          Dialog.hide();
+        },
+        onHide: () => {
+          Dialog.hide();
+        }
+      })
+      onResetEverything();
+    } else {
+      Dialog.show({
+        type: ALERT_TYPE.DANGER,
+        title: 'Ups!',
+        textBody: error,
+        button: 'cerrar',
+        closeOnOverlayTap: true,
+        onPressButton: () => {
+          Dialog.hide();
+        },
+        onHide: () => {
+          Dialog.hide();
+        }
+      })
+    }
+    setInsert(false);
+  }
+
+  //findFranja by id_franja
+  const franjaValue = (id_franja: string = '') => {
+    if (franjaByDiaAsignatura) {
+      const franja = franjaByDiaAsignatura?.find(e => e.franja === id_franja);
+      return franja?.nombre_franja;
+    }
+  };
 
   return (
     <View style={styles.container}>
-      <ScrollView style={{flex: 1}}>
+      <ScrollView style={{ flex: 1 }}>
         {/* Seleccion tipo Busqueda */}
-        <View style={{...styles.seleccionBusqueda}}>
-          <Text style={{...styles.label}}>
+        <View style={{ ...styles.seleccionBusqueda }}>
+          <Text style={{ ...styles.label }}>
             Seleccione el tipo de consulta{' '}
             <Text style={styles.mandatory}>*</Text>
           </Text>
@@ -464,7 +507,7 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
             rules={{
               required: true,
             }}
-            render={({field: {onChange, onBlur, value}}) => (
+            render={({ field: { onChange, onBlur, value } }) => (
               <DropDownPicker
                 searchable={true}
                 addCustomItem={false}
@@ -480,7 +523,7 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
                 setOpen={setOpenTutores}
                 setValue={setValueDropdownTutor}
                 setItems={setTutorItems}
-                onSelectItem={({value}) => {
+                onSelectItem={({ value }) => {
                   //guardamos el valor actual en el form
                   onChange(value);
                   onHandleSelectTutor(value!);
@@ -513,14 +556,14 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
 
         {/*Cursos por tutor*/}
         {!isLoadingCursoByTutor &&
-        cursosByTutor.length > 0 &&
-        cursosByTutorVisible ? (
+          cursosByTutor.length > 0 &&
+          cursosByTutorVisible ? (
           <Controller
             control={control}
             rules={{
               required: true,
             }}
-            render={({field: {onChange, onBlur, value}}) => (
+            render={({ field: { onChange, onBlur, value } }) => (
               <DropDownPicker
                 searchable={true}
                 listMode="MODAL"
@@ -531,13 +574,13 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
                 items={coursesByTutorItems}
                 setItems={setCoursesByTutorItems}
                 setValue={setValueDropdownCoursesByTutor}
-                onSelectItem={({value}) => {
+                onSelectItem={({ value }) => {
                   onChange(value);
                   onHandleSelectCoursesByTutor(value!);
                   //Mostramos los dias
                   setCalendarioVisible(true);
                 }}
-                style={{alignSelf: 'center', width: '100%', marginTop: 10}}
+                style={{ alignSelf: 'center', width: '100%', marginTop: 10 }}
                 listItemContainerStyle={{
                   width: '100%',
                   borderBottomColor: 'black',
@@ -550,7 +593,7 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
                   width: '90%',
                   alignSelf: 'center',
                 }}
-                selectedItemLabelStyle={{color: 'red', fontWeight: 'bold'}}
+                selectedItemLabelStyle={{ color: 'red', fontWeight: 'bold' }}
                 zIndex={1000}
                 zIndexInverse={3000}
               />
@@ -564,14 +607,14 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
         )}
 
         {!isLoadingDiaByAsignatura &&
-        diaByAsignatura!.length > 0 &&
-        calendarioVisible ? (
+          diaByAsignatura!.length > 0 &&
+          calendarioVisible ? (
           <>
-            <Text style={{marginLeft: width * 0.06, marginTop: width * 0.04}}>
+            <Text style={{ marginLeft: width * 0.06, marginTop: width * 0.04 }}>
               A continuación elige día, hora y fecha de la tutoria
             </Text>
             <TouchableOpacity onPress={() => setModalVisible(true)}>
-              <View style={{alignItems: 'center', marginTop: width * 0.01}}>
+              <View style={{ alignItems: 'center', marginTop: width * 0.01 }}>
                 <View
                   style={{
                     flexDirection: 'row',
@@ -580,7 +623,7 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
                     width: width * 0.9,
                     alignItems: 'center',
                   }}>
-                  <Text style={{marginLeft: width * 0.023}}>
+                  <Text style={{ marginLeft: width * 0.023 }}>
                     <Icon
                       name={'calendar-outline'}
                       size={30}
@@ -588,15 +631,15 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
                     />
                   </Text>
                   {control._formValues.fecha_tutoria.length > 0 &&
-                  control._formValues.dia.length > 0 &&
-                  control._formValues.franja.length > 0 ? (
+                    control._formValues.dia.length > 0 &&
+                    control._formValues.franja.length > 0 ? (
                     <View
-                      style={{marginVertical: width * 0.01, marginLeft: 10}}>
-                      <Text style={{fontWeight: 'bold', fontSize: 14}}>
+                      style={{ marginVertical: width * 0.01, marginLeft: 10 }}>
+                      <Text style={{ fontWeight: 'bold', fontSize: 14 }}>
                         {control._formValues.fecha_tutoria.length > 0 ? (
                           <>
                             Fecha:{' '}
-                            <Text style={{fontWeight: '500'}}>
+                            <Text style={{ fontWeight: '500' }}>
                               {control._formValues.fecha_tutoria}
                             </Text>
                           </>
@@ -604,11 +647,11 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
                           ''
                         )}
                       </Text>
-                      <Text style={{fontWeight: 'bold', fontSize: 14}}>
+                      <Text style={{ fontWeight: 'bold', fontSize: 14 }}>
                         {control._formValues.dia.length > 0 ? (
                           <>
                             Día:{' '}
-                            <Text style={{fontWeight: '500'}}>
+                            <Text style={{ fontWeight: '500' }}>
                               {Capitalize(
                                 inverseDayOfTheWeek(control._formValues.dia),
                               )}
@@ -618,11 +661,11 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
                           ''
                         )}
                       </Text>
-                      <Text style={{fontWeight: 'bold', fontSize: 14}}>
+                      <Text style={{ fontWeight: 'bold', fontSize: 14 }}>
                         {control._formValues.franja.length > 0 ? (
                           <>
                             Franja:{' '}
-                            <Text style={{fontWeight: '500'}}>
+                            <Text style={{ fontWeight: '500' }}>
                               {franjaValue(control._formValues.franja)}
                             </Text>
                           </>
@@ -634,8 +677,8 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
                   ) : (
                     <></>
                   )}
-                  <View style={{flex: 1}} />
-                  <Text style={{marginRight: width * 0.02}}>
+                  <View style={{ flex: 1 }} />
+                  <Text style={{ marginRight: width * 0.02 }}>
                     <Icon
                       name={'chevron-down-outline'}
                       size={width * 0.06}
@@ -654,11 +697,11 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
 
         {/* Celular, Tema, boton enviar */}
         {control._formValues.fecha_tutoria.length > 0 &&
-        control._formValues.dia.length > 0 &&
-        control._formValues.franja.length > 0 ? (
+          control._formValues.dia.length > 0 &&
+          control._formValues.franja.length > 0 ? (
           <>
-            <View style={{alignContent: 'center', marginTop: width * 0.015}}>
-              <Text style={{marginLeft: width * 0.06}}>
+            <View style={{ alignContent: 'center', marginTop: width * 0.015 }}>
+              <Text style={{ marginLeft: width * 0.06 }}>
                 Y ahora solo ingresa tu celular y el tema la tutoria
               </Text>
               <Controller
@@ -666,12 +709,12 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
                 rules={{
                   required: true,
                 }}
-                render={({field: {onChange, onBlur, value}}) => (
+                render={({ field: { onChange, onBlur, value } }) => (
                   <TextInput
                     mode="outlined"
                     label={
                       <Text>
-                        Celular<Text style={{color: 'red'}}>*</Text>
+                        Celular<Text style={{ color: 'red' }}>*</Text>
                       </Text>
                     }
                     outlineColor="black"
@@ -707,12 +750,12 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
                 rules={{
                   required: true,
                 }}
-                render={({field: {onChange, onBlur, value}}) => (
+                render={({ field: { onChange, onBlur, value } }) => (
                   <TextInput
                     mode="outlined"
                     label={
                       <Text>
-                        Tema<Text style={{color: 'red'}}>*</Text>
+                        Tema<Text style={{ color: 'red' }}>*</Text>
                       </Text>
                     }
                     outlineColor="black"
@@ -747,9 +790,9 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
               )}
             </View>
             <TouchableOpacity onPress={handleSubmit(onSubmitFirstPart)}>
-              <View style={{alignItems: 'center', marginTop: width * 0.07}}>
+              <View style={{ alignItems: 'center', marginTop: width * 0.07 }}>
                 <View style={styles.buttonContinuar}>
-                  <Text style={{...styles.buttonContinuarText}}>Continuar</Text>
+                  <Text style={{ ...styles.buttonContinuarText }}>Continuar</Text>
                 </View>
               </View>
             </TouchableOpacity>
@@ -769,7 +812,7 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
           }}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <View style={{alignItems: 'center'}}>
+              <View style={{ alignItems: 'center' }}>
                 <Image
                   source={require('../resources/Images/schedule_appointment.jpg')}
                   resizeMode="contain"
@@ -783,7 +826,7 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
                 rules={{
                   required: true,
                 }}
-                render={({field: {onChange, onBlur, value}}) => (
+                render={({ field: { onChange, onBlur, value } }) => (
                   <DropDownPicker
                     placeholder={`Seleccione un dia`}
                     value={valueDropDay}
@@ -792,12 +835,12 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
                     items={dayItems}
                     setItems={setDayItems}
                     setValue={setValueDropDay}
-                    onSelectItem={({value}) => {
+                    onSelectItem={({ value }) => {
                       onChange(value);
                       onHandleSelectDia(value!);
                       onChangeDayOfTheWeek(value!);
                     }}
-                    style={{alignSelf: 'center', width: '100%', marginTop: 10}}
+                    style={{ alignSelf: 'center', width: '100%', marginTop: 10 }}
                     listItemContainerStyle={{
                       width: '100%',
                       borderBottomColor: 'black',
@@ -810,7 +853,7 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
                       width: '90%',
                       alignSelf: 'center',
                     }}
-                    selectedItemLabelStyle={{color: 'red', fontWeight: 'bold'}}
+                    selectedItemLabelStyle={{ color: 'red', fontWeight: 'bold' }}
                   />
                 )}
                 name="dia"
@@ -820,7 +863,7 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
                 rules={{
                   required: true,
                 }}
-                render={({field: {onChange, onBlur, value}}) => (
+                render={({ field: { onChange, onBlur, value } }) => (
                   <DropDownPicker
                     dropDownDirection="BOTTOM"
                     placeholder={`Seleccione una franja`}
@@ -830,10 +873,10 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
                     items={franjaItems}
                     setItems={setFranjaItems}
                     setValue={setValuedropFranja}
-                    onSelectItem={({value}) => {
+                    onSelectItem={({ value }) => {
                       onChange(value);
                     }}
-                    style={{alignSelf: 'center', width: '100%', marginTop: 10}}
+                    style={{ alignSelf: 'center', width: '100%', marginTop: 10 }}
                     listItemContainerStyle={{
                       width: '100%',
                       borderBottomColor: 'black',
@@ -846,15 +889,15 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
                       width: '90%',
                       alignSelf: 'center',
                     }}
-                    selectedItemLabelStyle={{color: 'red', fontWeight: 'bold'}}
+                    selectedItemLabelStyle={{ color: 'red', fontWeight: 'bold' }}
                     zIndex={1000}
                     zIndexInverse={3000}
                   />
                 )}
                 name="franja"
               />
-              <View style={{alignItems: 'center', marginTop: 10}}>
-                <Text style={{textAlign: 'center'}}>
+              <View style={{ alignItems: 'center', marginTop: 10 }}>
+                <Text style={{ textAlign: 'center' }}>
                   A continuacion, elije una fecha segun el dia seleccionado
                 </Text>
               </View>
@@ -863,7 +906,7 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
                 rules={{
                   required: true,
                 }}
-                render={({field: {onChange, onBlur, value}}) => (
+                render={({ field: { onChange, onBlur, value } }) => (
                   <CustomCalendarComponent
                     markedDay={markedDay}
                     dayWeek={dayWeek}
@@ -886,15 +929,15 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
                   <Pressable
                     onPress={() => {
                       control._formValues.fecha_tutoria.length > 0 &&
-                      control._formValues.dia.length > 0 &&
-                      control._formValues.franja.length > 0
+                        control._formValues.dia.length > 0 &&
+                        control._formValues.franja.length > 0
                         ? console.log('guardado')
                         : Toast.show({
-                            type: ALERT_TYPE.DANGER,
-                            title: 'Avertencia!',
-                            textBody: 'Aun faltan datos por guardar',
-                            autoClose: 2000,
-                          });
+                          type: ALERT_TYPE.DANGER,
+                          title: 'Avertencia!',
+                          textBody: 'Aun faltan datos por guardar',
+                          autoClose: 2000,
+                        });
                       setModalVisible(false);
                     }}
                     style={styles.buttonEliminar}>
@@ -907,8 +950,8 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
                   <Pressable
                     disabled={
                       control._formValues.fecha_tutoria.length > 0 &&
-                      control._formValues.dia.length > 0 &&
-                      control._formValues.franja.length > 0
+                        control._formValues.dia.length > 0 &&
+                        control._formValues.franja.length > 0
                         ? false
                         : true
                     }
@@ -917,8 +960,8 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
                       ...styles.buttonGuardar,
                       backgroundColor:
                         control._formValues.fecha_tutoria.length > 0 &&
-                        control._formValues.dia.length > 0 &&
-                        control._formValues.franja.length > 0
+                          control._formValues.dia.length > 0 &&
+                          control._formValues.franja.length > 0
                           ? colores.Pantone_383_C
                           : colores.Cool_Gray_5_C,
                     }}>
@@ -944,7 +987,7 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
               <ScrollView showsVerticalScrollIndicator={false}>
                 {/* Teacher's image */}
                 <View
-                  style={{alignItems: 'center', marginVertical: width * 0.03}}>
+                  style={{ alignItems: 'center', marginVertical: width * 0.03 }}>
                   <Text
                     style={{
                       fontWeight: 'bold',
@@ -954,9 +997,9 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
                     Ya casi terminamos!
                   </Text>
                 </View>
-                <View style={{alignItems: 'center'}}>
+                <View style={{ alignItems: 'center' }}>
                   <Image
-                    source={{uri: tutorPhoto}}
+                    source={{ uri: tutorPhoto }}
                     resizeMode="contain"
                     style={{
                       borderRadius: 1000,
@@ -967,7 +1010,7 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
                 </View>
 
                 {/*Teacher's name and email */}
-                <View style={{alignItems: 'center', marginTop: width * 0.02}}>
+                <View style={{ alignItems: 'center', marginTop: width * 0.02 }}>
                   <Text
                     style={{
                       fontWeight: '700',
@@ -1010,11 +1053,11 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
                       width: '100%',
                       marginTop: width * 0.03,
                     }}>
-                    <View style={{width: '50%', justifyContent: 'center'}}>
-                      <Text style={{fontWeight: '700'}}>Asignatura:</Text>
+                    <View style={{ width: '50%', justifyContent: 'center' }}>
+                      <Text style={{ fontWeight: '700' }}>Asignatura:</Text>
                     </View>
-                    <View style={{width: '50%'}}>
-                      <Text style={{fontWeight: '400'}}>
+                    <View style={{ width: '50%' }}>
+                      <Text style={{ fontWeight: '400' }}>
                         {Capitalize(
                           cursosByTutor?.find(
                             e =>
@@ -1033,11 +1076,11 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
                       width: '100%',
                       marginTop: width * 0.02,
                     }}>
-                    <View style={{width: '50%', justifyContent: 'center'}}>
-                      <Text style={{fontWeight: '700'}}>Tema:</Text>
+                    <View style={{ width: '50%', justifyContent: 'center' }}>
+                      <Text style={{ fontWeight: '700' }}>Tema:</Text>
                     </View>
-                    <View style={{width: '50%'}}>
-                      <Text style={{fontWeight: '400'}}>
+                    <View style={{ width: '50%' }}>
+                      <Text style={{ fontWeight: '400' }}>
                         {control._formValues.tema}
                       </Text>
                     </View>
@@ -1050,11 +1093,11 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
                       width: '100%',
                       marginTop: width * 0.025,
                     }}>
-                    <View style={{width: '50%', justifyContent: 'center'}}>
-                      <Text style={{fontWeight: '700'}}>Dia:</Text>
+                    <View style={{ width: '50%', justifyContent: 'center' }}>
+                      <Text style={{ fontWeight: '700' }}>Dia:</Text>
                     </View>
-                    <View style={{width: '50%'}}>
-                      <Text style={{fontWeight: '400'}}>
+                    <View style={{ width: '50%' }}>
+                      <Text style={{ fontWeight: '400' }}>
                         {Capitalize(
                           inverseDayOfTheWeek(Number(control._formValues.dia)),
                         )}
@@ -1066,11 +1109,11 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
                       flexDirection: 'row',
                       width: '100%',
                     }}>
-                    <View style={{width: '50%', justifyContent: 'center'}}>
-                      <Text style={{fontWeight: '700'}}>Fecha:</Text>
+                    <View style={{ width: '50%', justifyContent: 'center' }}>
+                      <Text style={{ fontWeight: '700' }}>Fecha:</Text>
                     </View>
-                    <View style={{width: '50%'}}>
-                      <Text style={{fontWeight: '400'}}>
+                    <View style={{ width: '50%' }}>
+                      <Text style={{ fontWeight: '400' }}>
                         {control._formValues.fecha_tutoria}
                       </Text>
                     </View>
@@ -1080,11 +1123,11 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
                       flexDirection: 'row',
                       width: '100%',
                     }}>
-                    <View style={{width: '50%', justifyContent: 'center'}}>
-                      <Text style={{fontWeight: '700'}}>Franja:</Text>
+                    <View style={{ width: '50%', justifyContent: 'center' }}>
+                      <Text style={{ fontWeight: '700' }}>Franja:</Text>
                     </View>
-                    <View style={{width: '50%'}}>
-                      <Text style={{fontWeight: '400'}}>
+                    <View style={{ width: '50%' }}>
+                      <Text style={{ fontWeight: '400' }}>
                         {
                           franjaByDiaAsignatura?.find(
                             e => e.franja === control._formValues.franja,
@@ -1098,11 +1141,11 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
                       flexDirection: 'row',
                       width: '100%',
                     }}>
-                    <View style={{width: '50%', justifyContent: 'center'}}>
-                      <Text style={{fontWeight: '700'}}>Modalidad:</Text>
+                    <View style={{ width: '50%', justifyContent: 'center' }}>
+                      <Text style={{ fontWeight: '700' }}>Modalidad:</Text>
                     </View>
-                    <View style={{width: '50%'}}>
-                      <Text style={{fontWeight: '400'}}>
+                    <View style={{ width: '50%' }}>
+                      <Text style={{ fontWeight: '400' }}>
                         {tutores?.find(
                           e => e.id_tutor === control._formValues.id_tutor,
                         )?.sede === 'EDUCACION VIRTUAL'
@@ -1116,11 +1159,11 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
                       flexDirection: 'row',
                       width: '100%',
                     }}>
-                    <View style={{width: '50%', justifyContent: 'center'}}>
-                      <Text style={{fontWeight: '700'}}>Lugar:</Text>
+                    <View style={{ width: '50%', justifyContent: 'center' }}>
+                      <Text style={{ fontWeight: '700' }}>Lugar:</Text>
                     </View>
-                    <View style={{width: '50%'}}>
-                      <Text style={{fontWeight: '400'}}>
+                    <View style={{ width: '50%' }}>
+                      <Text style={{ fontWeight: '400' }}>
                         {Capitalize(
                           tutores?.find(
                             e => e.id_tutor === control._formValues.id_tutor,
@@ -1136,11 +1179,11 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
                       width: '100%',
                       marginTop: width * 0.02,
                     }}>
-                    <View style={{width: '50%', justifyContent: 'center'}}>
-                      <Text style={{fontWeight: '700'}}>Contacto:</Text>
+                    <View style={{ width: '50%', justifyContent: 'center' }}>
+                      <Text style={{ fontWeight: '700' }}>Contacto:</Text>
                     </View>
-                    <View style={{width: '50%'}}>
-                      <Text style={{fontWeight: '400'}}>
+                    <View style={{ width: '50%' }}>
+                      <Text style={{ fontWeight: '400' }}>
                         {control._formValues.celular}
                       </Text>
                     </View>
@@ -1148,13 +1191,13 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
                 </View>
 
                 {/* Comentarios Adicionales */}
-                <View style={{marginTop: width * 0.03}}>
+                <View style={{ marginTop: width * 0.03 }}>
                   <Controller
                     control={control}
                     rules={{
                       required: true,
                     }}
-                    render={({field: {onChange, onBlur, value}}) => (
+                    render={({ field: { onChange, onBlur, value } }) => (
                       <TextInput
                         mode="outlined"
                         label="Comentarios Adicionales"
@@ -1190,15 +1233,15 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
                     <Pressable
                       onPress={() => {
                         control._formValues.fecha_tutoria.length > 0 &&
-                        control._formValues.dia.length > 0 &&
-                        control._formValues.franja.length > 0
+                          control._formValues.dia.length > 0 &&
+                          control._formValues.franja.length > 0
                           ? console.log('guardado')
                           : Toast.show({
-                              type: ALERT_TYPE.DANGER,
-                              title: 'Avertencia!',
-                              textBody: 'Aun faltan datos por guardar',
-                              autoClose: 2000,
-                            });
+                            type: ALERT_TYPE.DANGER,
+                            title: 'Avertencia!',
+                            textBody: 'Aun faltan datos por guardar',
+                            autoClose: 2000,
+                          });
                         setModalFinalVisible(false);
                       }}
                       style={styles.buttonEliminar}>
@@ -1208,9 +1251,17 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
 
                   <View style={styles.buttonGuardarContentChild}>
                     <Pressable
-                      onPress={onSubmitFinal}
+                      onPress={() => {
+                        console.log("click")
+                        setInsert(true);
+                        onSubmitFinal()
+                      }}
                       style={styles.buttonAgendar}>
-                      <Text style={styles.buttonGuardarText}>Agendar</Text>
+                      {
+                        !insert
+                          ? <Text style={styles.buttonGuardarText}>Agendar</Text>
+                          : <ActivityIndicator />
+                      }
                     </Pressable>
                   </View>
                 </View>

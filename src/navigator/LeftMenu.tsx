@@ -18,6 +18,10 @@ import { GradesScreen } from '../screens/GradesScreen';
 import { RevistaScreen } from '../screens/RevistaScreen';
 import { AgendaInstitucionalScreen } from '../screens/AgendaInstitucionalScreen';
 import { TutoriasTemporal } from '../screens/TutoriasTemporal';
+import ExitoEscolarScreen from '../screens/ExitoEscolarScreen';
+import BienestarInstitucionalScreen from '../screens/BienestarInstitucionalScreen';
+import DirectorioEscolarScreen from '../screens/DirectorioEscolarScreen';
+import ConvocatoriasScreen from '../screens/ConvocatoriasScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -61,6 +65,10 @@ export const LeftMenu = () => {
       <Drawer.Screen name='Revista' component={RevistaScreen} options={{ headerTitle: 'Revista' }} />
       <Drawer.Screen name='Agenda' component={AgendaInstitucionalScreen} options={{ headerTitle: 'Agenda UTS' }} />
       <Drawer.Screen name='Tutorias' component={TutoriasTabs} options={{ headerTitle: 'Tutorías' }} />
+      <Drawer.Screen name='ExitoEscolar' component={ExitoEscolarScreen} options={{ headerTitle: 'Exito Escolar' }} />
+      <Drawer.Screen name='DirectorioEscolar' component={DirectorioEscolarScreen} options={{ headerTitle: 'Directorio Escolar' }} />
+      <Drawer.Screen name='BienestarInstitucional' component={BienestarInstitucionalScreen} options={{ headerTitle: 'Bienestar Institucional' }} />
+      <Drawer.Screen name='Convocatorias' component={ConvocatoriasScreen} options={{ headerTitle: 'Convocatorias' }} />
       {/* <Drawer.Screen name='Tutorias' component={TutoriasTemporal} options={{ headerTitle: 'Tutorias' }} /> */}
 
     </Drawer.Navigator>

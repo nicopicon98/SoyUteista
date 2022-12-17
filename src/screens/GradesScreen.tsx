@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import { ActivityIndicator, View, LogBox, Text, Alert, StyleSheet, Appearance, RefreshControl } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import AppBarComponent from '../components/AppBarComponent';
 
 import { MateriaNota } from '../components/MateriaNota';
 
@@ -49,6 +50,8 @@ export const GradesScreen = () => {
   }
 
   return (
+    <>
+    <AppBarComponent title='Notas escolares'/>
     <View style={{ flex: 1, backgroundColor: colorScheme === 'dark' ? 'black' : 'white' }}>
       {isLoading
         ? <ActivityIndicator
@@ -89,6 +92,8 @@ export const GradesScreen = () => {
         )
       }
     </View>
+    </>
+    
   )
 }
 

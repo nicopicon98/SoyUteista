@@ -6,6 +6,7 @@ import { Image } from 'react-native-elements';
 
 import { colores, fonts } from '../theme/appTheme';
 import { AuthContext } from '../context/AuthContext';
+import AppBarComponent from '../components/AppBarComponent';
 
 const { width, height } = Dimensions.get('window');
 
@@ -21,7 +22,8 @@ export const CarnetScreen = () => {
   const urlQR: string = `https://soyuteista.uts.edu.co/carnet/getData.php?email=${user!.userMoreInfo.C_PENG_EMAILINSTITUCIONAL}`;
 
   return (
-
+    <>
+    <AppBarComponent title='Carnet'/>
     <View style={styles.container}>
 
       <ImageBackground source={require(imageBackground)} resizeMode="cover" style={styles.image}>
@@ -76,6 +78,8 @@ export const CarnetScreen = () => {
       </ImageBackground>
 
     </View>
+    </>
+
 
 
   )

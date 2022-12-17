@@ -5,6 +5,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { colores } from '../theme/appTheme';
 import { DayScreen } from '../screens/DayScreen';
 import { useHorario } from '../hooks/useHorario';
+import AppBarComponent from '../components/AppBarComponent';
 
 const Tab = createMaterialTopTabNavigator();
 const { width } = Dimensions.get('window');
@@ -15,6 +16,8 @@ export const ScheduleTabs = () => {
   const colorScheme = Appearance.getColorScheme();
 
   return (
+    <>
+    <AppBarComponent title='Horario'/>
     <View style={{ flex: 1 }}>
       {isLoading && <ActivityIndicator style={styles.loader} color={colores.Pantone_382_C} animating={isLoading} size='large' />}
       {!isLoading &&
@@ -66,6 +69,8 @@ export const ScheduleTabs = () => {
         </Tab.Navigator>
       }
     </View>
+    </>
+    
   )
 }
 

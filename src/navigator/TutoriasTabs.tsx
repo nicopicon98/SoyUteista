@@ -10,6 +10,7 @@ import { CitasTutoriasScreen } from '../screens/CitasTutoriasScreen';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Examples } from '../screens/Examples';
 import { AlertNotificationRoot } from 'react-native-alert-notification';
+import AppBarComponent from '../components/AppBarComponent';
 
 
 const Tab = createMaterialTopTabNavigator();
@@ -19,7 +20,9 @@ const colorScheme = Appearance.getColorScheme();
 export const TutoriasTabs = () => {
 
   return (
-      <View style={{ flex: 1, backgroundColor: colorScheme === 'dark' ? 'black' : 'white' }}>
+    <>
+    <AppBarComponent title='Citas Tutorias'/>
+    <View style={{ flex: 1, backgroundColor: colorScheme === 'dark' ? 'black' : 'white' }}>
         <Tab.Navigator
           style={{
             paddingTop: 0
@@ -65,6 +68,8 @@ export const TutoriasTabs = () => {
           <Tab.Screen name="Tutorías Agendadas" component={CitasTutoriasScreen} />
         </Tab.Navigator>
       </View>
+    </>
+      
   )
 }
 

@@ -2,6 +2,7 @@ import { useIsFocused } from '@react-navigation/native';
 import React, { useEffect } from 'react'
 
 import { Text, ActivityIndicator, View, FlatList, StyleSheet, useWindowDimensions, Appearance } from 'react-native';
+import AppBarComponent from '../components/AppBarComponent';
 import { Tutoria } from '../components/Tutoria';
 
 import { useTutoriasAll } from '../hooks/useTutoriasAll'
@@ -20,6 +21,8 @@ export const CitasTutoriasScreen = ({ route, navigation }) => {
   }, [isFocused])
 
   return (
+    <>
+    
     <View style={{ flex: 1 }}>
       {isLoading && <ActivityIndicator
         style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
@@ -44,6 +47,8 @@ export const CitasTutoriasScreen = ({ route, navigation }) => {
         </View>)
       }
     </View>
+    </>
+    
   )
 }
 

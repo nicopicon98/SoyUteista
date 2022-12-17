@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Appearance, FlatList, RefreshControl, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
+import AppBarComponent from '../components/AppBarComponent';
 
 import { Noticia } from '../components/Noticia';
 import { SkeletonNews } from '../components/SkeletonNews';
@@ -26,6 +27,8 @@ export const AgendaInstitucionalScreen = () => {
   }
 
   return (
+    <>
+    <AppBarComponent title='Agenda'/>
     <View style={{ ...styles.container, backgroundColor: colorScheme === 'dark' ? 'black' : 'white' }}>
       {isLoading && <SkeletonNews />}
 
@@ -59,6 +62,8 @@ export const AgendaInstitucionalScreen = () => {
           />
         </View>}
     </View>
+    </>
+    
   );
 };
 

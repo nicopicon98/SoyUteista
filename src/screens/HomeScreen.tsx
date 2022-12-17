@@ -6,6 +6,7 @@ import { SkeletonNews } from '../components/SkeletonNews';
 import { useMantenteAlDia } from '../hooks/useMantenteAlDia';
 import { AuthContext } from '../context/AuthContext';
 import { fonts } from '../theme/appTheme';
+import AppBarComponent from '../components/AppBarComponent';
 
 
 export const HomeScreen = () => {
@@ -38,6 +39,8 @@ export const HomeScreen = () => {
     }
 
   return (
+    <>
+    <AppBarComponent title='Noticias'/>
     <View style={{ ...styles.container, backgroundColor: colorScheme === 'dark' ? 'black' : 'white' }}>
       {(isLoading) && <SkeletonNews />}
       {!isLoading &&
@@ -71,6 +74,8 @@ export const HomeScreen = () => {
         </View>
       }
     </View>
+    </>
+    
   );
 };
 

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { Appearance, useWindowDimensions } from 'react-native';
+import { Appearance, useWindowDimensions, Text } from 'react-native';
 
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
@@ -36,7 +36,7 @@ export const LeftMenu = () => {
     <Drawer.Navigator
       drawerType={(width >= 768) ? 'permanent' : 'front'}
       screenOptions={{
-        headerShown: true,
+        headerShown: false,
         headerStyle: {
           backgroundColor: colores.Pantone_382_C,
         },

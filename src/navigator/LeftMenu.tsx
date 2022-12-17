@@ -48,7 +48,7 @@ export const LeftMenu = () => {
           userName={user!.userFullName}
           userEmail={user!.userEmail}
           userPhoto={user!.userPhoto}
-          height={user!.userResult !== 1 ? height * 0.62 : height * 0.73}
+          height={user!.userResult !== 1 ? height * 0.62 : height }
           userPhotoError={user!.userPhotoError}
           userResult={user!.userResult}
           darkMode={colorScheme}

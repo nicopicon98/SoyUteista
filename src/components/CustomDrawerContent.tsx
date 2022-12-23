@@ -8,7 +8,8 @@ import {TouchableLeftMenu} from './TouchableLeftMenu';
 
 export const CustomDrawerContent: FC<CustomDrawerContentProps> = (
   props: CustomDrawerContentProps,
-) => (
+) => {
+  return (
   <DrawerContentScrollView
     {...props}
     style={{
@@ -135,7 +136,7 @@ export const CustomDrawerContent: FC<CustomDrawerContentProps> = (
       )}
 
       {/* Directorio Escolar  */}
-      {props.userResult === 1 && (
+      {props.userResult === 3 && (
         <TouchableLeftMenu
           type="navigate"
           iconColor={colores.Cool_Gray_5_C}
@@ -148,7 +149,7 @@ export const CustomDrawerContent: FC<CustomDrawerContentProps> = (
       )}
 
       {/* Servicios Bienestar  */}
-      {props.userResult === 1 && (
+      {props.userResult === 3 && (
         <TouchableLeftMenu
           type="navigate"
           iconColor={colores.Cool_Gray_5_C}
@@ -160,7 +161,7 @@ export const CustomDrawerContent: FC<CustomDrawerContentProps> = (
         />
       )}
       {/* Convocatorias */}
-      {props.userResult === 1 && (
+      {props.userResult === 3 && (
         <TouchableLeftMenu
           type="navigate"
           iconColor={colores.Cool_Gray_5_C}
@@ -226,6 +227,8 @@ export const CustomDrawerContent: FC<CustomDrawerContentProps> = (
     {/*End Menu */}
   </DrawerContentScrollView>
 );
+
+}
 
 const styles = StyleSheet.create({
   menuGlobalContainer: {

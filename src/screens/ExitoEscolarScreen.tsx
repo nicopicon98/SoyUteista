@@ -7,23 +7,19 @@ const ExitoEscolarScreen = () => {
   return (
     <>
       <AppBarComponent title="Exito Escolar" />
-               <Video
-            source={{ uri: 'http://edge.teveo.com.co/live/AeAAAgAaAANCA1IAyADIVKwAAAAAAAAAAmOnOAqnAD7PAAAA/playlist.m3u8' }}
-            rate={1.0}
-            volume={1.0}
-            isMuted={false}
-            resizeMode="cover"
-            shouldPlay={true}
-            useNativeControls={true}
-            isLooping
-            style={{ width: 300, height: 300, marginTop:100, borderWidth: 10 }}
-          />
-
+      <Video
+        source={{
+          uri: 'http://edge.teveo.com.co/live/AeAAAgAaAANCA1IAyADIVKwAAAAAAAAAAmOnOAqnAD7PAAAA/playlist.m3u8',
+        }}
+        rate={1.0}
+        volume={1.0}
+        style={{width: 300, height: 300, marginTop: 100, borderWidth: 10}}
+      />
     </>
   );
 };
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   backgroundVideo: {
     position: 'absolute',
     top: 500,

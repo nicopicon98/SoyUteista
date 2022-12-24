@@ -123,7 +123,7 @@ export const CustomDrawerContent: FC<CustomDrawerContentProps> = (
       )}
 
       {/* Exito Escolar  */}
-      {props.userResult === 1 && (
+      {props.userResult === 3 && (
         <TouchableLeftMenu
           type="navigate"
           iconColor={colores.Cool_Gray_5_C}

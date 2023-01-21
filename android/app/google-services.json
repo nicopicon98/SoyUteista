@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "853477412326",
+    "project_id": "soyuteista-cf8a2",
+    "storage_bucket": "soyuteista-cf8a2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:853477412326:android:016b216638ff8c377f1a27",
+        "android_client_info": {
+          "package_name": "com.soyuteista"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "853477412326-d6a88mr0f4fqokfeo04dmgkkb860hbu3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.soyuteista",
+            "certificate_hash": "1e26b35e7ca42f11d4544bf7c0ccd2e633399765"
+          }
+        },
+        {
+          "client_id": "853477412326-ub58ahrp2hk32d9hav68vn1jjlplbg9l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVxEhqhRnnmbBArYjIcNlxEXuOqwVEGLE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "853477412326-ub58ahrp2hk32d9hav68vn1jjlplbg9l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

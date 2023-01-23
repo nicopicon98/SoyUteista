@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
-import mantenteAlDiaAPI from '../api/mantenteAlDiaAPI';
-import { MantenteAlDiaInterface } from '../interfaces/MantenteAlDiaInterface';
+import { UTSPostsCategorias } from '../models/UTSPostsCategorias';
+import { getAgendas } from '../services';
 
 export const useAgendaInstitucional = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [agendas, setAgendas] = useState<MantenteAlDiaInterface[]>([]);
+  const [agendas, setAgendas] = useState<UTSPostsCategorias[]>([]);
 
   const loadNoticia = async () => {
     try {
-      const rep = await mantenteAlDiaAPI.get<MantenteAlDiaInterface[]>('/49/numberposts/12');
+      const rep = await getAgendas();
       setAgendas(rep.data);
       setIsLoading(false);
     } catch (error: any) {

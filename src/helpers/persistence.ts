@@ -1,5 +1,5 @@
-import { CarnetInterface } from "../interfaces/CarnetInterface";
-import { MateriaInterface } from "../interfaces/HorarioInterface";
+import { CarnetInterface } from "../models/CarnetInterface";
+import { MateriaInterface } from "../models/HorarioInterface";
 
 export const materias: Array<MateriaInterface> = [
   {

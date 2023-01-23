@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
-import tutoriasAPI from '../api/tutoriasAPI';
-import { TutoriasBringCursoByTutorInterface } from '../interfaces/TutoriasBringCursoByTutorInterface';
+import tutoriasAPI from '../api/tutorias.api';
+import { TutoriasBringCursoByTutorInterface } from '../models/TutoriasBringCursoByTutorInterface';
 
 export const useCursoByTutor = () => {
 

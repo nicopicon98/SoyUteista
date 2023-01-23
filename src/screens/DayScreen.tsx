@@ -2,7 +2,7 @@ import React from 'react'
 import { View, ScrollView } from 'react-native';
 
 import { MateriaHorario } from '../components/MateriaHorario';
-import { MateriaInterface } from '../interfaces/HorarioInterface';
+import { MateriaInterface } from '../models/HorarioInterface';
 
 
 interface Props {

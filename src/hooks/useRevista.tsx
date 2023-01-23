@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
-import { RevistaInterface } from '../interfaces/RevistaInterface';
-import revistaApi from '../api/revistaAPI';
+import { RevistaInterface } from '../models/RevistaInterface';
+import revistaApi from '../api/revista.api';
 
 export const useRevista = () => {
   const [isLoading, setIsLoading] = useState(true);

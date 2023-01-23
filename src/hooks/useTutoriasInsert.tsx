@@ -1,7 +1,7 @@
 import {useState} from 'react';
-import { TutoriasInsertInterface } from '../interfaces/TutoriasInsertInterface';
+import { TutoriasInsertInterface } from '../models/TutoriasInsertInterface';
 import useEffect from 'react';
-import tutoriasAPI from '../api/tutoriasAPI';
+import tutoriasAPI from '../api/tutorias.api';
 import { FieldValues } from 'react-hook-form';
 
 

@@ -1,7 +1,6 @@
-import React from 'react';
+import { DirectorioEscolarInterface } from '../models/DirectorioEscolarInterface';
+import serviciosAPI from '../api/servicios-academicos.api';
 import {useState, useEffect} from 'react';
-import serviciosAPI from '../api/serviciosAPI';
-import { DirectorioEscolarInterface, InfoDependencia } from '../interfaces/DirectorioEscolarInterface';
 
 export const useDirectorioEscolar = () => {
   const [isLoading, setIsLoading] = useState(true);

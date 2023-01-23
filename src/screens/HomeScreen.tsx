@@ -3,14 +3,14 @@ import { Alert, Appearance, FlatList, StyleSheet, Text, View, useWindowDimension
 
 import { Noticia } from '../components/Noticia';
 import { SkeletonNews } from '../components/SkeletonNews';
-import { useMantenteAlDia } from '../hooks/useMantenteAlDia';
+import { useNoticias } from '../hooks/useNoticias';
 import { AuthContext } from '../context/AuthContext';
 import { fonts } from '../theme/appTheme';
 import AppBarComponent from '../components/AppBarComponent';
 
 
 export const HomeScreen = () => {
-  const { isLoading, noticias, loadNoticia } = useMantenteAlDia();
+  const { isLoading, noticias, loadNoticia } = useNoticias();
   const { authState: { user } } = useContext(AuthContext);
   const { width } = useWindowDimensions();
   const [isRefreshing, setIsRefreshing] = useState(false);

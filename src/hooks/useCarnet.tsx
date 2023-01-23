@@ -1,8 +1,7 @@
-import { useState, useEffect, useContext } from 'react'
-
-import { Carnet, CarnetInterface } from '../interfaces/CarnetInterface';
-import carnetAPI from '../api/carnetAPI';
+import { useState } from 'react'
+import { Carnet } from '../models/CarnetInterface';
 import { replaceNull } from '../helpers/functions';
+import { getCarnet } from '../services';
 
 export const useCarnet = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -13,7 +12,7 @@ export const useCarnet = () => {
 
   //Validar si estudiante o no
   const loadInfoEstudiante = async (email: string) => {
-    const rep = await carnetAPI.get<CarnetInterface>(`/carnet/?email=${email}`);
+    const rep = await getCarnet(email, API_KEY);
     if(rep.data.result !== 1) {
       setError(rep.data.error);
       setInfoEstudiante(null);

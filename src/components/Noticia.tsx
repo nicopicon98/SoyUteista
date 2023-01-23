@@ -4,7 +4,7 @@ import { Linking } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import { MantenteAlDiaInterface } from '../interfaces/MantenteAlDiaInterface';
+import { MantenteAlDiaInterface } from '../models/UTSPostsCategorias';
 import { colores, fonts } from '../theme/appTheme';
 
 interface Props {

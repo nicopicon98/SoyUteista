@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {FlatList, ScrollView} from 'react-native-gesture-handler';
 import {useDirectorioEscolar} from '../hooks/useDirectorioEscolar';
-import {InfoDependencia} from '../interfaces/DirectorioEscolarInterface';
+import {InfoDependencia} from '../models/DirectorioEscolarInterface';
 
 const CardsDirectorioEscolar = () => {
   const {isLoading, state} = useDirectorioEscolar();

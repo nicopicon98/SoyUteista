@@ -1,63 +1,29 @@
-import React, { useContext, useEffect, useState } from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  useWindowDimensions,
-  Alert,
-  Button,
-  ActivityIndicator,
-  Dimensions,
-  Appearance,
-  Pressable,
-  Modal,
-  Platform,
-} from 'react-native';
-import { Image } from 'react-native-elements';
-import RadioGroup from 'react-native-radio-buttons-group';
-
-import { useTutoriaBusqueda } from '../hooks/useTutoriaBusqueda';
-// import { useForm } from '../hooks/useForm';
-import { useCursoByTutor } from '../hooks/useCursoByTutor';
-import { useDiaByAsignatura } from '../hooks/useDiaByAsignatura';
-import { useFranjaByDiaAsignatura } from '../hooks/useFranjaByDiaAsignatura';
-import { useInfoTutor } from '../hooks/useInfoTutor';
-import { useTutoriasAll } from '../hooks/useTutoriasAll';
-import { FormCrearCitaInterface } from '../interfaces/FormCrearCitaInterface';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
-import { colores, fonts, GlobalStyles } from '../theme/appTheme';
-import tutoriasApi from '../api/tutoriasAPI';
-import { AuthContext } from '../context/AuthContext';
-import { NavigationProps } from '../types/navigation';
-
-//Examples
-import { useForm, Controller, SubmitErrorHandler } from 'react-hook-form';
-
-import DropDownPicker, { ItemType } from 'react-native-dropdown-picker';
-import { DateData, LocaleConfig } from 'react-native-calendars';
+import { Text, View, StyleSheet, ActivityIndicator, Dimensions, Appearance, Pressable, Modal } from 'react-native';
 import { CustomCalendarComponent } from '../components/CustomCalendarComponent';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { CustomImageTutoresCrearCita } from '../components/CustomImageTutoresCrearCita';
-import { useBringTutor } from '../hooks/useBringTutor';
-import { GraphManager } from '../graph/GraphManager';
-import { blobToBase64 } from '../helpers/blobToBase64';
-import { TutoriasBringCursoByTutorInterface } from '../interfaces/TutoriasBringCursoByTutorInterface';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { useFranjaByDiaAsignatura } from '../hooks/useFranjaByDiaAsignatura';
+import { ALERT_TYPE, Dialog, Toast } from 'react-native-alert-notification';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { dayOfTheWeek, inverseDayOfTheWeek } from '../helpers/functions';
-import { Capitalize } from '../helpers/Capitalize';
-import {
-  ALERT_TYPE,
-  Dialog,
-  AlertNotificationRoot,
-  Toast,
-} from 'react-native-alert-notification';
-import { TextInput } from 'react-native-paper';
-import { errorTutoriasCrearInterface } from '../interfaces/errorTutoriasCrearInterface';
-import tutoriasAPI from '../api/tutoriasAPI';
+import DropDownPicker, { ItemType } from 'react-native-dropdown-picker';
+import { CreateCitaInterface } from '../models/CreateCitaInterface';
+import { useDiaByAsignatura } from '../hooks/useDiaByAsignatura';
+import { useTutoriaBusqueda } from '../hooks/useTutoriaBusqueda';
+import React, { useContext, useEffect, useState } from 'react';
 import { useTutoriasInsert } from '../hooks/useTutoriasInsert';
-import { TutoriasInfoTutorInterface } from '../interfaces/TutoriasInfoTutorInterface';
-import { CreateCitaInterface, RespCreateCitaInterface } from '../interfaces/CreateCitaInterface';
-import { getInfoTutor, postInsertTutoria } from '../services/services';
+import { getInfoTutor, postInsertTutoria } from '../services';
+import { GraphManager } from '../config/graph/GraphManager';
+import { useCursoByTutor } from '../hooks/useCursoByTutor';
+import RadioGroup from 'react-native-radio-buttons-group';
+import { blobToBase64 } from '../helpers/blobToBase64';
+import { NavigationProps } from '../types/navigation';
+import { useForm, Controller } from 'react-hook-form';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { AuthContext } from '../context/AuthContext';
+import { useInfoTutor } from '../hooks/useInfoTutor';
+import { Capitalize } from '../helpers/Capitalize';
+import { TextInput } from 'react-native-paper';
+import { Image } from 'react-native-elements';
+import { colores } from '../theme/appTheme';
 
 //Global values
 const colorScheme = Appearance.getColorScheme();

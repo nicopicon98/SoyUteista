@@ -1,15 +1,15 @@
 import React, { createContext, useEffect, useReducer } from 'react';
 
 import jwt_decode from 'jwt-decode';
-import carnetAPI from '../api/carnetAPI';
 
-import { CarnetInterface } from '../interfaces/CarnetInterface';
-import { UserAuthResponse } from '../interfaces/AuthUserInterface';
+import { CarnetInterface } from '../models/CarnetInterface';
+import { UserAuthResponse } from '../models/AuthUserInterface';
 import { blobToBase64 } from '../helpers/blobToBase64';
 import { Capitalize } from '../helpers/Capitalize';
-import { AuthManager } from '../auth/AuthManager';
+import { AuthManager } from '../config/auth/AuthManager';
 import { authReducer, AuthState } from './authReducer';
-import { GraphManager } from '../graph/GraphManager';
+import { GraphManager } from '../config/graph/GraphManager';
+import { getCarnet } from '../services';
 
 //Lo que se pasara desde el arbol principal
 export interface AuthContextProps {
@@ -86,7 +86,7 @@ export const AuthProvider = ({ children }: any) => {
   const authValidatorRole = async (token: string): Promise<AuthState> => {
     const API_KEY = "JSPHPWORKS4everandever!";
     const user: UserAuthResponse = jwt_decode(token);
-    const { data } = await carnetAPI.get<CarnetInterface | null>(`/carnet/?email=${user.upn}&key=${API_KEY}`);
+    const { data } = await getCarnet(user.upn, API_KEY);
     let photo: string = "";
     let userPhotoError: boolean = false;
     try {

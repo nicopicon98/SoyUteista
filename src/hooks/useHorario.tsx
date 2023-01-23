@@ -1,7 +1,6 @@
+import { MateriaInterface } from '../models/HorarioInterface';
+import { getHorario } from '../services/horario.service';
 import { useState, useEffect, useContext } from 'react'
-
-import horarioAPI from '../api/horarioAPI';
-import { HorarioInterface, MateriaInterface } from '../interfaces/HorarioInterface';
 import { AuthContext } from '../context/AuthContext';
 
 export const useHorario = () => {
@@ -13,8 +12,8 @@ export const useHorario = () => {
 
   const loadMateria = async () => {
     try {
-      const repDefinite = await horarioAPI.get<HorarioInterface>(`/schedule/?email=${user!.userEmail}&key=${API_KEY}`);
-      setMaterias(repDefinite.data.data.MATERIAS);
+      const rep = await getHorario(user!.userEmail, API_KEY)
+      setMaterias(rep.data.data.MATERIAS);
       setIsLoading(false);
     } catch (error) {
       setMaterias(null)

@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
 import { AnimatedSection, useCollapsible } from 'reanimated-collapsible-helpers';
-import { Notas } from '../interfaces/NotasInterface';
+import { Notas } from '../models/NotasInterface';
 import { evaluacionType } from '../types/evaluacion';
 
 interface Props {

@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react'
 
-import tutoriasAPI from '../api/tutoriasAPI';
-import { TutoriasBringTutorInterface } from '../interfaces/TutoriasBringTutorInterface';
+import tutoriasAPI from '../api/tutorias.api';
+import { TutoriasBringTutorInterface } from '../models/TutoriasBringTutorInterface';
 
 
 export const useBringTutor = () => {

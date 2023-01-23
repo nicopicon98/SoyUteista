@@ -1,9 +1,7 @@
 import { useState, useEffect, useContext } from 'react'
-
-
-import notasAPI from '../api/notasAPI';
 import { AuthContext } from '../context/AuthContext';
-import { Materias, NotasInterface } from '../interfaces/NotasInterface';
+import { Materias, NotasInterface } from '../models/NotasInterface';
+import { getNotas } from '../services';
 
 export const useNotas = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -14,7 +12,7 @@ export const useNotas = () => {
 
   const loadInfoEstudiante = async () => {
     try {
-      const rep = await notasAPI.get<NotasInterface>(`/qualification/?email=${user!.userEmail}&key=${API_KEY}`);
+      const rep = await getNotas(user!.userEmail, API_KEY )
       setNotasEstudiante(rep.data.data);
       setIsLoading(false);
     } catch (error) {

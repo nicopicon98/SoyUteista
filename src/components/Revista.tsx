@@ -4,7 +4,7 @@ import { Linking } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import { colores, fonts } from '../theme/appTheme';
-import { RevistaInterface } from '../interfaces/RevistaInterface';
+import { RevistaInterface } from '../models/RevistaInterface';
 
 interface Props {
   item: RevistaInterface;

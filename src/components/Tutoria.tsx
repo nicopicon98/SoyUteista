@@ -3,8 +3,8 @@ import { View, Text, StyleSheet, useWindowDimensions, TouchableWithoutFeedback, 
 
 import { Image } from 'react-native-elements';
 
-import { TutoriasAllInterface } from '../interfaces/TutoriasAllInterface';
-import { GraphManager } from '../graph/GraphManager';
+import { TutoriasAllInterface } from '../models/TutoriasAllInterface';
+import { GraphManager } from '../config/graph/GraphManager';
 import { blobToBase64 } from '../helpers/blobToBase64';
 import { colores } from '../theme/appTheme';
 import { TutoriaModal } from './TutoriaModal';

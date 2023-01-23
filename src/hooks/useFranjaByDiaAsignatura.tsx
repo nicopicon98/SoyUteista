@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
-import tutoriasAPI from '../api/tutoriasAPI';
-import { TutoriasFranjaByDiaAsignaturaInterface } from '../interfaces/TutoriasFranjaByDiaAsignaturaInterface';
+import tutoriasAPI from '../api/tutorias.api';
+import { TutoriasFranjaByDiaAsignaturaInterface } from '../models/TutoriasFranjaByDiaAsignaturaInterface';
 
 export const useFranjaByDiaAsignatura = () => {
 

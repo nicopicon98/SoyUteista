@@ -3,7 +3,7 @@ import { StyleSheet, TouchableOpacity, View, Text, Appearance, useWindowDimensio
 import { AnimatedSection, useCollapsible } from 'reanimated-collapsible-helpers';
 
 import { colores } from '../theme/appTheme';
-import { Corte, InfoMateria, InfoCorte } from '../interfaces/NotasInterface';
+import { Corte, InfoMateria, InfoCorte } from '../models/NotasInterface';
 
 interface Props {
 	materia: string;

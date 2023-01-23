@@ -4,7 +4,7 @@ import { } from 'react-native-animatable';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import Icon from 'react-native-vector-icons/Ionicons';
-import { TutoriasAllInterface } from '../interfaces/TutoriasAllInterface';
+import { TutoriasAllInterface } from '../models/TutoriasAllInterface';
 import { colores } from '../theme/appTheme';
 
 interface Props {

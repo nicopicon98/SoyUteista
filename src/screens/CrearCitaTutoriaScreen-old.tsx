@@ -11,11 +11,11 @@ import { useDiaByAsignatura } from '../hooks/useDiaByAsignatura';
 import { useFranjaByDiaAsignatura } from '../hooks/useFranjaByDiaAsignatura';
 import { useInfoTutor } from '../hooks/useInfoTutor';
 import { useTutoriasAll } from '../hooks/useTutoriasAll';
-import { FormCrearCitaInterface } from '../interfaces/FormCrearCitaInterface';
+import { FormCrearCitaInterface } from '../models/FormCrearCitaInterface';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { colores, fonts } from '../theme/appTheme';
-import { CreateCitaInterface, RespCreateCitaInterface } from '../interfaces/CreateCitaInterface';
-import tutoriasApi from '../api/tutoriasAPI';
+import { CreateCitaInterface, RespCreateCitaInterface } from '../models/CreateCitaInterface';
+import tutoriasApi from '../api/tutorias.api';
 import { AuthContext } from '../context/AuthContext';
 import { NavigationProps } from '../types/navigation';
 

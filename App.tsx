@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React from 'react';
 
 import { LogBox, Platform } from 'react-native';
 
@@ -6,11 +6,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { AuthProvider } from './src/context/AuthContext';
 import { StackNavigator } from './src/navigator/StackNavigator';
 import { AlertNotificationRoot } from 'react-native-alert-notification';
-import { Alert } from 'react-native';
 import { Provider as PaperProvider } from 'react-native-paper';
 
 import SpInAppUpdates, {
-  NeedsUpdateResponse,
   IAUUpdateKind,
   StartUpdateOptions,
 } from 'sp-react-native-in-app-updates';
@@ -47,7 +45,9 @@ export const AppState = ({ children }: { children: JSX.Element | JSX.Element[] }
 
 const App = () => {
 
-  useNotifications()
+  if (Platform.OS === 'android'){
+    useNotifications()
+  }
 
   return (
     <NavigationContainer>

@@ -1,4 +1,4 @@
-import { UserContextInterface } from "../interfaces/UserContextInterface";
+import { UserContextInterface } from "../models/UserContextInterface";
 
 
 export type AuthState = {

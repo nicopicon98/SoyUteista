@@ -1,9 +1,9 @@
 import { useState, useEffect} from 'react'
 
 
-import tutoriasAPI from '../api/tutoriasAPI';
+import tutoriasAPI from '../api/tutorias.api';
 import { replaceNull } from '../helpers/functions';
-import { CoursesAllInterface } from '../interfaces/CoursesAllInterface';
+import { CoursesAllInterface } from '../models/CoursesAllInterface';
 
 export const useCoursesAll = () => {
   const [isLoadingCourses, setIsLoadingCourses] = useState(false);

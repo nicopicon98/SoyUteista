@@ -1,10 +1,10 @@
 import { useState, useEffect, useContext } from 'react'
 
 
-import tutoriasAPI from '../api/tutoriasAPI';
+import tutoriasAPI from '../api/tutorias.api';
 import { AuthContext } from '../context/AuthContext';
 import { replaceNull } from '../helpers/functions';
-import { TutoriasAllInterface } from '../interfaces/TutoriasAllInterface';
+import { TutoriasAllInterface } from '../models/TutoriasAllInterface';
 
 export const useTutoriasAll = () => {
   const [isLoading, setIsLoading] = useState(true);

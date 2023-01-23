@@ -1,28 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { authorize, refresh, AuthConfiguration } from 'react-native-app-auth';
+import { authorize, refresh } from 'react-native-app-auth';
+import { config } from '../config/auth';
 import moment from 'moment';
-
-import { AuthConfig } from './AuthConfig';
-
-export const config: AuthConfiguration = {
-  clientId: AuthConfig.appId,
-  redirectUrl: 'app-uts-sistemas://react-native-auth/',
-  scopes: AuthConfig.appScopes,
-  additionalParameters: { prompt: 'select_account' },
-  serviceConfiguration: {
-    authorizationEndpoint:
-      'https://login.microsoftonline.com/common/oauth2/v2.0/authorize',
-    tokenEndpoint: 'https://login.microsoftonline.com/common/oauth2/v2.0/token',
-  },
-};
 
 export class AuthManager {
   static signInAsync = async () => {
     //here the magic occurrs
     const result = await authorize(config);
-
-    // Aca estoy mostrando el token
-    // console.log(result.accessToken); 
 
     // Store the access token, refresh token, and expiration time in storage
     await AsyncStorage.setItem('userToken', result.accessToken);

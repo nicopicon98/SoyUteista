@@ -1,8 +1,14 @@
-import { Client, ResponseType } from '@microsoft/microsoft-graph-client';
-import { GraphAuthProvider } from './GraphAuthProvider';
+import { Client } from '@microsoft/microsoft-graph-client';
+import { AuthManager } from './auth-manager.service';
 
-// Set the authProvider to an instance
-// of GraphAuthProvider
+
+class GraphAuthProvider {
+  getAccessToken = async () => {
+    const token = await AuthManager.getAccessTokenAsync();
+    return token || '';
+  };
+}
+
 const clientOptions = {
   authProvider: new GraphAuthProvider(),
 };
@@ -12,7 +18,6 @@ const graphClient = Client.initWithMiddleware(clientOptions);
 
 export class GraphManager {
   static getUserAsync = async () => {
-    // GET /me
     const answer = await graphClient
       .api('/me')
       .select('displayName,givenName,mail,userPrincipalName')

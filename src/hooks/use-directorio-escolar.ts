@@ -1,6 +1,6 @@
 import { getDirectorioEscolar } from '../services';
 import { DirectorioEscolar } from '../models';
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 
 export const useDirectorioEscolar = () => {
   const [isLoading, setIsLoading] = useState(true);

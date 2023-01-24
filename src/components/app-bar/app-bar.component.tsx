@@ -1,6 +1,6 @@
 import { DrawerActions, useNavigation } from '@react-navigation/native';
-import { colores } from '../../theme/appTheme';
 import { Appbar } from 'react-native-paper';
+import { colores } from '../../theme';
 
 interface Props {
   title: string;

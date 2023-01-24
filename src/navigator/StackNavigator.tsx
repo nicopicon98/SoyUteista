@@ -2,10 +2,10 @@ import React, { useState, useContext, useEffect } from 'react'
 
 import { createStackNavigator } from "@react-navigation/stack";
 
-import { AuthLoadingScreen } from '../screens/SplashScreen';
-import { SignInScreen } from '../screens/SignInScreen';
+import { AuthLoadingScreen } from '../screens/splash/splash.screen';
+import { SignInScreen } from '../screens/sign-in/sign-in.screen';
 import { LeftMenu } from "./LeftMenu";
-import { AuthContext } from '../context/auth.component';
+import { AuthContext } from '../context/auth.context';
 
 const Stack = createStackNavigator();
 

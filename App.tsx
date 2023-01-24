@@ -3,7 +3,7 @@ import React from 'react';
 import { LogBox, Platform } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
-import { AuthProvider } from './src/context/auth.component';
+import { AuthProvider } from './src/context/auth.context';
 import { StackNavigator } from './src/navigator/StackNavigator';
 import { AlertNotificationRoot } from 'react-native-alert-notification';
 import { Provider as PaperProvider } from 'react-native-paper';

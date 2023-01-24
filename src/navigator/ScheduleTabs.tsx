@@ -1,11 +1,8 @@
 import React from 'react'
-import { Dimensions, ActivityIndicator, View, Text, StyleSheet, Appearance } from 'react-native';
-
+import { Dimensions, ActivityIndicator, View, StyleSheet, Appearance } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { colores } from '../theme/appTheme';
-import { DayScreen } from '../screens/DayScreen';
 import { useHorario } from '../hooks/useHorario';
-import AppBarComponent from '../components/app-bar/app-bar.component';
 
 const Tab = createMaterialTopTabNavigator();
 const { width } = Dimensions.get('window');
@@ -49,22 +46,22 @@ export const ScheduleTabs = () => {
         >
 
           <Tab.Screen name="Lun">
-            {() => <DayScreen materias={materias!.filter(e => e.DIA == 1)} />}
+            {() => <ScheduleDay materias={materias!.filter(e => e.DIA == 1)} />}
           </Tab.Screen>
           <Tab.Screen name="Mar">
-            {() => <DayScreen materias={materias!.filter(e => e.DIA == 2)} />}
+            {() => <ScheduleDay materias={materias!.filter(e => e.DIA == 2)} />}
           </Tab.Screen>
           <Tab.Screen name="Mie">
-            {() => <DayScreen materias={materias!.filter(e => e.DIA == 3)} />}
+            {() => <ScheduleDay materias={materias!.filter(e => e.DIA == 3)} />}
           </Tab.Screen>
           <Tab.Screen name="Jue">
-            {() => <DayScreen materias={materias!.filter(e => e.DIA == 4)} />}
+            {() => <ScheduleDay materias={materias!.filter(e => e.DIA == 4)} />}
           </Tab.Screen>
           <Tab.Screen name="Vie">
-            {() => <DayScreen materias={materias!.filter(e => e.DIA == 5)} />}
+            {() => <ScheduleDay materias={materias!.filter(e => e.DIA == 5)} />}
           </Tab.Screen>
           <Tab.Screen name="Sab">
-            {() => <DayScreen materias={materias!.filter(e => e.DIA == 6)} />}
+            {() => <ScheduleDay materias={materias!.filter(e => e.DIA == 6)} />}
           </Tab.Screen>
         </Tab.Navigator>
       }

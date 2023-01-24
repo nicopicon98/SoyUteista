@@ -1,26 +1,25 @@
-import React, { useContext, useEffect } from 'react';
-import { Appearance, useWindowDimensions, Text } from 'react-native';
+import React, { useContext } from 'react';
+import { Appearance, useWindowDimensions } from 'react-native';
 
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 
-import { CustomDrawerContent } from '../components/CustomDrawerContent';
+import { CustomDrawerContent } from '../components/custom-drawer-content/custom-drawer-content.component';
 import { colores } from '../theme/appTheme';
 import { ScheduleTabs } from './ScheduleTabs';
 import { TutoriasTabs } from './TutoriasTabs';
-import { AuthContext } from '../context/auth.component';
+import { AuthContext } from '../context/auth.context';
 
-import { HomeScreen } from '../screens/HomeScreen';
-import { CalendarScreen } from '../screens/CalendarScreen';
-import { CarnetScreen } from '../screens/CarnetScreen';
-import { PerfilScreen } from '../screens/PerfilScreen';
-import { GradesScreen } from '../screens/GradesScreen';
-import { RevistaScreen } from '../screens/RevistaScreen';
-import { AgendaInstitucionalScreen } from '../screens/AgendaInstitucionalScreen';
-import { TutoriasTemporal } from '../screens/TutoriasTemporal';
-import ExitoEscolarScreen from '../screens/ExitoEscolarScreen';
-import BienestarInstitucionalScreen from '../screens/BienestarInstitucionalScreen';
-import DirectorioEscolarScreen from '../screens/DirectorioEscolarScreen';
+import { HomeScreen } from '../screens/home/home.screen';
+import { CarnetScreen } from '../screens/carnet/carnet.screen';
+import { PerfilScreen } from '../screens/profile/profile.screen';
+import { GradesScreen } from '../screens/grades/grades.screen';
+import { RevistaScreen } from '../screens/revista/revista.screen';
+import { AgendaInstitucionalScreen } from '../screens/agenda-institucional/agenda-institucional.screen';
+import { TutoriasTemporal } from '../screens/citas-tutorias/TutoriasTemporal';
+import ExitoEscolarScreen from '../screens/exito-escolar/exito-escolar.screen';
+import BienestarInstitucionalScreen from '../screens/bienestar-institucional/bienestar-institucional.screen';
+import DirectorioEscolarScreen from '../screens/directorio-escolar/directorio-escolar.screen';
 import ConvocatoriasScreen from '../screens/ConvocatoriasScreen';
 
 const Drawer = createDrawerNavigator();
@@ -57,7 +56,6 @@ export const LeftMenu = () => {
       )}>
 
       <Drawer.Screen name='Inicio' component={HomeScreen} options={{ headerTitle: 'SoyUteísta' }} />
-      <Drawer.Screen name='Calendario' component={CalendarScreen} options={{ headerTitle: 'Calendario' }} />
       <Drawer.Screen name='Horario' component={ScheduleTabs} options={{ headerTitle: 'Horario' }} />
       <Drawer.Screen name='Carnet' component={CarnetScreen} options={{ headerTitle: 'Carnet' }} />
       <Drawer.Screen name='Perfil' component={PerfilScreen} options={{ headerTitle: 'Perfil' }} />

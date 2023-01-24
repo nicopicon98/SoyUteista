@@ -5,8 +5,8 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import { colores } from '../theme/appTheme';
-import { CrearCitaTutoriaScreen } from '../screens/CrearCitaTutoriaScreen';
-import { CitasTutoriasScreen } from '../screens/CitasTutoriasScreen';
+import { CrearCitaTutoriaScreen } from '../screens/crear-cita-tutoria/crear-cita-tutoria.screen';
+import { CitasTutoriasScreen } from '../screens/citas-tutorias/citas-tutorias.screen';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Examples } from '../screens/Examples';
 import { AlertNotificationRoot } from 'react-native-alert-notification';

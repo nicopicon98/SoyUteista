@@ -5,3 +5,4 @@ export * from './use-day-by-asignatura.hook';
 export * from './use-insert-tutorias.hook';
 export * from './use-search-tutoria.hook';
 export * from './use-tutor-info.hook';
+export * from './use-franja-by-dia-asignatura.hook'

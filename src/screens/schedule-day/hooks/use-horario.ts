@@ -1,8 +1,8 @@
-import { MateriaInterface } from '../models/horario.model';
-import { getHorario } from '../services/horario.service';
 import { useState, useEffect, useContext } from 'react'
-import { API_KEY } from '../config/auth';
-import { AuthContext } from '../context';
+import { MateriaInterface } from '../models';
+import { API_KEY } from '@src/config/auth';
+import { AuthContext } from '@src/context';
+import { getHorario } from '@src/services';
 
 export const useHorario = () => {
   const [isLoading, setIsLoading] = useState(true);

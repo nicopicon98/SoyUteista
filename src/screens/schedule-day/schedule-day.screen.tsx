@@ -1,6 +1,6 @@
 import { MateriaHorario } from './components/materia-horario';
 import { View, ScrollView } from 'react-native';
-import { MateriaInterface } from '../../models';
+import { MateriaInterface } from './models';
 
 interface Props {
   materias: MateriaInterface[];

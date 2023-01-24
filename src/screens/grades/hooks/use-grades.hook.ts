@@ -1,8 +1,8 @@
 import { useState, useEffect, useContext } from 'react'
-import { AuthContext } from '../../../context';
-import { API_KEY } from '../../../config/auth';
-import { getNotas } from '../../../services';
-import { Materias } from '../../../models';
+import { AuthContext } from '@src/context';
+import { API_KEY } from '@src/config/auth';
+import { getNotas } from '@src/services';
+import { Materias } from '@src/models';
 
 export const useGrades = () => {
   const [notasEstudiante, setNotasEstudiante] = useState<Materias[]>();
@@ -11,7 +11,7 @@ export const useGrades = () => {
 
   const loadInfoEstudiante = async () => {
     try {
-      const rep = await getNotas(user!.userEmail, API_KEY )
+      const rep = await getNotas(user!.userEmail, API_KEY)
       setNotasEstudiante(rep.data.data);
       setIsLoading(false);
     } catch (error) {

@@ -1,6 +1,6 @@
 import { FlatList, Text, StyleSheet } from 'react-native';
 import { Image, View } from 'react-native-animatable';
-import { useConvocatorias } from '../../../../hooks';
+import { useConvocatorias } from '../../hooks';
 
 export const ListConvocatorias = () => {
   const { convocatorias } = useConvocatorias();

@@ -1,8 +1,10 @@
-import React from 'react'
 import { Dimensions, ActivityIndicator, View, StyleSheet, Appearance } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { colores } from '../theme/appTheme';
-import { useHorario } from '../hooks/useHorario';
+import { AppBarComponent } from '@src/components/app-bar';
+import { ScheduleDay } from '@src/screens/schedule-day';
+import { useHorario } from '@src/hooks';
+import { colores } from '@src/theme';
+
 
 const Tab = createMaterialTopTabNavigator();
 const { width } = Dimensions.get('window');

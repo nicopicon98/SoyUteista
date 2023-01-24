@@ -1,6 +1,6 @@
-import { getAllTutors } from '../../../services';
-import { TutorResp } from '../../../models';
-import { useState} from 'react'
+import { getAllTutors } from '@src/services';
+import { TutorResp } from '@src/models';
+import { useState } from 'react'
 
 
 export const useBringTutor = () => {

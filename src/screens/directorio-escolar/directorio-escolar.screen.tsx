@@ -1,6 +1,6 @@
 import { CardsDirectorioEscolar } from './components/cards-directorio-escolar'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { AppBarComponent } from '../../components/app-bar'
+import { AppBarComponent } from '@src/components/app-bar'
 import { View } from 'react-native-animatable'
 
 export const DirectorioEscolarScreen = () => {

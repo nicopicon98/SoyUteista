@@ -1,6 +1,6 @@
 import { RadioButtonProps } from 'react-native-radio-buttons-group';
-import { useState } from 'react';
 import { useBringTutor, useCourses } from './';
+import { useState } from 'react';
 
 export const useSearchTutoria = (size: number) => {
 

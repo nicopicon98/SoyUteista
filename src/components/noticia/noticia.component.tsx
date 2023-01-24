@@ -1,8 +1,8 @@
 import { Text, View, StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { colores, fonts } from '../../theme/appTheme';
-import { UTSPostsCategories } from '../../models';
+import { UTSPostsCategories } from '@src/models';
 import { Linking } from 'react-native';
+import { colores, fonts } from '@src/theme';
 
 interface Props {
   item: UTSPostsCategories;

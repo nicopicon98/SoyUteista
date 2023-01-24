@@ -1,21 +1,28 @@
-import { useCoursesByIdTutor, useDayByAsignatura, useInsertTutorias, useSearchTutoria, useTutorInfo } from './hooks';
+import {
+  useCoursesByIdTutor,
+  useFranjaByDiaAsignatura,
+  useDayByAsignatura,
+  useInsertTutorias,
+  useSearchTutoria,
+  useTutorInfo
+} from './hooks';
 import { Text, View, StyleSheet, ActivityIndicator, Dimensions, Appearance, Pressable, Modal } from 'react-native';
-import { useFranjaByDiaAsignatura } from '../../hooks/use-franja-by-dia-asignatura';
-import { getInfoTutor, GraphManager, postInsertTutoria } from '../../services';
-import { blobToBase64, Capitalize, dayToID, idToDay } from '../../utilities';
+import { getInfoTutor, GraphManager, postInsertTutoria } from '@src/services';
+import { blobToBase64, Capitalize, dayToID, idToDay } from '@src/utilities';
 import { ALERT_TYPE, Dialog, Toast } from 'react-native-alert-notification';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
-import { CustomCalendarComponent } from '../../components/custom-calendar';
+import { CustomCalendarComponent } from '@src/components/custom-calendar';
 import DropDownPicker, { ItemType } from 'react-native-dropdown-picker';
 import React, { useContext, useEffect, useState } from 'react';
-import { CreateCita, NavigationProps } from '../../models';
 import RadioGroup from 'react-native-radio-buttons-group';
 import { useForm, Controller } from 'react-hook-form';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { TextInput } from 'react-native-paper';
+import { NavigationProps } from '@src/models';
 import { Image } from 'react-native-elements';
-import { AuthContext } from '../../context';
-import { colores } from '../../theme';
+import { AuthContext } from '@src/context';
+import { CreateCita } from './models';
+import { colores } from '@src/theme';
 
 //Global values
 const colorScheme = Appearance.getColorScheme();
@@ -756,7 +763,7 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
             <View style={styles.modalView}>
               <View style={{ alignItems: 'center' }}>
                 <Image
-                  source={require('../resources/Images/schedule_appointment.jpg')}
+                  source={require('@resources/Images/schedule_appointment.jpg')}
                   resizeMode="contain"
                   style={styles.imageLogo}
                 />

@@ -1,19 +1,19 @@
 import { ImageBackground, StyleSheet, View, Dimensions, ScrollView } from 'react-native';
-import { AppBarComponent } from '../../components/app-bar';
+import { AppBarComponent } from '@src/components/app-bar';
 import { Text } from 'react-native-animatable';
 import { Image } from 'react-native-elements';
-import { colores, fonts } from '../../theme';
+import { colores, fonts } from '@src/theme';
 import QRCode from 'react-native-qrcode-svg';
-import { AuthContext } from '../../context';
+import { AuthContext } from '@src/context';
 import { useContext } from 'react'
 
 const { width } = Dimensions.get('window');
 
 export const CarnetScreen = () => {
 
-  const imageBackground: string = "../resources/Images/carnetFondo.jpg";
-  const imageLogo: string = "../resources/Images/Logo.png";
-  const imageEscudo: string = "../resources/Images/carnetEscudo.png";
+  const imageBackground: string = "@resources/Images/carnetFondo.jpg";
+  const imageLogo: string = "@resources/Images/Logo.png";
+  const imageEscudo: string = "@resources/Images/carnetEscudo.png";
 
   const { authState: { user } } = useContext(AuthContext);
 

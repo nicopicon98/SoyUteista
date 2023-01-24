@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
-import { SkeletonAnimation } from '../skeleton-animation/skeleton-animation.component';
+import { View, StyleSheet, Dimensions } from 'react-native';
+import { SkeletonAnimation } from '../skeleton-animation';
 
 const { width, height } = Dimensions.get('window');
 

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { getRevista } from '../../../services';
-import { RevistaResp } from '../../../models';
+import { getRevista } from '@src/services';
+import { RevistaResp } from '@src/models';
 
 export const useRevista = () => {
   const [isLoading, setIsLoading] = useState(true);

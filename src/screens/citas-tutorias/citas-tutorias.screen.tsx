@@ -1,8 +1,8 @@
 import { Text, ActivityIndicator, View, FlatList, StyleSheet, useWindowDimensions, Appearance } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
 import { Tutoria } from './components/tutoria';
-import { colores } from '../../theme';
 import { useTutorias } from './hooks';
+import { colores } from '@src/theme';
 import { useEffect } from 'react'
 
 const colorScheme = Appearance.getColorScheme();

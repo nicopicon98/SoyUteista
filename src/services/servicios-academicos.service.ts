@@ -1,5 +1,5 @@
-import { serviciosAPI } from "../api";
-import { ConvocatoriasResp } from "../models";
+import { serviciosAPI } from "@src/api";
+import { ConvocatoriasResp } from "@src/models";
 
 export const getServiciosAcademicos = async () => {
   const resp = await serviciosAPI.get<ConvocatoriasResp[]>('/convocatorias');

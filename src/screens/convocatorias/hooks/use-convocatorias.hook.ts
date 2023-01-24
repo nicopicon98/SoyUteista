@@ -1,4 +1,4 @@
-import { getServiciosAcademicos } from '../../../services';
+import { getServiciosAcademicos } from '@src/services';
 import { useEffect, useState } from 'react';
 import { ConvocatoriasResp } from '../models';
 

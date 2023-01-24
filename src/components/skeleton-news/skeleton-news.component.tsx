@@ -1,11 +1,9 @@
-import React from 'react'
+import { SkeletonAnimation } from '../skeleton-animation';
 import { Dimensions, View } from 'react-native';
-import { SkeletonAnimation } from '../skeleton-animation/skeleton-animation.component';
-import { SkeletonNew } from '../skeleton-new/skeleton-new.component';
+import { SkeletonNew } from '../skeleton-new'
 
 
 const { width, height } = Dimensions.get('window');
-
 export const SkeletonNews = () => {
 
   const titleWidth = width * 0.68;

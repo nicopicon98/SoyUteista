@@ -1,15 +1,15 @@
 export interface DirectorioEscolar {
-  dependencia:     string;
+  dependencia: string;
   infoDependencia: InfoDependencia[];
 }
 
 export interface InfoDependencia {
-  dependenciaNombre:     string;
+  dependenciaNombre: string;
   idContactoDependencia: number;
-  nombre:                string;
-  profesion:             string;
-  correo:                string;
-  extension:             number;
-  idDependencia:         number;
-  fechaRegistro:         string;
+  nombre: string;
+  profesion: string;
+  correo: string;
+  extension: number;
+  idDependencia: number;
+  fechaRegistro: string;
 }

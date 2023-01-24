@@ -1,16 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import { Dimensions, ActivityIndicator, View, Text, StyleSheet, Appearance } from 'react-native';
-
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { Dimensions, View,  StyleSheet, Appearance } from 'react-native';
+import { CrearCitaTutoriaScreen } from '@src/screens/crear-cita-tutoria';
+import { CitasTutoriasScreen } from '@src/screens/citas-tutorias';
+import { AppBarComponent } from '@src/components/app-bar';
 import Icon from 'react-native-vector-icons/Ionicons';
-
-import { colores } from '../theme/appTheme';
-import { CrearCitaTutoriaScreen } from '../screens/crear-cita-tutoria/crear-cita-tutoria.screen';
-import { CitasTutoriasScreen } from '../screens/citas-tutorias/citas-tutorias.screen';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Examples } from '../screens/Examples';
-import { AlertNotificationRoot } from 'react-native-alert-notification';
-import AppBarComponent from '../components/app-bar/app-bar.component';
+import { colores } from '@src/theme';
 
 
 const Tab = createMaterialTopTabNavigator();
@@ -64,7 +58,6 @@ export const TutoriasTabs = () => {
           })}
         >
           <Tab.Screen name="Crear Tutoría" component={CrearCitaTutoriaScreen} />
-          {/* <Tab.Screen name="Crear Tutoría" component={Examples} /> */}
           <Tab.Screen name="Tutorías Agendadas" component={CitasTutoriasScreen} />
         </Tab.Navigator>
       </View>

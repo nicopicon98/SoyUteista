@@ -1,5 +1,5 @@
-import { getAllCourses } from '../../../services';
-import { CoursesAll } from '../../../models';
+import { getAllCourses } from '@src/services';
+import { CoursesAll } from '@src/models';
 import { useState } from 'react'
 
 export const useCourses = () => {

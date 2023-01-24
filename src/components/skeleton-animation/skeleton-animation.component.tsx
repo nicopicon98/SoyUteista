@@ -1,6 +1,6 @@
-import React, { useRef, useEffect } from 'react'
-import { Dimensions, Animated, StyleSheet } from 'react-native';
-import { colores } from '../../theme/appTheme';
+import { Animated, StyleSheet } from 'react-native';
+import { useRef, useEffect } from 'react'
+import { colores } from '@src/theme';
 
 
 interface SkeletonProps {

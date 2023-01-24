@@ -1,3 +1,5 @@
+import { MateriaInterface } from "./";
+
 export interface HorarioResp {
   result: number;
   data: Resp2;
@@ -13,13 +15,3 @@ export interface Resp2 {
   MATERIAS: MateriaInterface[];
 }
 
-export interface MateriaInterface {
-  CODIGO_MATERIA: string;
-  NOMBRE_MATERIA: string;
-  GRUPO: string;
-  DIA: number;
-  HORA_INICIO: string;
-  HORA_FINAL: string;
-  SALON: string;
-  DESCRIPCION: string;
-}

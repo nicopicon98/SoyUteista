@@ -1,5 +1,5 @@
-import { getFranjaByDayAsignatura } from '../services';
-import { FranjaByDayAsignatura } from '../models';
+import { getFranjaByDayAsignatura } from '@src/services';
+import { FranjaByDayAsignatura } from '@src/models';
 import { useState } from 'react'
 
 export const useFranjaByDiaAsignatura = () => {

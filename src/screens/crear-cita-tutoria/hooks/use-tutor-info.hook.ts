@@ -1,5 +1,5 @@
-import { getTutorByIdAsignaturaDayFranja } from '../../../services';
-import { TutorInfoResp } from '../../../models';
+import { getTutorByIdAsignaturaDayFranja } from '@src/services';
+import { TutorInfoResp } from '@src/models';
 import { useState } from 'react'
 
 export const useTutorInfo = () => {

@@ -1,19 +1,13 @@
-import React from 'react';
-
-import { LogBox, Platform } from 'react-native';
-
-import { NavigationContainer } from '@react-navigation/native';
-import { AuthProvider } from './src/context/auth.context';
-import { StackNavigator } from './src/navigator/StackNavigator';
+import SpInAppUpdates, {IAUUpdateKind, StartUpdateOptions} from 'sp-react-native-in-app-updates';
 import { AlertNotificationRoot } from 'react-native-alert-notification';
+import { StackNavigator } from '@src/navigator/stack.navigator';
+import { useNotifications } from '@src/hooks/use-notifications';
+import { NavigationContainer } from '@react-navigation/native';
 import { Provider as PaperProvider } from 'react-native-paper';
+import { AuthProvider } from '@src/context/auth.context';
+import { LogBox, Platform } from 'react-native';
+import { colores } from '@src/theme/app.theme';
 
-import SpInAppUpdates, {
-  IAUUpdateKind,
-  StartUpdateOptions,
-} from 'sp-react-native-in-app-updates';
-import { colores } from './src/theme/appTheme';
-import { useNotifications } from './src/hooks/use-notifications';
 
 const inAppUpdates = new SpInAppUpdates(
   true // isDebug

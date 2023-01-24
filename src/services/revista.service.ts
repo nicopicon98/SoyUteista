@@ -1,5 +1,5 @@
-import { revistaAPI } from "../api";
-import { RevistaResp } from "../models";
+import { revistaAPI } from "@src/api";
+import { RevistaResp } from "@src/models";
 
 export const getRevista = async () => {
   const resp = await revistaAPI.get<RevistaResp[]>('/getNewsletter.php');

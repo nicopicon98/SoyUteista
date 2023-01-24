@@ -1,10 +1,10 @@
 import { View, Text, StyleSheet, Image, Appearance, useWindowDimensions } from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
-import { AppBarComponent } from '../../components/app-bar';
+import { AppBarComponent } from '@src/components/app-bar';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as Progress from 'react-native-progress';
-import { colores, fonts } from '../../theme';
-import { AuthContext } from '../../context';
+import { colores, fonts } from '@src/theme';
+import { AuthContext } from '@src/context';
 
 export const ProfileScreen = () => {
   const [loadProgress, setLoadProgress] = useState(true);

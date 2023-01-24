@@ -1,8 +1,8 @@
 import React from 'react'
 import { StyleSheet, View, Text, useWindowDimensions, Dimensions, Appearance } from 'react-native';
 
-import { MateriaInterface } from '../../../../models/horario.model';
-import { colores, fonts } from '../../../../theme/appTheme';
+import { MateriaInterface } from '../../models/horario.model';
+import { colores, fonts } from '../../../../theme/app.theme';
 
 interface Props {
   materia: MateriaInterface;

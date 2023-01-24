@@ -18,7 +18,7 @@ export const config: AuthConfiguration = {
   scopes: AuthConfig.appScopes,
   additionalParameters: { prompt: 'select_account' },
   serviceConfiguration: {
-    authorizationEndpoint:'https://login.microsoftonline.com/common/oauth2/v2.0/authorize',
+    authorizationEndpoint: 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize',
     tokenEndpoint: 'https://login.microsoftonline.com/common/oauth2/v2.0/token',
   },
 };

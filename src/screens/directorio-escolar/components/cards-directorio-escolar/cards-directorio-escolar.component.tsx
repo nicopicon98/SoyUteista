@@ -1,6 +1,6 @@
-import { useDirectorioEscolar } from '../../../../hooks/use-directorio-escolar';
 import { ScrollView } from 'react-native-gesture-handler';
 import { View, Text, StyleSheet } from 'react-native';
+import { useDirectorioEscolar } from '../../hooks';
 
 export const CardsDirectorioEscolar = () => {
   const { state } = useDirectorioEscolar();

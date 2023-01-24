@@ -1,7 +1,7 @@
 import { Text, View, StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { colores, fonts } from '../../../../theme';
-import { RevistaResp } from '../../../../models';
+import { colores, fonts } from '@src/theme';
+import { RevistaResp } from '@src/models';
 import { Linking } from 'react-native';
 
 

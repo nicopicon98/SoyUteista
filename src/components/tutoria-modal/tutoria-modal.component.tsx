@@ -1,7 +1,7 @@
+import { TutoriaResp } from '@src/models';
+import { colores } from '@src/theme';
 import {  Modal, Text, StyleSheet, View, Pressable, Appearance } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { colores } from '../../theme/appTheme';
-import { TutoriaResp } from '../../models';
 
 interface Props {
   modalVisible: boolean;

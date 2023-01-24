@@ -1,11 +1,10 @@
 import { Appearance, FlatList, RefreshControl, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
-import { SkeletonNews } from '../../components/skeleton-news';
-import { AppBarComponent } from '../../components/app-bar';
-import { Noticia } from '../../components/Noticia';
+import { SkeletonNews } from '@src/components/skeleton-news';
+import { AppBarComponent } from '@src/components/app-bar';
+import { Noticia } from '@src/components/noticia';
 import { useAgendaInstitucional } from './hooks';
-import { fonts } from '../../theme/appTheme';
+import { fonts } from '@src/theme/app.theme';
 import { useState } from 'react';
-
 
 
 export const AgendaInstitucionalScreen = () => {

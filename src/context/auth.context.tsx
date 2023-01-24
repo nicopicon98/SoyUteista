@@ -1,9 +1,9 @@
 import React, { createContext, useEffect, useReducer } from 'react';
-import { AuthManager, getCarnet, GraphManager } from '../services';
+import { AuthManager, getCarnet, GraphManager } from '@src/services';
+import { blobToBase64, Capitalize } from '@src/utilities';
 import { authReducer, AuthState } from './auth.reducer';
-import { blobToBase64, Capitalize } from '../utilities';
-import { UserAuthResponse } from '../models';
-import { API_KEY } from '../config/auth';
+import { UserAuthResponse } from '@src/models';
+import { API_KEY } from '@src/config/auth';
 import jwt_decode from 'jwt-decode';
 
 //Lo que se pasara desde el arbol principal

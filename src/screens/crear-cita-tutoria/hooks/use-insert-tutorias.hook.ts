@@ -1,6 +1,6 @@
-import { postInsertCitaTutoria } from '../../../services';
+import { postInsertCitaTutoria } from '@src/services';
 import { FieldValues } from 'react-hook-form';
-import { CreateCitaResp } from '../../../models';
+import { CreateCitaResp } from '@src/models';
 import { useState } from 'react';
 
 

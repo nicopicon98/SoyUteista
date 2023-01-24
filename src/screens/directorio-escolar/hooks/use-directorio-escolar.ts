@@ -1,5 +1,5 @@
-import { getDirectorioEscolar } from '../services';
-import { DirectorioEscolar } from '../models';
+import { getDirectorioEscolar } from '@src/services';
+import { DirectorioEscolar } from '@src/models';
 import { useState, useEffect } from 'react';
 
 export const useDirectorioEscolar = () => {

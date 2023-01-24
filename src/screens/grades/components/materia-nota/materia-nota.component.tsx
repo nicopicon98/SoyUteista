@@ -1,9 +1,7 @@
-import React from 'react'
 import { StyleSheet, TouchableOpacity, View, Text, Appearance, useWindowDimensions } from 'react-native';
 import { AnimatedSection, useCollapsible } from 'reanimated-collapsible-helpers';
-
-import { colores } from '../../../../theme/appTheme';
-import { Corte, InfoMateria, InfoCorte } from '../../../../models/notas.model';
+import { Corte, InfoMateria, InfoCorte } from '@src/models';
+import { colores } from '@src/theme';
 
 interface Props {
 	materia: string;

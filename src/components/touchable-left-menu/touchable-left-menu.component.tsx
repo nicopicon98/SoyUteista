@@ -1,9 +1,9 @@
-import { useContext } from 'react'
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { Text, StyleSheet, Dimensions } from 'react-native';
 import { DrawerNavigationHelpers } from '@react-navigation/drawer/lib/typescript/src/types';
-import { AuthContext } from '../../context/auth.context';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Text, StyleSheet, Dimensions } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { AuthContext } from '@src/context';
+import { useContext } from 'react'
 
 type TouchableLeftMenuType = "signOut" | "navigate";
 

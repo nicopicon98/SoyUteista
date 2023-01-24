@@ -1,16 +1,16 @@
 import {
   BringCourseByTutor,
   CoursesAll,
-  CreateCita,
   CreateCitaResp,
   DaysByAsignatura,
   FranjaByDayAsignatura,
   TutoriaResp,
   TutorInfoResp,
   TutorResp
-} from "../models";
+} from "@src/models";
+import { CreateCita } from "@src/screens/crear-cita-tutoria/models";
 import { FieldValues } from "react-hook-form";
-import { tutoriasAPI } from "../api";
+import { tutoriasAPI } from "@src/api";
 
 export const getInfoTutor = async (id_asignatura: string, diaValue: string, franja: string) => {
   try {
@@ -62,7 +62,7 @@ export const getAllTutors = async (tipo_listado: string) => {
   return resp
 }
 
-export const getTutorByIdAsignaturaDayFranja = async(id_asignatura: string, dia: string, franja: string) => {
+export const getTutorByIdAsignaturaDayFranja = async (id_asignatura: string, dia: string, franja: string) => {
   const resp = await tutoriasAPI.get<TutorInfoResp[]>(`/buscar_info_tutor.php?id_asignatura=${id_asignatura}&dia=${dia}&franja=${franja}`);
   return resp
 }
@@ -77,7 +77,7 @@ export const getFranjaByDayAsignatura = async (id_asignatura: string, day: strin
   return resp
 }
 
-export const postInsertCitaTutoria = async(formData: FieldValues) => {
+export const postInsertCitaTutoria = async (formData: FieldValues) => {
   const resp = await tutoriasAPI.post('/crear_cita.php', formData);
   return resp;
 }

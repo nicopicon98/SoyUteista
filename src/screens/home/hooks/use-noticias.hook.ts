@@ -1,6 +1,6 @@
-import { UTSPostsCategories } from '../../../models';
+import { UTSPostsCategories } from '@src/models';
 import { useState, useEffect } from 'react';
-import { getNoticias } from '../../../services';
+import { getNoticias } from '@src/services';
 
 export const useNoticias = () => {
   const [isLoading, setIsLoading] = useState(true);

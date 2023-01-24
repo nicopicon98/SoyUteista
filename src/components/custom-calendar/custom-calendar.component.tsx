@@ -1,7 +1,7 @@
-import { CalendarSingleComponent } from '../calendar-single/calendar-single.component';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
+import { CalendarSingleComponent } from '../calendar-single';
 import { Dimensions, View, StyleSheet } from 'react-native';
-import { colores } from '../../theme/appTheme';
+import { colores } from '@src/theme';
 import { Component } from 'react'
 
 

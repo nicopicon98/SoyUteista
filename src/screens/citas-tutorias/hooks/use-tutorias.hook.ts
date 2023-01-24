@@ -1,8 +1,8 @@
 import { useState, useEffect, useContext } from 'react'
-import { getAllTutoriasByUser } from '../../../services';
-import { replaceNull } from '../../../utilities';
-import { AuthContext } from '../../../context';
-import { TutoriaResp } from '../../../models';
+import { getAllTutoriasByUser } from '@src/services';
+import { replaceNull } from '@src/utilities';
+import { AuthContext } from '@src/context';
+import { TutoriaResp } from '@src/models';
 
 export const useTutorias = () => {
   const [isLoading, setIsLoading] = useState(true);

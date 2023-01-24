@@ -1,11 +1,11 @@
 import { Alert, Appearance, FlatList, StyleSheet, Text, View, useWindowDimensions, RefreshControl } from 'react-native';
+import { SkeletonNews } from '@src/components/skeleton-news';
+import { AppBarComponent } from '@src/components/app-bar';
 import { useContext, useEffect, useState } from 'react';
-import { Noticia } from '../../components/Noticia';
-import { useNoticias } from './hooks/use-noticias.hook';
-import { AuthContext } from '../../context';
-import { AppBarComponent } from '../../components/app-bar';
-import { SkeletonNews } from '../../components/skeleton-news';
-import { fonts } from '../../theme';
+import { Noticia } from '@src/components/noticia';
+import { AuthContext } from '@src/context';
+import { useNoticias } from './hooks';
+import { fonts } from '@src/theme';
 
 export const HomeScreen = () => {
   const { isLoading, noticias, loadNoticia } = useNoticias();

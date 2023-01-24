@@ -1,10 +1,10 @@
 import { View, ActivityIndicator, StyleSheet, FlatList, useWindowDimensions, Appearance, RefreshControl } from 'react-native';
+import { AppBarComponent } from '@src/components/app-bar';
 import { Text } from 'react-native-animatable';
 import { Revista } from './components/revista';
+import { colores, fonts } from '@src/theme';
 import { useRevista } from './hooks';
 import { useState } from 'react';
-import { AppBarComponent } from '../../components/app-bar';
-import { colores, fonts } from '../../theme';
 
 export const RevistaScreen = () => {
   const { width } = useWindowDimensions();

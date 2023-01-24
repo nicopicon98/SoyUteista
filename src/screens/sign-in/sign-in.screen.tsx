@@ -3,8 +3,8 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import { Image } from 'react-native-elements';
 import { useContext, useState } from 'react';
-import { AuthContext } from '../../context';
-import { colores } from '../../theme';
+import { AuthContext } from '@src/context';
+import { colores } from '@src/theme';
 
 
 export const SignInScreen = () => {
@@ -18,12 +18,11 @@ export const SignInScreen = () => {
   }
 
   const { height, width } = useWindowDimensions();
-  const imageBackground: string = "../resources/Images/loginBackground.jpg";
 
   return (
     <View style={{ ...styles.container }}>
       <ImageBackground
-        source={require(imageBackground)}
+        source={require('@resources/Images/loginBackground.jpg')}
         resizeMode="cover"
         style={styles.image}
       >

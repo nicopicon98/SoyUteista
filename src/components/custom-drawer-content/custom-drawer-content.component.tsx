@@ -1,8 +1,8 @@
 import { DrawerContentScrollView } from '@react-navigation/drawer';
-import { GlobalStyles, colores } from '../../theme/appTheme';
 import { TouchableLeftMenu } from '../touchable-left-menu';
-import { CustomDrawerContentProps } from '../../models';
+import { CustomDrawerContentProps } from '@src/models';
 import { View, Text, StyleSheet } from 'react-native';
+import { colores, GlobalStyles } from '@src/theme';
 import { Image } from 'react-native-elements';
 
 export const CustomDrawerContent = (props: CustomDrawerContentProps) => {

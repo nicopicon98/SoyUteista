@@ -1,6 +1,6 @@
-import { UTSPostsCategories } from '../../../models';
-import { getAgendas } from '../../../services';
+import { UTSPostsCategories } from '@src/models';
 import { useState, useEffect } from 'react';
+import { getAgendas } from '@src/services';
 
 
 export const useAgendaInstitucional = () => {

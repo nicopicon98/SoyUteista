@@ -1,4 +1,4 @@
-import { AppBarComponent } from '../../components/app-bar';
+import { AppBarComponent } from '@src/components/app-bar';
 import Video from 'react-native-video';
 
 export const ExitoEscolarScreen = () => {

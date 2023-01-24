@@ -1,5 +1,5 @@
-import { BringCourseByTutor } from '../../../models';
-import { getCourseByTutor } from '../../../services';
+import { getCourseByTutor } from '@src/services';
+import { BringCourseByTutor } from '@src/models';
 import { useState } from 'react'
 
 export const useCoursesByIdTutor = () => {

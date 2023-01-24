@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { authorize, refresh } from 'react-native-app-auth';
-import { config } from '../config/auth';
+import { config } from '@src/config/auth';
 import moment from 'moment';
 
 export class AuthManager {

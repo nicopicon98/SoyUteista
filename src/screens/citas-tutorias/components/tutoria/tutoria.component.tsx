@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react'
-import { View, Text, StyleSheet, useWindowDimensions, TouchableWithoutFeedback, Appearance } from 'react-native';
+import { TutoriaModal } from '@src/components/tutoria-modal/tutoria-modal.component';
+import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import { colores } from '@src/theme/app.theme';
+import { blobToBase64 } from '@src/utilities';
 import { Image } from 'react-native-elements';
-import { colores } from '../../../../theme/appTheme';
-import { TutoriaModal } from '../../../../components/tutoria-modal/tutoria-modal.component';
-import { GraphManager } from '../../../../services';
-import { TutoriaResp } from '../../../../models';
-import { blobToBase64 } from '../../../../utilities';
+import { GraphManager } from '@src/services';
+import { useEffect, useState } from 'react'
+import { TutoriaResp } from '@src/models';
 
 interface Props {
   item: TutoriaResp
@@ -15,7 +15,7 @@ export const Tutoria = ({ item }: Props) => {
   const imageLogo: string = "https://avatarairlines.com/wp-content/uploads/2020/05/Male-placeholder.jpeg";
   const [tutorPhoto, setTutorPhoto] = useState(imageLogo);
   const [modalVisible, setModalVisible] = useState(false);
-  
+
   useEffect(() => {
     getTutorPhoto();
   }, [])
@@ -31,7 +31,7 @@ export const Tutoria = ({ item }: Props) => {
       setTutorPhoto(imageLogo);
     }
   }
-  
+
   return (
     <View>
       <TutoriaModal

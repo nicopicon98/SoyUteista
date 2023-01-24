@@ -1,6 +1,6 @@
 import React from 'react';
 import {View} from 'react-native-animatable';
-import AppBarComponent from '../components/AppBarComponent';
+import AppBarComponent from '../components/app-bar/app-bar.component';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import ListConvocatorias from '../components/ListConvocatorias';
 

@@ -10,6 +10,8 @@ export const AuthConfig = {
   ],
 };
 
+export const API_KEY = "JSPHPWORKS4everandever!";
+
 export const config: AuthConfiguration = {
   clientId: AuthConfig.appId,
   redirectUrl: 'app-uts-sistemas://react-native-auth/',

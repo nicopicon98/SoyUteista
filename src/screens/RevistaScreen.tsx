@@ -9,10 +9,10 @@ import {
   RefreshControl,
 } from 'react-native';
 import {Text} from 'react-native-animatable';
-import AppBarComponent from '../components/AppBarComponent';
+import AppBarComponent from '../components/app-bar/app-bar.component';
 import {Revista} from '../components/Revista';
 
-import {useRevista} from '../hooks/useRevista';
+import {useRevista} from '../hooks/use-revista';
 import {colores, fonts} from '../theme/appTheme';
 
 export const RevistaScreen = () => {

@@ -5,8 +5,8 @@ import QRCode from 'react-native-qrcode-svg';
 import { Image } from 'react-native-elements';
 
 import { colores, fonts } from '../theme/appTheme';
-import { AuthContext } from '../context/AuthContext';
-import AppBarComponent from '../components/AppBarComponent';
+import { AuthContext } from '../context/auth.component';
+import AppBarComponent from '../components/app-bar/app-bar.component';
 
 const { width, height } = Dimensions.get('window');
 

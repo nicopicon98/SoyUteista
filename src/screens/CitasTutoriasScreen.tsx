@@ -1,18 +1,14 @@
-import { useIsFocused } from '@react-navigation/native';
-import React, { useEffect } from 'react'
-
 import { Text, ActivityIndicator, View, FlatList, StyleSheet, useWindowDimensions, Appearance } from 'react-native';
-import AppBarComponent from '../components/AppBarComponent';
+import { useIsFocused } from '@react-navigation/native';
 import { Tutoria } from '../components/Tutoria';
-
-import { useTutoriasAll } from '../hooks/useTutoriasAll'
 import { colores } from '../theme/appTheme';
+import { useEffect } from 'react'
 
 const colorScheme = Appearance.getColorScheme();
 
 export const CitasTutoriasScreen = ({ route, navigation }) => {
 
-  const { isLoading, tutorias, loadTutorias } = useTutoriasAll();
+  const { isLoading, tutorias, loadTutorias } = useTutorias();
   const isFocused = useIsFocused();
   const { width, height } = useWindowDimensions();
 

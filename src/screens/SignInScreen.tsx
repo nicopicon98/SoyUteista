@@ -4,7 +4,7 @@ import { Image } from 'react-native-elements';
 
 import { colores, fonts } from '../theme/appTheme';
 import { NavigationProps } from '../types/navigation';
-import { AuthContext } from '../context/AuthContext';
+import { AuthContext } from '../context/auth.component';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 

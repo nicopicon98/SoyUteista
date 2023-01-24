@@ -5,7 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { AuthLoadingScreen } from '../screens/SplashScreen';
 import { SignInScreen } from '../screens/SignInScreen';
 import { LeftMenu } from "./LeftMenu";
-import { AuthContext } from '../context/AuthContext';
+import { AuthContext } from '../context/auth.component';
 
 const Stack = createStackNavigator();
 

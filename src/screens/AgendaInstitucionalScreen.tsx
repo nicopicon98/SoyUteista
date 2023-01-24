@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react';
 import { Appearance, FlatList, RefreshControl, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
-import AppBarComponent from '../components/AppBarComponent';
+import AppBarComponent from '../components/app-bar/app-bar.component';
 
 import { Noticia } from '../components/Noticia';
 import { SkeletonNews } from '../components/SkeletonNews';
-import { useAgendaInstitucional } from '../hooks/useAgendaInstitucional';
+import { useAgendaInstitucional } from '../hooks/use-agenda-institucional.hook';
 import { fonts } from '../theme/appTheme';
 
 

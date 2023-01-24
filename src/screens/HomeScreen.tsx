@@ -3,10 +3,10 @@ import { Alert, Appearance, FlatList, StyleSheet, Text, View, useWindowDimension
 
 import { Noticia } from '../components/Noticia';
 import { SkeletonNews } from '../components/SkeletonNews';
-import { useNoticias } from '../hooks/useNoticias';
-import { AuthContext } from '../context/AuthContext';
+import { useNoticias } from '../hooks/use-noticias';
+import { AuthContext } from '../context/auth.component';
 import { fonts } from '../theme/appTheme';
-import AppBarComponent from '../components/AppBarComponent';
+import AppBarComponent from '../components/app-bar/app-bar.component';
 
 
 export const HomeScreen = () => {

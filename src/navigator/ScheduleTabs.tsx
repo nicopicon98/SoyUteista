@@ -5,7 +5,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { colores } from '../theme/appTheme';
 import { DayScreen } from '../screens/DayScreen';
 import { useHorario } from '../hooks/useHorario';
-import AppBarComponent from '../components/AppBarComponent';
+import AppBarComponent from '../components/app-bar/app-bar.component';
 
 const Tab = createMaterialTopTabNavigator();
 const { width } = Dimensions.get('window');

@@ -3,7 +3,7 @@ import React from 'react';
 import { LogBox, Platform } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
-import { AuthProvider } from './src/context/AuthContext';
+import { AuthProvider } from './src/context/auth.component';
 import { StackNavigator } from './src/navigator/StackNavigator';
 import { AlertNotificationRoot } from 'react-native-alert-notification';
 import { Provider as PaperProvider } from 'react-native-paper';
@@ -13,7 +13,7 @@ import SpInAppUpdates, {
   StartUpdateOptions,
 } from 'sp-react-native-in-app-updates';
 import { colores } from './src/theme/appTheme';
-import { useNotifications } from './src/hooks/useNotifications';
+import { useNotifications } from './src/hooks/use-notifications';
 
 const inAppUpdates = new SpInAppUpdates(
   true // isDebug

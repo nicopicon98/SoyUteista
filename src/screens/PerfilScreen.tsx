@@ -12,8 +12,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import * as Progress from 'react-native-progress';
 
 import {colores, fonts} from '../theme/appTheme';
-import {AuthContext} from '../context/AuthContext';
-import AppBarComponent from '../components/AppBarComponent';
+import {AuthContext} from '../context/auth.component';
+import AppBarComponent from '../components/app-bar/app-bar.component';
 
 export const PerfilScreen = () => {
   const [loadProgress, setLoadProgress] = useState(true);

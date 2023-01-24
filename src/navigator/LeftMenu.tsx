@@ -8,7 +8,7 @@ import { CustomDrawerContent } from '../components/CustomDrawerContent';
 import { colores } from '../theme/appTheme';
 import { ScheduleTabs } from './ScheduleTabs';
 import { TutoriasTabs } from './TutoriasTabs';
-import { AuthContext } from '../context/AuthContext';
+import { AuthContext } from '../context/auth.component';
 
 import { HomeScreen } from '../screens/HomeScreen';
 import { CalendarScreen } from '../screens/CalendarScreen';

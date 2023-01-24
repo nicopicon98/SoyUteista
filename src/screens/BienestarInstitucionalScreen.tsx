@@ -1,5 +1,5 @@
 import React from 'react'
-import AppBarComponent from '../components/AppBarComponent';
+import AppBarComponent from '../components/app-bar/app-bar.component';
 
 const BienestarInstitucionalScreen = () => {
   return (

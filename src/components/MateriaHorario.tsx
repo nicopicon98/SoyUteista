@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, View, Text, useWindowDimensions, Dimensions, Appearance } from 'react-native';
 
-import { MateriaInterface } from '../models/HorarioInterface';
+import { MateriaInterface } from '../models/horario.model';
 import { colores, fonts } from '../theme/appTheme';
 
 interface Props {

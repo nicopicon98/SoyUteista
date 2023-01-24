@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react'
 
 import { ActivityIndicator, View, LogBox, Text, Alert, StyleSheet, Appearance, RefreshControl } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import AppBarComponent from '../components/AppBarComponent';
+import AppBarComponent from '../components/app-bar/app-bar.component';
 
 import { MateriaNota } from '../components/MateriaNota';
 
-import { useNotas } from '../hooks/useNotas';
+import { useNotas } from '../hooks/use-notas';
 import { colores } from '../theme/appTheme';
 
 LogBox.ignoreLogs(["EventEmitter.removeListener"]);

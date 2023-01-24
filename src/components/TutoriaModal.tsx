@@ -4,13 +4,13 @@ import { } from 'react-native-animatable';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import Icon from 'react-native-vector-icons/Ionicons';
-import { TutoriasAllInterface } from '../models/TutoriasAllInterface';
+import { TutoriaResp } from '../models';
 import { colores } from '../theme/appTheme';
 
 interface Props {
   modalVisible: boolean;
   setModalVisible: (visible: boolean) => void;
-  infoTutoria: TutoriasAllInterface;
+  infoTutoria: TutoriaResp;
 }
 
 const colorScheme = Appearance.getColorScheme();

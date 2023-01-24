@@ -3,14 +3,14 @@ import { View, Text, StyleSheet, useWindowDimensions, TouchableWithoutFeedback, 
 
 import { Image } from 'react-native-elements';
 
-import { TutoriasAllInterface } from '../models/TutoriasAllInterface';
-import { GraphManager } from '../config/graph/GraphManager';
 import { blobToBase64 } from '../helpers/blobToBase64';
 import { colores } from '../theme/appTheme';
 import { TutoriaModal } from './TutoriaModal';
+import { GraphManager } from '../services';
+import { TutoriaResp } from '../models';
 
 interface Props {
-  item: TutoriasAllInterface
+  item: TutoriaResp
 }
 
 const colorScheme = Appearance.getColorScheme();

@@ -3,12 +3,12 @@ import { Text, View, StyleSheet, Image, Dimensions, TouchableOpacity } from 'rea
 import { Linking } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
+import { UTSPostsCategories } from '../models';
 
-import { MantenteAlDiaInterface } from '../models/UTSPostsCategorias';
 import { colores, fonts } from '../theme/appTheme';
 
 interface Props {
-  item: MantenteAlDiaInterface;
+  item: UTSPostsCategories;
 }
 
 const { width, height } = Dimensions.get('window');

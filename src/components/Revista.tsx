@@ -1,13 +1,13 @@
-import React from 'react'
 import { Text, View, StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native';
-import { Linking } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-
 import { colores, fonts } from '../theme/appTheme';
-import { RevistaInterface } from '../models/RevistaInterface';
+import { RevistaResp } from '../models';
+import { Linking } from 'react-native';
+import React from 'react'
+
 
 interface Props {
-  item: RevistaInterface;
+  item: RevistaResp;
 }
 
 const { width, height } = Dimensions.get('window');

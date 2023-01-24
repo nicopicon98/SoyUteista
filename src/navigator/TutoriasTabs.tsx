@@ -10,7 +10,7 @@ import { CitasTutoriasScreen } from '../screens/CitasTutoriasScreen';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Examples } from '../screens/Examples';
 import { AlertNotificationRoot } from 'react-native-alert-notification';
-import AppBarComponent from '../components/AppBarComponent';
+import AppBarComponent from '../components/app-bar/app-bar.component';
 
 
 const Tab = createMaterialTopTabNavigator();

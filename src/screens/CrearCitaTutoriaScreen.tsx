@@ -1,29 +1,25 @@
 import { Text, View, StyleSheet, ActivityIndicator, Dimensions, Appearance, Pressable, Modal } from 'react-native';
-import { CustomCalendarComponent } from '../components/CustomCalendarComponent';
-import { useFranjaByDiaAsignatura } from '../hooks/useFranjaByDiaAsignatura';
+import { CustomCalendarComponent } from '../components/custom-calendar-component/CustomCalendarComponent';
+import { useFranjaByDiaAsignatura } from '../hooks/use-franja-by-dia-asignatura';
 import { ALERT_TYPE, Dialog, Toast } from 'react-native-alert-notification';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
-import { dayOfTheWeek, inverseDayOfTheWeek } from '../helpers/functions';
 import DropDownPicker, { ItemType } from 'react-native-dropdown-picker';
-import { CreateCitaInterface } from '../models/CreateCitaInterface';
-import { useDiaByAsignatura } from '../hooks/useDiaByAsignatura';
-import { useTutoriaBusqueda } from '../hooks/useTutoriaBusqueda';
+import { useDiaByAsignatura } from '../hooks/use-day-by-asignatura';
 import React, { useContext, useEffect, useState } from 'react';
-import { useTutoriasInsert } from '../hooks/useTutoriasInsert';
-import { getInfoTutor, postInsertTutoria } from '../services';
-import { GraphManager } from '../config/graph/GraphManager';
-import { useCursoByTutor } from '../hooks/useCursoByTutor';
+import { useTutoriasInsert } from '../hooks/use-insert-tutorias';
+import { getInfoTutor, GraphManager, postInsertTutoria } from '../services';
+import { useCursoByTutor } from '../hooks/use-courses-by-id_tutor';
 import RadioGroup from 'react-native-radio-buttons-group';
-import { blobToBase64 } from '../helpers/blobToBase64';
 import { NavigationProps } from '../types/navigation';
 import { useForm, Controller } from 'react-hook-form';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { AuthContext } from '../context/AuthContext';
-import { useInfoTutor } from '../hooks/useInfoTutor';
-import { Capitalize } from '../helpers/Capitalize';
+import { AuthContext } from '../context/auth.component';
+import { useInfoTutor } from '../hooks/use-tutor-info';
 import { TextInput } from 'react-native-paper';
 import { Image } from 'react-native-elements';
 import { colores } from '../theme/appTheme';
+import { CreateCita } from '../models';
+import { blobToBase64, Capitalize, dayToID, idToDay } from '../utilities';
 
 //Global values
 const colorScheme = Appearance.getColorScheme();
@@ -128,7 +124,7 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
     isLoadingCourses,
     clickCourses,
     currentValue,
-  } = useTutoriaBusqueda(width * 0.06);
+  } = useSearchTutoria(width * 0.06);
 
   const { cursosByTutor, onLoadCursoByTutor, isLoadingCursoByTutor } =
     useCursoByTutor();
@@ -144,7 +140,7 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
 
   const { infoTutor, onLoadInfoTutor, isLoadingInfoTutor } = useInfoTutor();
 
-  const { insertTutoria } = useTutoriasInsert();
+  const { insertTutoria } = useInsertTutorias();
   useInfoTutor();
   //Effects
   useEffect(() => {
@@ -269,7 +265,7 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
   };
 
   const onHandleSelectDia = (day: string) => {
-    const dia = inverseDayOfTheWeek(Number(day));
+    const dia = idToDay(Number(day));
     const id_asignatura = control._formValues.id_asignatura;
     onLoadFranjaByDiaAsignatura(id_asignatura, dia);
   };
@@ -316,8 +312,8 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
       setDayItems(
         diaByAsignatura.map(e => ({
           label: Capitalize(e.dia),
-          value: dayOfTheWeek(e.dia).toString(),
-          testID: dayOfTheWeek(e.dia).toString(),
+          value: dayToID(e.dia).toString(),
+          testID: dayToID(e.dia).toString(),
           icon: () => <Icon name="today-outline" size={25} />,
         })),
       );
@@ -350,7 +346,7 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
   const onSubmitFinal = async () => {
     console.log("click")
     const { _formValues: { id_asignatura, dia, franja, celular, comentarios, tema, fecha_tutoria } } = control;
-    const diaValue = inverseDayOfTheWeek(Number(dia))
+    const diaValue = idToDay(Number(dia))
     const rep = await getInfoTutor(id_asignatura, diaValue, franja)
     const { data } = rep;
     crearCita({
@@ -369,7 +365,7 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
     });
   };
 
-  const crearCita = async (obj: CreateCitaInterface) => {
+  const crearCita = async (obj: CreateCita) => {
     const {
       id_crear_cita,
       documento,

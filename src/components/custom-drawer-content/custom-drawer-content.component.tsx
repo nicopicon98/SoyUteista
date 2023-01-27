@@ -106,21 +106,8 @@ export const CustomDrawerContent = (props: CustomDrawerContentProps) => {
             />
           )}
 
-        {/* Tutorias */}
-        {props.userResult === 1 && (
-          <TouchableLeftMenu
-            type="navigate"
-            iconColor={colores.Cool_Gray_5_C}
-            iconSize={30}
-            iconName="people-sharp"
-            menuText="Tutorías"
-            screenDestiny="Tutorias"
-            navigation={props.navigation}
-          />
-        )}
-
         {/* Exito Escolar  */}
-        {props.userResult === 3 && (
+        {props.userResult === 1 && (
           <TouchableLeftMenu
             type="navigate"
             iconColor={colores.Cool_Gray_5_C}
@@ -133,7 +120,7 @@ export const CustomDrawerContent = (props: CustomDrawerContentProps) => {
         )}
 
         {/* Directorio Escolar  */}
-        {props.userResult === 3 && (
+        {props.userResult === 1 && (
           <TouchableLeftMenu
             type="navigate"
             iconColor={colores.Cool_Gray_5_C}
@@ -144,21 +131,8 @@ export const CustomDrawerContent = (props: CustomDrawerContentProps) => {
             navigation={props.navigation}
           />
         )}
-
-        {/* Servicios Bienestar  */}
-        {props.userResult === 3 && (
-          <TouchableLeftMenu
-            type="navigate"
-            iconColor={colores.Cool_Gray_5_C}
-            iconSize={30}
-            iconName="heart"
-            menuText="Bienestar Institucional"
-            screenDestiny="BienestarInstitucional"
-            navigation={props.navigation}
-          />
-        )}
         {/* Convocatorias */}
-        {props.userResult === 3 && (
+        {props.userResult === 1 && (
           <TouchableLeftMenu
             type="navigate"
             iconColor={colores.Cool_Gray_5_C}

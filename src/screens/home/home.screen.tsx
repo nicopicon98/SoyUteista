@@ -6,12 +6,16 @@ import { Noticia } from '@src/components/noticia';
 import { AuthContext } from '@src/context';
 import { useNoticias } from './hooks';
 import { fonts } from '@src/theme';
+import { FABGroup } from '@src/components/FAB-group';
+import { useNavigation } from '@react-navigation/native';
+import { screens } from '@src/utilities';
 
 export const HomeScreen = () => {
   const { isLoading, noticias, loadNoticia } = useNoticias();
   const { authState: { user } } = useContext(AuthContext);
   const { width } = useWindowDimensions();
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const navigation = useNavigation<any>();
 
   const colorScheme = Appearance.getColorScheme();
   useEffect(() => {
@@ -42,34 +46,37 @@ export const HomeScreen = () => {
       <View style={{ ...styles.container, backgroundColor: colorScheme === 'dark' ? 'black' : 'white' }}>
         {(isLoading) && <SkeletonNews />}
         {!isLoading &&
-          <View style={{
-            alignItems: 'center',
-            backgroundColor: colorScheme === 'dark' ? 'black' : 'white',
-            marginHorizontal: width * 0.037
-          }}>
-            <FlatList
-              data={noticias}
-              keyExtractor={(noticia) => noticia.url}
-              showsVerticalScrollIndicator={false}
-              ListHeaderComponent={(
-                <Text style={{
-                  ...styles.title,
-                  marginBottom: width * 0.04,
-                  top: width * 0.05,
-                  paddingBottom: width * 0.03,
-                  fontSize: width * 0.09,
-                  left: -(width * 0.005)
-                }}>Últimas Noticias</Text>
-              )}
-              renderItem={Noticia}
-              refreshControl={
-                <RefreshControl
-                  refreshing={isRefreshing}
-                  onRefresh={loadNoticiasFromBackend}
-                />
-              }
-            />
-          </View>
+          <>
+            <View style={{
+              alignItems: 'center',
+              backgroundColor: colorScheme === 'dark' ? 'black' : 'white',
+              marginHorizontal: width * 0.037
+            }}>
+              <FlatList
+                data={noticias}
+                keyExtractor={(noticia) => noticia.url}
+                showsVerticalScrollIndicator={false}
+                ListHeaderComponent={(
+                  <Text style={{
+                    ...styles.title,
+                    marginBottom: width * 0.04,
+                    top: width * 0.05,
+                    paddingBottom: width * 0.03,
+                    fontSize: width * 0.09,
+                    left: -(width * 0.005)
+                  }}>Últimas Noticias</Text>
+                )}
+                renderItem={Noticia}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={isRefreshing}
+                    onRefresh={loadNoticiasFromBackend}
+                  />
+                }
+              />
+            </View>
+            <FABGroup screens={screens(navigation)}/>
+          </>
         }
       </View>
     </>

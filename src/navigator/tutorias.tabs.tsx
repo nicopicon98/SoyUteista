@@ -1,5 +1,5 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { Dimensions, View,  StyleSheet, Appearance } from 'react-native';
+import { Dimensions, View, StyleSheet, Appearance } from 'react-native';
 import { CrearCitaTutoriaScreen } from '@src/screens/crear-cita-tutoria';
 import { CitasTutoriasScreen } from '@src/screens/citas-tutorias';
 import { AppBarComponent } from '@src/components/app-bar';
@@ -15,8 +15,8 @@ export const TutoriasTabs = () => {
 
   return (
     <>
-    <AppBarComponent title='Citas Tutorias'/>
-    <View style={{ flex: 1, backgroundColor: colorScheme === 'dark' ? 'black' : 'white' }}>
+      <AppBarComponent title='Citas Tutorias' />
+      <View style={{ flex: 1, backgroundColor: colorScheme === 'dark' ? 'black' : 'white' }}>
         <Tab.Navigator
           style={{
             paddingTop: 0
@@ -62,7 +62,7 @@ export const TutoriasTabs = () => {
         </Tab.Navigator>
       </View>
     </>
-      
+
   )
 }
 

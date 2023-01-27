@@ -14,7 +14,10 @@ export const colores = {
   Green_Aqua: '#30D798',
   Blue_Dark: '#3070D7',
   Blue_Heaven: '#30C3D7',
-  White: '#FFFFFF'
+  White: '#FFFFFF',
+
+  //opacity
+  GreenLightOpacity: '#d5f7d9'
 }
 
 export const fonts = {

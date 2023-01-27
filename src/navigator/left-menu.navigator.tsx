@@ -1,4 +1,3 @@
-import { BienestarInstitucionalScreen } from '@src/screens/bienestar-institucional';
 import { AgendaInstitucionalScreen } from '@src/screens/agenda-institucional';
 import { CustomDrawerContent } from '@src/components/custom-drawer-content';
 import { DirectorioEscolarScreen } from '@src/screens/directorio-escolar';
@@ -16,6 +15,7 @@ import { TutoriasTabs } from './tutorias.tabs';
 import { AuthContext } from '@src/context';
 import { colores } from '@src/theme';
 import { useContext } from 'react';
+import { BienestarTabs } from './bienestar-tabs';
 
 const Drawer = createDrawerNavigator();
 
@@ -40,28 +40,26 @@ export const LeftMenuNavigator = () => {
           userName={user!.userFullName}
           userEmail={user!.userEmail}
           userPhoto={user!.userPhoto}
-          height={user!.userResult !== 1 ? height * 0.62 : height }
+          height={user!.userResult !== 1 ? height * 0.62 : height}
           userPhotoError={user!.userPhotoError}
           userResult={user!.userResult}
           darkMode={colorScheme}
           userFranDesc={user!.userMoreInfo.C_FRAN_DESCRIPCION}
         />
       )}>
-
-      <Drawer.Screen name='Inicio' component={HomeScreen} options={{ headerTitle: 'SoyUteísta' }} />
-      <Drawer.Screen name='Horario' component={ScheduleTabs} options={{ headerTitle: 'Horario' }} />
-      <Drawer.Screen name='Carnet' component={CarnetScreen} options={{ headerTitle: 'Carnet' }} />
-      <Drawer.Screen name='Perfil' component={ProfileScreen} options={{ headerTitle: 'Perfil' }} />
-      <Drawer.Screen name='Notas' component={GradesScreen} options={{ headerTitle: 'Notas actuales' }} />
-      <Drawer.Screen name='Revista' component={RevistaScreen} options={{ headerTitle: 'Revista' }} />
-      <Drawer.Screen name='Agenda' component={AgendaInstitucionalScreen} options={{ headerTitle: 'Agenda UTS' }} />
-      <Drawer.Screen name='Tutorias' component={TutoriasTabs} options={{ headerTitle: 'Tutorías' }} />
-      <Drawer.Screen name='ExitoEscolar' component={ExitoEscolarScreen} options={{ headerTitle: 'Exito Escolar' }} />
-      <Drawer.Screen name='DirectorioEscolar' component={DirectorioEscolarScreen} options={{ headerTitle: 'Directorio Escolar' }} />
-      <Drawer.Screen name='BienestarInstitucional' component={BienestarInstitucionalScreen} options={{ headerTitle: 'Bienestar Institucional' }} />
-      <Drawer.Screen name='Convocatorias' component={ConvocatoriasScreen} options={{ headerTitle: 'Convocatorias' }} />
+      <Drawer.Screen name='Inicio' component={HomeScreen} />
+      <Drawer.Screen name='Horario' component={ScheduleTabs} />
+      <Drawer.Screen name='Carnet' component={CarnetScreen} />
+      <Drawer.Screen name='Perfil' component={ProfileScreen} />
+      <Drawer.Screen name='Notas' component={GradesScreen} />
+      <Drawer.Screen name='Revista' component={RevistaScreen} />
+      <Drawer.Screen name='Agenda' component={AgendaInstitucionalScreen} />
+      <Drawer.Screen name='ExitoEscolar' component={ExitoEscolarScreen} />
+      <Drawer.Screen name='DirectorioEscolar' component={DirectorioEscolarScreen} />
+      <Drawer.Screen name='Convocatorias' component={ConvocatoriasScreen} />
       {/* <Drawer.Screen name='Tutorias' component={TutoriasTemporal} options={{ headerTitle: 'Tutorias' }} /> */}
-
+      <Drawer.Screen name="Bienestar" component={BienestarTabs} />
+      <Drawer.Screen name='Tutorias' component={TutoriasTabs} />
     </Drawer.Navigator>
   );
 }

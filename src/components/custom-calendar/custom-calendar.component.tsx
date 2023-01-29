@@ -59,10 +59,7 @@ export class CustomCalendarComponent extends Component<Props> {
 				{/* Close modal */}
 				<Calendar
 					markingType={"custom"}
-					// headerStyle={{backgroundColor: 'red'}}
 					hideExtraDays={true}
-					// customHeaderTitle={<Text>"Xd"</Text>}
-					// disableArrowLeft={this.state.isCurrentMonth!}
 					showTodayButton={true}
 					markedDates={{
 						[markedDay]: {

@@ -9,8 +9,8 @@ export const BienestarInstitucionalScreen = () => {
   const bienestarFABScreen = screens(navigation).slice(1)
   return (
     <>
-      <View style={{flex: 1, backgroundColor: 'red'}} />
-      <FABGroup screens={bienestarFABScreen} />
+      
+      {/* <FABGroup screens={bienestarFABScreen} /> */}
     </>
   )
 }

@@ -17,7 +17,7 @@ export const colores = {
   White: '#FFFFFF',
 
   //opacity
-  GreenLightOpacity: '#d5f7d9'
+  GreenLightOpacity: 'rgba(196, 215, 48, 0.7)'
 }
 
 export const fonts = {

@@ -1,7 +1,7 @@
+import { BottomNavigation, DefaultTheme } from 'react-native-paper';
 import { useBienestarTabs } from './hooks/useBienestarTabs.hooks';
 import { View, Text, TextStyle, StyleProp } from 'react-native';
 import { AppBarComponent } from "@src/components/app-bar";
-import { BottomNavigation } from 'react-native-paper';
 import { colores } from "@src/theme";
 
 export const BienestarTabs = () => {
@@ -22,10 +22,17 @@ export const BienestarTabs = () => {
         navigationState={{ index, routes }}
         onIndexChange={setIndex}
         inactiveColor="black"
+        activeColor={colores.Pantone_382_C}
         renderScene={renderScene}
         shifting={true}
+        theme={{
+          ...DefaultTheme,
+          colors: {
+            ...DefaultTheme.colors,
+            secondaryContainer: colores.GreenLightOpacity, // Use transparent to disable the little highlighting oval
+          },
+        }}
         sceneAnimationEnabled={true}
-        activeColor={colores.Pantone_382_C}
         renderLabel={({ route, focused }) => {
           return (
             <View style={{
@@ -37,14 +44,8 @@ export const BienestarTabs = () => {
             </View>
           )
         }}
-        onTabPress={({route}) => route.key === 'todas' && setBadgeVisible(false)}
-        // renderIcon={({ route, focused }) => {
-        //   // return {route.focusedIcon}
-        //   return (
-        //     <Icon />
-
-        //   )
-        // }}
+        compact={true}
+        onTabPress={({ route }) => route.key === 'todas' && setBadgeVisible(false)}
       />
 
     </>

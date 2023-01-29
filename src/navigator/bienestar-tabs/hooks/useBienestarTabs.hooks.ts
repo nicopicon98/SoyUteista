@@ -9,7 +9,7 @@ export const useBienestarTabs = (amountCitas: number) => {
   const routes = [
     {
       key: 'agendar',
-      title: 'Agendar',
+      title: 'Agenda tu cita',
       focusedIcon: 'calendar-account',
       unfocusedIcon: 'calendar-account-outline',
     },

@@ -1,33 +1,51 @@
-import { FABGroup } from '@src/components/FAB-group';
-import { screens } from '@src/utilities';
-import { View, Text, Appearance, Dimensions, ScrollView } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { SegmentedButtonsResponsive } from "./components/segmented-buttons";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { CardBienestar } from "@src/components/card-bienestar"
+import { useGetProByField } from "./hooks";
+import { StyleSheet, Text } from 'react-native';
+import { servicesFn } from "./data";
+import { useState } from 'react';
+import { ActivityIndicator } from "react-native-paper";
 
-const colorScheme = Appearance.getColorScheme();
-const { width } = Dimensions.get("window")
 export const CrearCitaBienestarScreen = () => {
+  const [value, setValue] = useState<string>('odontologia');
+  const {
+    fetchProfessionalsByField,
+    professionals,
+    isLoadingProfessionals
+  } = useGetProByField();
 
-  const navigation = useNavigation();
-  const bienestarFABScreen = screens(navigation).slice(1)
+  const pressFieldHandler = async function () {
+    const _field = this.value;
+    console.log(_field)
+    await fetchProfessionalsByField(_field);
+  }
+
+  const servicesButtons = servicesFn(pressFieldHandler);
+  const professionalsView = !isLoadingProfessionals && professionals?.map(e => {
+    return <Text style={{fontWeight: 'bold'}}>{}</Text>
+  })
+
+  console.log(professionals, 'root')
 
   return (
-    <View style={{ flex: 1 }}>
-      <ScrollView
-        style={{
-          backgroundColor: colorScheme === 'dark' ? 'black' : 'white',
-          
-        }}>
-        <View style={{
-          alignItems: 'center',
-          marginHorizontal: width * 0.037,
-          }}>
-          {
-            [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 1, 2, 3, 2, 1, 2, 3, 4, 5, 6, 7, 4, 2].map((e, _) => {
-              return <Text key={_}>{e}</Text>
-            })}
-        </View>
-      </ScrollView>
-      <FABGroup screens={bienestarFABScreen} />
-    </View>
+    <CardBienestar>
+      <SafeAreaView style={styles.container}>
+        <SegmentedButtonsResponsive
+          buttons={servicesButtons}
+          value={value}
+          onValueChange={setValue}
+        />
+        {isLoadingProfessionals && <ActivityIndicator />}
+        {!isLoadingProfessionals && professionalsView}
+      </SafeAreaView>
+    </CardBienestar>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+  },
+});

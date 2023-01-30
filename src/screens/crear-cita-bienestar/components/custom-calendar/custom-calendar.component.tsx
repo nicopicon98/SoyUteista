@@ -9,13 +9,14 @@ interface Props {
   onChangeDate: (data: string) => void;
 }
 
-const {width} = Dimensions.get("window");
+const {width, height} = Dimensions.get("window");
 
 export const CustomCalendarComponent = ({ markedDay, onPressDate, onChangeDate }: Props) => {
   return (
     <Calendar
+      style={{width: width*0.9}}
       markingType={"custom"}
-      // hideExtraDays={true}
+      hideExtraDays={true}
       showTodayButton={true}
       markedDates={{
         [markedDay]: {

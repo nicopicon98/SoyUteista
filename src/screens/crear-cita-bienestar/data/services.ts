@@ -18,8 +18,7 @@ export const servicesFn = (fn: () => void) => {
       icon: 'stethoscope',
     },
   ]
-  const servicesResp = services.map(e => {
+  return services.map(e => {
     return { ...e, onPress: fn }
   })
-  return servicesResp
 }

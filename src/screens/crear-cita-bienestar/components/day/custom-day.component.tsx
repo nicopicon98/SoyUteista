@@ -39,7 +39,7 @@ export const CustomDay =({ date, onPressDate, marking, onChangeDate }: Props) =>
 
 const styles = StyleSheet.create({
   container: {
-    padding: width * 0.01
+    padding: width * 0.00
   },
   textActive: {
     color: 'black',

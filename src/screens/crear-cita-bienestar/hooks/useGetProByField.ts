@@ -4,7 +4,7 @@ import { Professional } from '../models/professional.model';
 
 export const useGetProByField = () => {
 
-  const [professionals, setProfessionals] = useState<Professional[]>()
+  const [professionals, setProfessionals] = useState<Professional[]>([])
   const [isLoadingProfessionals, setIsLoadingProfessionals] = useState<boolean>(false);
 
   const fetchProfessionalsByField = async (field: string = "odontologia") => {

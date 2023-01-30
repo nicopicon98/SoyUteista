@@ -1,8 +1,8 @@
-import { arrToChunkArrOfArrs } from "@src/utilities/arr-to-chunk-arr-of-arrs";
-import { Service } from '../../models/services.model';
-import { SegmentedButtons } from "react-native-paper"
-import { Dispatch, SetStateAction } from "react";
 import { Dimensions, StyleSheet } from "react-native";
+import { Service } from '../../models/services.model';
+import { arrToChunkArrOfArrs } from "@src/utilities";
+import { SegmentedButtons } from "react-native-paper";
+import { Dispatch, SetStateAction } from "react";
 
 interface Props {
   buttons: Service[];

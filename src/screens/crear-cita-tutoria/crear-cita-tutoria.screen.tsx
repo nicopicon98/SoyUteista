@@ -125,6 +125,7 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
     clickCourses,
     currentValue,
   } = useSearchTutoria(width * 0.06);
+  
   const { cursosByTutor, onLoadCursoByTutor, isLoadingCursoByTutor } = useCoursesByIdTutor();
   const { dayByAsignatura, isLoadingDayByAsignatura, onLoadDiaByAsignatura } = useDayByAsignatura();
   const { franjaByDiaAsignatura, isLoadingFranjaByDiaAsignatura, onLoadFranjaByDiaAsignatura } = useFranjaByDiaAsignatura();

@@ -82,7 +82,6 @@ export class CustomCalendarComponent extends Component<Props> {
 						);
 					}}
 				/>
-				
 			</View>
 		)
 	}

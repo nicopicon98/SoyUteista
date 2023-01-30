@@ -11,38 +11,39 @@ interface Props {
 	onChangeDate: (data: string) => void;
 }
 
-const { width} = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
-export const CalendarSingleComponent = ({ date, dayWeek, onPressDate, state, marking, onChangeDate }: Props) => {
-	let date2 = new Date(date!.dateString);
-	let actualDate = new Date();
-	actualDate.setHours(0, 0, 0, 0)
-	const actualMonth = actualDate.getMonth() + 1 < 10 ? "0" + (actualDate.getMonth() + 1) : actualDate.getMonth() + 1
-	const today = actualDate.getFullYear() + "-" + actualMonth + "-" + actualDate.getDate()
-	return (
-		<View>
-			{(date2.getDay() === dayWeek &&
-				state !== 'disabled' &&
-				(date2.getTime() >= actualDate.getTime() || date.dateString === today)) // si esto llega a fallar lo que va despues del or poner date.dateString === today 
-				? <Pressable onPress={() => {
-					onPressDate(date!.dateString)
-					onChangeDate(date!.dateString)
-				}}>
-					<View style={{ ...styles.container, ...marking?.customStyles?.container }}>
-						<Text
-							style={{ ...styles.textActive, ...marking?.customStyles?.text }}
-						>
-							{date?.day}
-						</Text>
+export const CalendarSingleComponent =
+	({ date, dayWeek, onPressDate, state, marking, onChangeDate }: Props) => {
+		let date2 = new Date(date!.dateString);
+		let actualDate = new Date();
+		actualDate.setHours(0, 0, 0, 0)
+		const actualMonth = actualDate.getMonth() + 1 < 10 ? "0" + (actualDate.getMonth() + 1) : actualDate.getMonth() + 1
+		const today = actualDate.getFullYear() + "-" + actualMonth + "-" + actualDate.getDate()
+		return (
+			<View>
+				{(date2.getDay() === dayWeek &&
+					state !== 'disabled' &&
+					(date2.getTime() >= actualDate.getTime() || date.dateString === today)) // si esto llega a fallar lo que va despues del or poner date.dateString === today 
+					? <Pressable onPress={() => {
+						onPressDate(date!.dateString)
+						onChangeDate(date!.dateString)
+					}}>
+						<View style={{ ...styles.container, ...marking?.customStyles?.container }}>
+							<Text
+								style={{ ...styles.textActive, ...marking?.customStyles?.text }}
+							>
+								{date?.day}
+							</Text>
+						</View>
+					</Pressable>
+					: <View style={{ ...styles.container }}>
+						<Text style={{ ...styles.textDisabled }}>{date?.day}</Text>
 					</View>
-				</Pressable>
-				: <View style={{ ...styles.container }}>
-					<Text style={{ ...styles.textDisabled }}>{date?.day}</Text>
-				</View>
-			}
-		</View>
-	)
-}
+				}
+			</View>
+		)
+	}
 
 const styles = StyleSheet.create({
 	container: {

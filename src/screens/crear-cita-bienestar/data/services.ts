@@ -23,4 +23,3 @@ export const servicesFn = (fn: () => void) => {
   })
   return servicesResp
 }
-

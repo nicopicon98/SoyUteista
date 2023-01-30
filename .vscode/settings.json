@@ -1,0 +1,16 @@
+{
+  "audioCues.volume": 0,
+  "audioCues.diffLineDeleted": "off",
+  "audioCues.diffLineInserted": "off",
+  "audioCues.terminalQuickFix": "off",
+  "audioCues.taskFailed": "off",
+  "audioCues.taskCompleted": "off",
+  "audioCues.onDebugBreak": "off",
+  "audioCues.notebookCellFailed": "off",
+  "audioCues.notebookCellCompleted": "off",
+  "audioCues.noInlayHints": "off",
+  "audioCues.lineHasInlineSuggestion": "off",
+  "audioCues.lineHasFoldedArea": "off",
+  "audioCues.lineHasError": "off",
+  "audioCues.lineHasBreakpoint": "off"
+}

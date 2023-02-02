@@ -135,8 +135,8 @@ android {
         applicationId "com.soyuteista"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 10
-        versionName "Cthulhu"
+        versionCode 8
+        versionName "1.0.8"
         manifestPlaceholders = [ appAuthRedirectScheme: 'app-uts-sistemas']
     }
     splits {

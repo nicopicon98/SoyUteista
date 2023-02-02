@@ -24,7 +24,7 @@ inAppUpdates.checkNeedsUpdate().then((result) => {
     if (Platform.OS === 'android') {
       // android only, on iOS the user will be promped to go to your app store page
       updateOptions = {
-        updateType: IAUUpdateKind.FLEXIBLE,
+        updateType: IAUUpdateKind.IMMEDIATE,
       };
     }
     inAppUpdates.startUpdate(updateOptions); // https://github.com/SudoPlz/sp-react-native-in-app-updates/blob/master/src/types.ts#L78

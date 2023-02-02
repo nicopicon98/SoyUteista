@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// const baseURL = 'http://webservice.uts.edu.co/endpoint/development';
-const baseURL = 'http://webservice.uts.edu.co/endpoint/production';
+
+const baseURL = 'https://webservice.uts.edu.co/api/v1/production/soyuteista';
 
 const notasAPI = axios.create({ baseURL })
 

@@ -1,6 +1,6 @@
 import { getAllProfessionalsByfield } from '@src/services/bienestar.service';
 import { useEffect, useState } from 'react'
-import { Professional } from '../models/professional.model';
+import { Professional } from '../models';
 
 export const useGetProByField = () => {
 

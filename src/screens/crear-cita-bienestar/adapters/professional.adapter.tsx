@@ -1,13 +1,19 @@
-import { Professional } from "../models/professional.model"
-import Icon from 'react-native-vector-icons/Ionicons';
-import { Capitalize } from "@src/utilities"
 import { ItemType } from "react-native-dropdown-picker";
+// import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/FontAwesome5Pro';
+import { Capitalize } from "@src/utilities"
+import { Professional } from "../models"
+
+interface Params {
+  professionals: Professional[];
+  customIcon: JSX.Element
+}
 
 export const createProfessionalItemsAdapter =
-  (professionals: Professional[]): ItemType<string>[] => {
+    ({professionals, customIcon}: Params): ItemType<string>[] => {
     return professionals.map(e => ({
       label: `${Capitalize(e.nombre)}`,
-      value: e.id_usuario,
-      icon: () => <Icon name="person-outline" size={25} />
+      value: `${e.id_usuario}`,
+      icon: () => customIcon
     }));
   }

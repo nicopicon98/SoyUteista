@@ -1,4 +1,5 @@
-import { createProfessionalItemsAdapter, insertCitaBienestarAdapter } from "./adapters";
+import { createProfessionalItemsAdapter, createScheduleItemAdapter } from "./adapters";
+import { fromDMYSlashtoYMDHyphen, fromYMDHyphentoDMYSlash } from "@src/utilities";
 import { SegmentedButtonsResponsive } from "./components/segmented-buttons";
 import DropDownPicker, { ItemType } from "react-native-dropdown-picker";
 import { CustomCalendarComponent } from "./components/custom-calendar";
@@ -6,13 +7,17 @@ import { StyleSheet, Text, Dimensions, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { CardBienestar } from "@src/components/card-bienestar"
-import { useState, useEffect, useContext, useReducer } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { ActivityIndicator } from "react-native-paper";
 import { Controller, useForm } from "react-hook-form";
 import { AuthContext } from '@src/context';
 import { useGetProByField } from "./hooks";
 import { colores } from "@src/theme";
 import { servicesFn } from "./data";
+import { useGetAvailSchedule } from './hooks/use-get-avail-schedule.hook';
+import moment from "moment";
+import 'moment/locale/es';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const { width } = Dimensions.get('window')
 
@@ -35,6 +40,8 @@ export const CrearCitaBienestarScreen = () => {
 
   //Calendar
   const [markedDay, setMarkedDay] = useState('');
+  const formmattedMarkedDay = moment(markedDay);
+  if (markedDay.length > 0) formmattedMarkedDay.locale('es')
 
   //Franjas
   const [openFranjas, setOpenFranjas] = useState(false);
@@ -44,7 +51,6 @@ export const CrearCitaBienestarScreen = () => {
   //Conditional rendering
   const [showDependentElements, setShowDependenElements] = useState(false);
 
-
   /**Hooks */
 
   //fetch professionals by Field
@@ -53,6 +59,13 @@ export const CrearCitaBienestarScreen = () => {
     professionals,
     isLoadingProfessionals
   } = useGetProByField();
+
+  //fetch schedule by professionaliD
+  const {
+    fetchSchedulesByIdProfessional,
+    isLoadingSchedules,
+    schedules
+  } = useGetAvailSchedule()
 
   //Form react-hook-form
   const {
@@ -66,7 +79,8 @@ export const CrearCitaBienestarScreen = () => {
     defaultValues: {
       id_usuario: '',
       student_celphone: '',
-      id_horario: ''
+      id_horario: '',
+      date: ''
     },
   });
 
@@ -75,6 +89,12 @@ export const CrearCitaBienestarScreen = () => {
   useEffect(() => {
     setProfessionalsItems();
   }, [professionals])
+
+
+  //If the field property changed, we reset everything.
+  useEffect(() => {
+    changeFieldHandler();
+  }, [field])
 
 
   /** Events */
@@ -86,27 +106,67 @@ export const CrearCitaBienestarScreen = () => {
     await fetchProfessionalsByField(_field);
   }
 
+  //reset form, dropdown value, hide marked day, hide rest of the elements
+  const changeFieldHandler = () => {
+    //hide the rest of the elements
+    setShowDependenElements(false);
+    //we reset the form
+    reset();
+    //uncheck marked day
+    setMarkedDay('')
+    //remove selection from professionals dropdown
+    setDropDownProfessionals("");
+    //remove selection from franjas dropdown
+    setDropDownFranjas("");
+  }
+
   // Adaptig professionals to dropdown Items format
   const setProfessionalsItems = () => {
-    const newProfessionalsItems = createProfessionalItemsAdapter(professionals);
+    const customIcon = <Icon name='account' size={25} />
+    const newProfessionalsItems =
+      createProfessionalItemsAdapter({ professionals, customIcon });
     setProfessionalItems(newProfessionalsItems);
   }
 
   // Click on professional
-  const onSelectProfessional = (value: string) => {
+  const onSelectProfessional = async (value: string) => {
     /** http request to fetch available schedules */
     //TODO
+    console.log(value)
+    await fetchSchedulesByIdProfessional(); //this changes schedule
     /** Show the rest */
     setShowDependenElements(true);
   }
 
   // Click on date
-  const onPressDate = (date: string) => {
+  const onSelectDate = (date: string) => {
+    /**We first reset franjas */
+    reset({
+      ...control._formValues,
+      id_horario: '',
+      date
+    })
+    setDropDownFranjas('')
     /**Set marked day and highlight it  */
     setMarkedDay(date);
     /**Filter and show frames */
+    //1. we format date to the original response 
+    const dateFormmated = fromYMDHyphentoDMYSlash(date);
+    //2. Now we'll filter franjas from the selected date
+    const franjasFromSelectedDate = schedules.find(e => e.date === dateFormmated); // siempre existe
+    //3. setFranjas on Dropdown
+    //3.1 we extend properties according to SOLID
     //TODO
+    //obtain franja name
+    setFranjasItems(
+      createScheduleItemAdapter(
+            {schedule: franjasFromSelectedDate!}))
   };
+
+  //Click on Franja
+  const onSelectFranja = (franja: string) => {
+    console.log(franja)
+  }
 
   // Click on continue,
   const onSubmitFirstPart = (data: FormData) => {
@@ -125,14 +185,14 @@ export const CrearCitaBienestarScreen = () => {
     //const userStudentEmail = user!.userEmail;
     //const obj = insertCitaBienestarAdapter({ id_horario, userStudentCelphone, userStudentEmail })
     //console.log("sending", obj)
-    //TODO
+    //TODO -> control._formValues
   };
 
   // Add pressFieldHandler function to catch each field's value and send the http request
   const servicesButtonsFormatted = servicesFn(pressFieldHandler);
 
   // Condional JSX
-  const professionalsView = <View>
+  const professionalsView = 
     <Controller
       control={control}
       rules={{
@@ -173,8 +233,11 @@ export const CrearCitaBienestarScreen = () => {
       )}
       name="id_usuario"
     />
-  </View>
 
+  //formatting to available schedules
+  const availableDates = schedules.map(e => {
+    return { date: fromDMYSlashtoYMDHyphen(e.date) }
+  })
   const calendar = <Controller
     control={control}
     rules={{
@@ -183,55 +246,61 @@ export const CrearCitaBienestarScreen = () => {
     render={({ field: { onChange, onBlur, value } }) => (
       <CustomCalendarComponent
         markedDay={markedDay}
-        onPressDate={onPressDate}
+        onPressDate={onSelectDate}
         onChangeDate={onChange}
+        availableDates={availableDates}
       />
     )}
     name="date"
   />
 
-  const franjas = <View>
-    <Controller
-      control={control}
-      rules={{
-        required: true,
-      }}
-      render={({ field: { onChange, onBlur, value } }) => (
-        <DropDownPicker
-          addCustomItem={false}
-          placeholder={'Selecciona una franja'}
-          listMode="FLATLIST"
-          open={openFranjas}
-          value={dropDownFranjas}
-          items={franjasItems}
-          setOpen={setOpenFranjas}
-          setValue={setDropDownFranjas}
-          setItems={setFranjasItems}
-          onSelectItem={({ value }) => {
-            onChange(value);
-            onSelectProfessional(value!);
-          }}
-          style={{
-            alignSelf: 'center',
-            width: '100%',
-            marginTop: width * 0.04,
-          }}
-          listItemContainerStyle={{
-            width: '100%',
-            borderBottomColor: 'black',
-            borderBottomWidth: 1,
-            borderBottomStartRadius: 16,
-            borderBottomEndRadius: 16,
-          }}
-          containerStyle={{
-            width: '90%',
-            alignSelf: 'center',
-          }}
-        />
-      )}
-      name="id_usuario"
-    />
-  </View>
+  const franjas = <Controller
+    control={control}
+    rules={{
+      required: true,
+    }}
+    render={({ field: { onChange, onBlur, value } }) => (
+      <DropDownPicker
+        addCustomItem={false}
+        placeholder={'Selecciona una franja'}
+        listMode="MODAL"
+        modalProps={{
+          animationType: "slide"
+        }}
+        modalTitle={`A continuacion elije una franja para el dia ${moment(markedDay).format('LL')}:`}
+        modalTitleStyle={{
+          fontSize: width * 0.040
+        }}
+        open={openFranjas}
+        value={dropDownFranjas}
+        items={franjasItems}
+        setOpen={setOpenFranjas}
+        setValue={setDropDownFranjas}
+        setItems={setFranjasItems}
+        onSelectItem={({ value }) => {
+          onChange(value);
+          onSelectFranja(value!);
+        }}
+        style={{
+          alignSelf: 'center',
+          width: '100%',
+          marginTop: width * 0.04,
+        }}
+        listItemContainerStyle={{
+          width: '100%',
+          borderBottomColor: 'black',
+          borderBottomWidth: 1,
+          borderBottomStartRadius: 16,
+          borderBottomEndRadius: 16,
+        }}
+        containerStyle={{
+          width: '90%',
+          alignSelf: 'center',
+        }}
+      />
+    )}
+    name="id_horario"
+  />
 
   const submitButtonFirstPart = <TouchableOpacity onPress={handleSubmit(onSubmitFirstPart)}>
     <View style={{ alignItems: 'center', marginTop: width * 0.02 }}>
@@ -241,6 +310,12 @@ export const CrearCitaBienestarScreen = () => {
     </View>
   </TouchableOpacity>
 
+  console.log("fields", control._formValues)
+  const validateButtonSubmit = 
+        control._formValues.id_usuario.length > 0 &&
+        control._formValues.id_horario.length > 0 &&
+        control._formValues.date.length > 0
+        
   return (
     <CardBienestar>
       <SafeAreaView style={styles.container}>
@@ -249,11 +324,25 @@ export const CrearCitaBienestarScreen = () => {
           value={field}
           onValueChange={setField}
         />
-        {isLoadingProfessionals && <ActivityIndicator />}
-        {!isLoadingProfessionals && professionalsView}
-        {showDependentElements && calendar}
-        {showDependentElements && franjas}
-        {showDependentElements && submitButtonFirstPart}
+        {
+          (isLoadingProfessionals)
+            ? <ActivityIndicator />
+            : professionalsView
+        }
+        {
+          (showDependentElements)
+            ? (isLoadingSchedules)
+              ? <ActivityIndicator />
+              : <>
+                {calendar}
+                {franjas}
+              </>
+            : <></>
+        }
+        {validateButtonSubmit 
+          ? <View style={{marginTop: width*0.08}}>{submitButtonFirstPart}</View>
+          : <></>}
+        
       </SafeAreaView>
     </CardBienestar>
   )

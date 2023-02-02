@@ -7,39 +7,42 @@ interface Props {
   markedDay: string;
   onPressDate: (data: string) => void;
   onChangeDate: (data: string) => void;
+  availableDates: { date: string }[];
 }
 
-const {width, height} = Dimensions.get("window");
+const { width } = Dimensions.get("window");
 
-export const CustomCalendarComponent = ({ markedDay, onPressDate, onChangeDate }: Props) => {
-  return (
-    <Calendar
-      style={{width: width*0.9}}
-      markingType={"custom"}
-      hideExtraDays={true}
-      showTodayButton={true}
-      markedDates={{
-        [markedDay]: {
-          customStyles: {
-            container: styles.markedStylesContainer,
-            text: styles.markedStylesText,
+export const CustomCalendarComponent =
+  ({ markedDay, onPressDate, onChangeDate, availableDates }: Props) => {
+    return (
+      <Calendar
+        style={{ width: width * 0.9 }}
+        markingType={"custom"}
+        hideExtraDays={true}
+        showTodayButton={true}
+        markedDates={{
+          [markedDay]: {
+            customStyles: {
+              container: styles.markedStylesContainer,
+              text: styles.markedStylesText,
+            },
           },
-        },
-      }}
-      dayComponent={({ date, state, marking }) => {
-        return (
-          <CustomDay
-            date={date!}
-            marking={marking!}
-            onPressDate={onPressDate}
-            state={state!}
-            onChangeDate={onChangeDate}
-          />
-        );
-      }}
-    />
-  )
-}
+        }}
+        dayComponent={({ date, state, marking }) => {
+          return (
+            <CustomDay
+              date={date!}
+              marking={marking!}
+              onPressDate={onPressDate}
+              state={state!}
+              onChangeDate={onChangeDate}
+              availableDates={availableDates}
+            />
+          );
+        }}
+      />
+    )
+  }
 
 const styles = StyleSheet.create({
   markedStylesContainer: {

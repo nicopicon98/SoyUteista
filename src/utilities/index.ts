@@ -3,5 +3,8 @@ export * from './blob-to-base64.utility';
 export * from './capitalize.utility';
 export * from './day-formatter.utility';
 export * from './fab-screens.utility';
+export * from './filter-object-array.utility';
 export * from './is-before-today.utility';
 export * from './replace-null.utility';
+export * from './obj-show-formatter.utility';
+export * from './number-to-words.utility'; 

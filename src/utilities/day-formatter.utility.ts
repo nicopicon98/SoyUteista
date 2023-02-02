@@ -1,4 +1,4 @@
-export const dayToID = (day: string) => {
+export const dayToID = (day: string) : number => {
   switch (day) {
     case 'LUNES':
       return 0;
@@ -17,7 +17,7 @@ export const dayToID = (day: string) => {
   }
 }
 
-export function idToDay(day: number) {
+export function idToDay(day: number): string {
   switch (day) {
     case 0:
       return 'LUNES';
@@ -34,4 +34,14 @@ export function idToDay(day: number) {
     default:
       return '';
   }
+}
+
+export const fromDMYSlashtoYMDHyphen = (date: string): string => {
+  const dateArr = date.split("/");
+  return dateArr[2] + "-" + dateArr[1] + "-" + dateArr[0];
+}
+
+export const fromYMDHyphentoDMYSlash = (date: string): string => {
+  const dateArr = date.split("-");
+  return dateArr[2] + "/" + dateArr[1] + "/" + dateArr[0];
 }

@@ -1,8 +1,7 @@
+import { colores } from '@src/theme';
 import React from 'react'
 import { StyleSheet, View, Text, useWindowDimensions, Dimensions, Appearance } from 'react-native';
-
-import { MateriaInterface } from '../../models/horario.model';
-import { colores, fonts } from '../../../../theme/app.theme';
+import { MateriaInterface } from '../../models';
 
 interface Props {
   materia: MateriaInterface;

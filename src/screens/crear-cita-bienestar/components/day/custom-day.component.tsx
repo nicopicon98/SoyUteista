@@ -1,4 +1,4 @@
-import { isBeforeToday } from "@src/utilities";
+import { existsObject, isBeforeToday } from "@src/utilities";
 import { Pressable, View, Text, Dimensions, StyleSheet } from 'react-native';
 import { DateData, DayState } from 'react-native-calendars/src/types';
 import { MarkingProps } from 'react-native-calendars/src/calendar/day/marking';
@@ -11,13 +11,17 @@ interface Props {
   marking: MarkingProps;
   onPressDate: (data: string) => void;
   onChangeDate: (data: string) => void;
+  availableDates: { date: string }[];
 }
-export const CustomDay =({ date, onPressDate, marking, onChangeDate }: Props) => {
-    const dateFormmatted = new Date(date!.dateString);
+export const CustomDay =
+  ({ date, onPressDate, marking, onChangeDate, availableDates }: Props) => {
+
+    const validDates = existsObject(availableDates, "date", date.dateString)
+    const checkIsBeforeToday = isBeforeToday(date.dateString)
 
     return (
       <View>
-        {(!isBeforeToday(dateFormmatted))
+        {(!checkIsBeforeToday && validDates)
           ? <Pressable onPress={() => {
             onPressDate(date!.dateString)
             onChangeDate(date!.dateString)
@@ -30,7 +34,7 @@ export const CustomDay =({ date, onPressDate, marking, onChangeDate }: Props) =>
               </Text>
             </View>
           </Pressable>
-          : <View style={{ ...styles.container}}>
+          : <View style={{ ...styles.container }}>
             <Text style={{ ...styles.textDisabled }}>{date?.day}</Text>
           </View>
         }

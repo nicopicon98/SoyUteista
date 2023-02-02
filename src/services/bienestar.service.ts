@@ -6,7 +6,7 @@ export const getAllProfessionalsByfield = async (field: string, email: string) =
   return resp.data
 }
 
-export const getCalendarByUserId = async(user_id: number, email: string) => {
+export const getScheduleByUserId = async(user_id: string, email: string) => {
   const resp = await webserviceAPI.get(`/bienestar/calendar-by-user-id/?user_id=${user_id}&key=${API_KEY}&email=${email}`)
   return resp.data
 }

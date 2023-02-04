@@ -19,6 +19,7 @@
     "@react-native-firebase/analytics": "^17.0.0",
     "@react-native-firebase/app": "^16.5.1",
     "@react-native-firebase/crashlytics": "^17.0.0",
+    "@react-native-firebase/database": "^17.0.0",
     "@react-native-firebase/messaging": "^16.5.1",
     "@react-native-picker/picker": "^2.4.2",
     "@react-navigation/bottom-tabs": "^6.5.3",

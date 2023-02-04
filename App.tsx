@@ -4,11 +4,13 @@ import { StackNavigator } from '@src/navigator/stack.navigator';
 import { useNotifications } from '@src/hooks/use-notifications';
 import { NavigationContainer, NavigationContainerRef } from '@react-navigation/native';
 import { Provider as PaperProvider } from 'react-native-paper';
-import crashlytics from '@react-native-firebase/crashlytics';
+import database from '@react-native-firebase/database';
+import { firebase } from '@react-native-firebase/database';
+
 import { AuthContext, AuthProvider } from '@src/context/auth.context';
 import { LogBox, Platform } from 'react-native';
 import { colores } from '@src/theme/app.theme';
-import { useContext, useRef } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 
 
 const inAppUpdates = new SpInAppUpdates(
@@ -53,8 +55,10 @@ const App = () => {
 }
 
 import React from 'react'
+import moment from 'moment';
 
 const NavigationContainerCustom = () => {
+
   const navigationRef = useRef<NavigationContainerRef<ReactNavigation.RootParamList> | null>(null);
   const { authState: { user } } = useContext(AuthContext)
 
@@ -63,15 +67,18 @@ const NavigationContainerCustom = () => {
       ref={navigationRef}
       onStateChange={async () => {
         const actualScreen = (navigationRef.current?.getCurrentRoute()?.name) ?? "No screen"
-
-          crashlytics().setAttributes({
+        firebase
+          .app()
+          .database('https://soyuteista-cf8a2-default-rtdb.firebaseio.com/')
+          .ref('/entrys')
+          .push()
+          .set({
             screen: actualScreen,
-          }).then(e =>{
-            console.log(e)
-          }).catch((e) => {
-            console.log(e, "catc")
-          })
-          // console.log(resp)
+            email: user?.userEmail,
+            time: moment().format()
+          }).then((e) => console.log(e))
+
+        // console.log(resp)
 
 
       }}

@@ -1,23 +1,24 @@
 import { createProfessionalItemsAdapter, createScheduleItemAdapter } from "./adapters";
 import { fromDMYSlashtoYMDHyphen, fromYMDHyphentoDMYSlash } from "@src/utilities";
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { SegmentedButtonsResponsive } from "./components/segmented-buttons";
+import { useGetAvailSchedule } from './hooks/use-get-avail-schedule.hook';
 import DropDownPicker, { ItemType } from "react-native-dropdown-picker";
 import { CustomCalendarComponent } from "./components/custom-calendar";
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { StyleSheet, Text, Dimensions, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { ActivityIndicator, TextInput } from "react-native-paper";
+import { CardBienestar } from "@src/components/card-bienestar";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { CardBienestar } from "@src/components/card-bienestar"
 import { useState, useEffect, useContext } from 'react';
-import { ActivityIndicator } from "react-native-paper";
 import { Controller, useForm } from "react-hook-form";
+import { Modal, Pressable } from 'react-native';
 import { AuthContext } from '@src/context';
 import { useGetProByField } from "./hooks";
 import { colores } from "@src/theme";
 import { servicesFn } from "./data";
-import { useGetAvailSchedule } from './hooks/use-get-avail-schedule.hook';
 import moment from "moment";
 import 'moment/locale/es';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const { width } = Dimensions.get('window')
 
@@ -32,6 +33,9 @@ export const CrearCitaBienestarScreen = () => {
   const [field, setField] = useState<string>('odontologia');
 
   const { authState: { user } } = useContext(AuthContext);
+
+  //Final Modal
+  const [modalFinalVisible, setModalFinalVisible] = useState(false);
 
   //professionals
   const [openProfessionals, setOpenProfessionals] = useState(false);
@@ -50,6 +54,9 @@ export const CrearCitaBienestarScreen = () => {
 
   //Conditional rendering
   const [showDependentElements, setShowDependenElements] = useState(false);
+
+  //Insert Cita
+  const [insert, setInsert] = useState(false);
 
   /**Hooks */
 
@@ -83,6 +90,12 @@ export const CrearCitaBienestarScreen = () => {
       date: ''
     },
   });
+
+  //Validate Submit
+  const validateButtonSubmit =
+    control._formValues.id_usuario.length > 0 &&
+    control._formValues.id_horario.length > 0 &&
+    control._formValues.date.length > 0
 
   //Once the component is loaded, we proceed to adapt the professionals to dropdown Items format
   //if professionals change, the http request will be dispatched with the specific field
@@ -160,7 +173,7 @@ export const CrearCitaBienestarScreen = () => {
     //obtain franja name
     setFranjasItems(
       createScheduleItemAdapter(
-            {schedule: franjasFromSelectedDate!}))
+        { schedule: franjasFromSelectedDate! }))
   };
 
   //Click on Franja
@@ -169,17 +182,17 @@ export const CrearCitaBienestarScreen = () => {
   }
 
   // Click on continue,
-  const onSubmitFirstPart = (data: FormData) => {
-    /**Check if empty values */
-    //TODO
+  const onSubmitFirstPart = () => {
     /**Open modal confirmation */
-    //TODO
+    setModalFinalVisible(true);
   };
 
   // Click on insert Appointment
-  const onSubmit = async () => {
+  const onSubmit = async (data: FormData) => {
     /**Check number is inserted properly, use Regex */
     //TODO
+    /**Start activity indicator */
+    setInsert(true);
     /**Get all info */
     //const { id_horario, student_celphone: userStudentCelphone } = data;
     //const userStudentEmail = user!.userEmail;
@@ -192,7 +205,7 @@ export const CrearCitaBienestarScreen = () => {
   const servicesButtonsFormatted = servicesFn(pressFieldHandler);
 
   // Condional JSX
-  const professionalsView = 
+  const professionalsView =
     <Controller
       control={control}
       rules={{
@@ -302,7 +315,10 @@ export const CrearCitaBienestarScreen = () => {
     name="id_horario"
   />
 
-  const submitButtonFirstPart = <TouchableOpacity onPress={handleSubmit(onSubmitFirstPart)}>
+  const submitButtonFirstPart = <TouchableOpacity
+    activeOpacity={0.75}
+    onPress={onSubmitFirstPart}
+  >
     <View style={{ alignItems: 'center', marginTop: width * 0.02 }}>
       <View style={styles.buttonContinuar}>
         <Text style={{ ...styles.buttonContinuarText }}>Continuar</Text>
@@ -310,41 +326,238 @@ export const CrearCitaBienestarScreen = () => {
     </View>
   </TouchableOpacity>
 
-  console.log("fields", control._formValues)
-  const validateButtonSubmit = 
-        control._formValues.id_usuario.length > 0 &&
-        control._formValues.id_horario.length > 0 &&
-        control._formValues.date.length > 0
-        
+  // console.log("fields", control._formValues)
+  
+
+  const errorHandler = (type: string): JSX.Element => {
+    switch (type) {
+      case "required":
+        return <Text>El campo es requerido</Text>;
+      case "minLength":
+      case "pattern":
+        return <Text>Ingresa un numero de celular valido</Text>;
+      default:
+        return <></>;
+    }
+  }
+
+  const confModal = <Modal
+    animationType="fade"
+    hardwareAccelerated={true}
+    transparent={true}
+    visible={modalFinalVisible}
+    onRequestClose={() => {
+      setModalFinalVisible(!modalFinalVisible);
+    }}>
+    <View style={styles.centeredViewFinalModal}>
+      <View style={styles.modalFinalView}>
+        <ScrollView showsVerticalScrollIndicator={false}>
+
+          {/* All the info */}
+          <View
+            style={{
+              marginTop: width * 0.02,
+              borderColor: colores.Cool_Gray_5_C,
+              borderWidth: 0.8,
+              paddingHorizontal: width * 0.03,
+              paddingVertical: width * 0.02,
+            }}>
+            {/* Modalidad */}
+            <View
+              style={{
+                flexDirection: 'row',
+                width: '100%',
+                marginTop: width * 0.03,
+              }}>
+              <View style={{ width: '50%', justifyContent: 'center' }}>
+                <Text style={{ fontWeight: '700' }}>Servicio a agendar:</Text>
+              </View>
+              <View style={{ width: '50%' }}>
+                <Text style={{ fontWeight: '400' }}>
+                  {field}
+                </Text>
+              </View>
+            </View>
+
+            {/* Profesional */}
+            <View
+              style={{
+                flexDirection: 'row',
+                width: '100%',
+                marginTop: width * 0.015
+              }}>
+              <View style={{ width: '50%', justifyContent: 'center' }}>
+                <Text style={{ fontWeight: '700' }}>Profesional:</Text>
+              </View>
+              <View style={{ width: '50%' }}>
+                <Text style={{ fontWeight: '400' }}>
+                  {professionals
+                    .find(
+                      e => e.id_usuario == control._formValues.id_usuario)?.nombre}
+                </Text>
+              </View>
+            </View>
+
+            {/* Ubicacion */}
+            <View
+              style={{
+                flexDirection: 'row',
+                width: '100%',
+                marginTop: width * 0.015
+              }}>
+              <View style={{ width: '50%', justifyContent: 'center' }}>
+                <Text style={{ fontWeight: '700' }}>Ubicacion:</Text>
+              </View>
+              <View style={{ width: '50%' }}>
+                <Text style={{ fontWeight: '400' }}>
+                  {/* {professionals
+                  .find(
+                    e => e.id_usuario == control._formValues.id_usuario)?.ubicacion} */}
+                  Edificio B piso 1
+                </Text>
+              </View>
+            </View>
+
+            {/* Fecha */}
+            <View
+              style={{
+                flexDirection: 'row',
+                width: '100%',
+                marginTop: width * 0.015
+              }}>
+              <View style={{ width: '50%', justifyContent: 'center' }}>
+                <Text style={{ fontWeight: '700' }}>Fecha:</Text>
+              </View>
+              <View style={{ width: '50%' }}>
+                <Text style={{ fontWeight: '400' }}>
+                  {moment(control._formValues.date).format('LL')}
+                </Text>
+              </View>
+            </View>
+
+            {/* Franja */}
+            <View
+              style={{
+                flexDirection: 'row',
+                width: '100%',
+              }}>
+              <View style={{ width: '50%', justifyContent: 'center' }}>
+                <Text style={{ fontWeight: '700' }}>Franja:</Text>
+              </View>
+              <View style={{ width: '50%' }}>
+                <Text style={{ fontWeight: '400' }}>
+                  {schedules.find(e => {
+                    return e.franjas.find(f => f.id_horario == control._formValues.id_horario)
+                  })?.franjas[0].nombre}
+                </Text>
+              </View>
+            </View>
+
+          </View>
+
+          {/* Numero de contacto */}
+          <View style={{ marginTop: width * 0.03 }}>
+            <Controller
+              control={control}
+              rules={{
+                required: true,
+                minLength: 10,
+                pattern: /3[0-9]{9}/gm, //colombian cel                
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <TextInput
+                  mode="outlined"
+                  keyboardType="number-pad"
+                  label="Numero de contacto"
+                  outlineColor="black"
+                  activeOutlineColor="black"
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  maxLength={10}
+                  value={value}
+                  numberOfLines={2}
+                  right={<TextInput.Icon icon="pencil" size={20} />}
+                  style={{
+                    backgroundColor: 'white',
+                    fontSize: 14,
+                  }}
+                />
+              )}
+              name="student_celphone"
+            />
+            {errors.student_celphone?.type === 'required' && errorHandler("required")}
+            {errors.student_celphone?.type === 'minLength' && errorHandler("minLength")}
+            {errors.student_celphone?.type === 'pattern' && errorHandler("pattern")}
+          </View>
+
+          {/* Actions */}
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-evenly',
+              marginTop: width * 0.12,
+            }}>
+            {/* Salir sin guardar */}
+
+            <View style={styles.buttonGuardarContentChild}>
+              <Pressable
+                onPress={() => {
+                  setModalFinalVisible(false);
+                }}
+                style={styles.buttonEliminar}>
+                <Text style={styles.buttonGuardarText}>Volver</Text>
+              </Pressable>
+            </View>
+
+            <View style={styles.buttonGuardarContentChild}>
+              <Pressable
+                onPress={handleSubmit(onSubmit)}
+                style={styles.buttonAgendar}>
+                {
+                  !insert
+                    ? <Text style={styles.buttonGuardarText}>Agendar</Text>
+                    : <ActivityIndicator color={colores.White} />
+                }
+              </Pressable>
+            </View>
+          </View>
+        </ScrollView>
+      </View>
+    </View>
+  </Modal>
+
   return (
-    <CardBienestar>
-      <SafeAreaView style={styles.container}>
-        <SegmentedButtonsResponsive
-          buttons={servicesButtonsFormatted}
-          value={field}
-          onValueChange={setField}
-        />
-        {
-          (isLoadingProfessionals)
-            ? <ActivityIndicator />
-            : professionalsView
-        }
-        {
-          (showDependentElements)
-            ? (isLoadingSchedules)
-              ? <ActivityIndicator />
-              : <>
-                {calendar}
-                {franjas}
-              </>
-            : <></>
-        }
-        {validateButtonSubmit 
-          ? <View style={{marginTop: width*0.08}}>{submitButtonFirstPart}</View>
-          : <></>}
-        
-      </SafeAreaView>
-    </CardBienestar>
+    <>
+      <CardBienestar>
+        <SafeAreaView style={styles.container}>
+          <SegmentedButtonsResponsive
+            buttons={servicesButtonsFormatted}
+            value={field}
+            onValueChange={setField}
+          />
+          {
+            (isLoadingProfessionals)
+              ? <ActivityIndicator color={colores.Pantone_383_C} />
+              : professionalsView
+          }
+          {
+            (showDependentElements)
+              ? (isLoadingSchedules)
+                ? <ActivityIndicator color={colores.Pantone_383_C} />
+                : <>
+                  {calendar}
+                  {franjas}
+                </>
+              : <></>
+          }
+          {validateButtonSubmit
+            ? <View style={{ marginTop: width * 0.08 }}>{submitButtonFirstPart}</View>
+            : <></>}
+
+        </SafeAreaView>
+      </CardBienestar>
+      <View style={{ flex: 1, width: width * 0. }}>{confModal}</View>
+    </>
   )
 }
 
@@ -365,5 +578,53 @@ const styles = StyleSheet.create({
   buttonContinuarText: {
     fontSize: width * 0.042,
     fontWeight: '500',
+    color: colores.White
   },
+  centeredViewFinalModal: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalFinalView: {
+    margin: 0,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+    width: width * 0.9,
+  },
+  buttonGuardarContentChild: {
+    width: width * 0.3,
+    zIndex: 2000,
+  },
+  buttonAgendar: {
+    backgroundColor: colores.Pantone_383_C,
+    paddingVertical: width * 0.015,
+    paddingHorizontal: width * 0.01,
+    borderRadius: 100,
+    alignItems: 'center',
+  },
+  buttonGuardarText: {
+    fontSize: width * 0.04,
+    textAlign: 'center',
+    color: 'white',
+  },
+  buttonEliminar: {
+    backgroundColor: colores.Cool_Gray_5_C,
+    paddingVertical: width * 0.015,
+    paddingHorizontal: width * 0.01,
+    borderRadius: 100,
+    alignItems: 'center',
+  },
+  redWarning: {
+    color: 'red'
+  }
 });

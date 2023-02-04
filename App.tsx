@@ -1,12 +1,14 @@
-import SpInAppUpdates, {IAUUpdateKind, StartUpdateOptions} from 'sp-react-native-in-app-updates';
+import SpInAppUpdates, { IAUUpdateKind, StartUpdateOptions } from 'sp-react-native-in-app-updates';
 import { AlertNotificationRoot } from 'react-native-alert-notification';
 import { StackNavigator } from '@src/navigator/stack.navigator';
 import { useNotifications } from '@src/hooks/use-notifications';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, NavigationContainerRef } from '@react-navigation/native';
 import { Provider as PaperProvider } from 'react-native-paper';
-import { AuthProvider } from '@src/context/auth.context';
+import crashlytics from '@react-native-firebase/crashlytics';
+import { AuthContext, AuthProvider } from '@src/context/auth.context';
 import { LogBox, Platform } from 'react-native';
 import { colores } from '@src/theme/app.theme';
+import { useContext, useRef } from 'react';
 
 
 const inAppUpdates = new SpInAppUpdates(
@@ -38,38 +40,66 @@ export const AppState = ({ children }: { children: JSX.Element | JSX.Element[] }
 }
 
 const App = () => {
-
-  if (Platform.OS === 'android'){
+  console.log(Platform.OS)
+  if (Platform.OS === 'android') {
     useNotifications()
   }
 
   return (
-    <NavigationContainer>
-      <AppState>
-        <PaperProvider>
-          <AlertNotificationRoot
-            colors={[{
-              label: 'white',
-              card: 'black',
-              overlay: 'red',
-              success: colores.Pantone_383_C,
-              danger: 'red',
-              warning: colores.Blue_Rey,
-            },
-            {
-              label: 'labelExampleLight',
-              card: 'cardExampleLight',
-              overlay: 'overlayExampleLight',
-              success: 'red',
-              danger: 'red',
-              warning: 'yellow',
-            }]}
-            theme='light'
-          >
-            <StackNavigator />
-          </AlertNotificationRoot>
-        </PaperProvider>
-      </AppState>
+    <AppState>
+      <NavigationContainerCustom />
+    </AppState>
+  )
+}
+
+import React from 'react'
+
+const NavigationContainerCustom = () => {
+  const navigationRef = useRef<NavigationContainerRef<ReactNavigation.RootParamList> | null>(null);
+  const { authState: { user } } = useContext(AuthContext)
+
+  return (
+    <NavigationContainer
+      ref={navigationRef}
+      onStateChange={async () => {
+        const actualScreen = (navigationRef.current?.getCurrentRoute()?.name) ?? "No screen"
+
+          crashlytics().setAttributes({
+            screen: actualScreen,
+          }).then(e =>{
+            console.log(e)
+          }).catch((e) => {
+            console.log(e, "catc")
+          })
+          // console.log(resp)
+
+
+      }}
+
+    >
+      <PaperProvider>
+        <AlertNotificationRoot
+          colors={[{
+            label: 'white',
+            card: 'black',
+            overlay: 'red',
+            success: colores.Pantone_383_C,
+            danger: 'red',
+            warning: colores.Blue_Rey,
+          },
+          {
+            label: 'labelExampleLight',
+            card: 'cardExampleLight',
+            overlay: 'overlayExampleLight',
+            success: 'red',
+            danger: 'red',
+            warning: 'yellow',
+          }]}
+          theme='light'
+        >
+          <StackNavigator />
+        </AlertNotificationRoot>
+      </PaperProvider>
     </NavigationContainer>
   )
 }

@@ -9,6 +9,9 @@ export const useNotifications = () => {
 			id: 'soyuteista',
 			name: 'SoyUteìsta',
 		});
+		await messaging().registerDeviceForRemoteMessages();
+		const token = await messaging().getToken();
+		console.log(token, "userToken")
 		let displayNotification: Notification;
 		if (!photo) {
 			displayNotification = {

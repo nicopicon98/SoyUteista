@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }: any) => {
 
   useEffect(() => {
     checkToken();
-    console.log("Desde AuthContext");
+    // console.log("Desde AuthContext");
   }, [])
 
   //Revisamos aca en el context si ya tiene token
@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }: any) => {
     //Nos traemos el token del async storage
     const tokenReceived = await AuthManager.getAccessTokenAsync();
     //Lo pintamos
-    console.log(tokenReceived);
+    // console.log(tokenReceived);
     //No token, no autenticado
     if (!tokenReceived) return dispatch({ type: 'notAuthenticated' })
     //Hay token
@@ -73,7 +73,7 @@ export const AuthProvider = ({ children }: any) => {
       await AuthManager.signOutAsync();
       dispatch({ type: 'logOut' });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   }
 
@@ -87,7 +87,7 @@ export const AuthProvider = ({ children }: any) => {
       const userImage: Blob = await GraphManager.getPhotoAsync();
       const answerBase64: any = await blobToBase64(userImage);
       const Fullphoto: string[] = answerBase64.split(',');
-      console.log(Fullphoto)
+      // console.log(Fullphoto)
       photo = Fullphoto[1];
     } catch (error) {
       userPhotoError = true;

@@ -1,1 +1,1 @@
-export * from './use-podcast.hook';
+export * from './use-podcast-videos.hook';

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { getPodcastService } from './../../../services/podcast.service';
 import { PodcastInterface } from './../models/get-podcasts.model';
 
-export const useNoticias = () => {
+export const usePodcast = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [podcast, setPodcast] = useState<PodcastInterface>({
     data: []

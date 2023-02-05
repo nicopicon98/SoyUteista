@@ -64,25 +64,21 @@ const NavigationContainerCustom = () => {
 
   return (
     <NavigationContainer
-      ref={navigationRef}
-      onStateChange={async () => {
-        const actualScreen = (navigationRef.current?.getCurrentRoute()?.name) ?? "No screen"
-        firebase
-          .app()
-          .database('https://soyuteista-cf8a2-default-rtdb.firebaseio.com/')
-          .ref('/entrys')
-          .push()
-          .set({
-            screen: actualScreen,
-            email: user?.userEmail,
-            time: moment().format()
-          }).then((e) => console.log(e))
-
-        // console.log(resp)
-
-
-      }}
-
+    // ref={navigationRef}
+    // onStateChange={async () => {
+    //   const actualScreen = (navigationRef.current?.getCurrentRoute()?.name) ?? "No screen"
+    //   firebase
+    //     .app()
+    //     .database('https://soyuteista-cf8a2-default-rtdb.firebaseio.com/')
+    //     .ref('/entrys')
+    //     .push()
+    //     .set({
+    //       screen: actualScreen,
+    //       email: user?.userEmail,
+    //       time: moment().format()
+    //     }).then((e) => console.log(e))
+    //   // console.log(resp)
+    // }}
     >
       <PaperProvider>
         <AlertNotificationRoot

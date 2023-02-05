@@ -22,7 +22,6 @@ export const useVideosPodcast = () => {
       const rep = await Promise.all([getPodcastService(user!.userEmail, API_KEY), getExitoEscolarService(user!.userEmail, API_KEY)])
       setPodcast(rep[0].data);
       setVideos(rep[1].data)
-      console.log(rep[0].data.data)
       setIsLoading(false);
     } catch (error: any) {
       console.log(error);

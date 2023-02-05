@@ -51,7 +51,7 @@ export const ExitoEscolarScreen = () => {
               {() => <CardPodcast podcast={podcast.data} />}
             </Tab.Screen>
             <Tab.Screen name="Videos">
-              {() => <CardVideo />}
+              {() => <CardVideo videos={videos.data} />}
             </Tab.Screen>
           </Tab.Navigator>
         }

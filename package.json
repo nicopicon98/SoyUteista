@@ -60,6 +60,7 @@
     "react-native-vector-icons": "^9.1.0",
     "react-native-video": "^5.2.1",
     "reanimated-collapsible-helpers": "^1.0.0",
+    "rxjs": "^7.8.0",
     "sp-react-native-in-app-updates": "^1.1.7",
     "windows-iana": "^5.1.0",
     "yarn": "^1.22.19"

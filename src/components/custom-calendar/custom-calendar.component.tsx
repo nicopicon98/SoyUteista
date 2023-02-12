@@ -29,9 +29,8 @@ LocaleConfig.defaultLocale = 'es';
 
 interface Props {
 	markedDay: string;
-	dayWeek: number;
+	dayWeek: string;
 	onPressDate: (data: string) => void;
-	setModalVisible: (bool: boolean) => void;
 	onChangeDate: (data: string) => void;
 }
 
@@ -51,7 +50,6 @@ export class CustomCalendarComponent extends Component<Props> {
 			markedDay,
 			dayWeek,
 			onPressDate,
-			setModalVisible,
 			onChangeDate,
 		} = this.props;
 		return (

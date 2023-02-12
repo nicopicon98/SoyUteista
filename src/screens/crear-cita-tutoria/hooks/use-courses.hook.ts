@@ -1,24 +1,28 @@
 import { getAllCourses } from '@src/services';
-import { CoursesAll } from '@src/models';
-import { useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import { Course } from '../models';
+import { mockCourses } from '../data/mockdata';
+import { AuthContext } from '@src/context';
 
 export const useCourses = () => {
-  const [isLoadingCourses, setIsLoadingCourses] = useState(false);
-  const [courses, setCourses] = useState<CoursesAll[]>();
-  const [clickCourses, setClickCourses] = useState(false);
+  const [isLoadingCourses, setIsLoadingCourses] = useState(true);
+  const [courses, setCourses] = useState<Course[]>([]);
+  const {authState: {user}} = useContext(AuthContext)
 
   const loadCursos = async () => {
-    setIsLoadingCourses(true);
-    const rep = await getAllCourses();
+    const rep = await getAllCourses(user?.userMoreInfo?.C_UNID_NOMBRE);
+    console.log(rep.data)
     setCourses(rep.data);
     setIsLoadingCourses(false);
   }
+
+  useEffect(() => {
+    loadCursos();
+  }, [])
 
   return {
     isLoadingCourses,
     courses,
     loadCursos,
-    setClickCourses,
-    clickCourses
   }
 }

@@ -1,40 +1,40 @@
 export const numberToWords = (number: string) => {
   switch (number) {
-    case '01:00':
-    case '13:00':
+    case '01':
+    case '13':
       return "one";
-    case '02:00':
-    case '14:00':
+    case '02':
+    case '14':
       return "two";
-    case '03:00':
-    case '15:00':
+    case '03':
+    case '15':
       return "three";
-    case '04:00':
-    case '16:00':
-      return "fourth";
-    case '05:00':
-    case '17:00':
+    case '04':
+    case '16':
+      return "four";
+    case '05':
+    case '17':
       return "five";
-    case '06:00':
-    case '18:00':
+    case '06':
+    case '18':
       return "six";
-    case '07:00':
-    case '19:00':
+    case '07':
+    case '19':
       return "seven";
-    case '08:00':
-    case '20:00':
+    case '08':
+    case '20':
       return "eight";
-    case '09:00':
-    case '21:00':
+    case '09':
+    case '21':
       return "nine";
-    case '10:00':
-    case '22:00':
+    case '10':
+    case '22':
       return "ten";
-    case '11:00':
-    case '23:00':
+    case '11':
+    case '23':
       return "eleven";
-    case '12:00':
-    case '00:00':
+    case '12':
+    case '00':
       return "twelve";
     default:
       return ""

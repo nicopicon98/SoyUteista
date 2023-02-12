@@ -6,9 +6,11 @@ export interface TutorResp {
 }
 
 export interface TutorInfoResp {
-  correo: string;
-  lugar: string;
-  id_crearCitas: string;
-  nombre: string;
   sede: string;
+  correo: string;
+  sala_virtual: string;
+  id_crearCitas: string;
+  ubicacion: string;
+  nombre_lugar: string;
+  id_tutor: string;
 }

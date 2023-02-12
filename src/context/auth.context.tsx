@@ -56,7 +56,6 @@ export const AuthProvider = ({ children }: any) => {
 
   //Two options, or no matriculado or matriculado
   const signIn = async () => {
-    //Guarda token
     await AuthManager.signInAsync();
     //leemos token
     const tokenReceived = await AuthManager.getAccessTokenAsync();

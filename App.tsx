@@ -5,9 +5,9 @@ import { useNotifications } from '@src/hooks/use-notifications';
 import { NavigationContainer } from '@react-navigation/native';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { AuthProvider } from '@src/context/auth.context';
-import { LogBox, Platform } from 'react-native';
+import { LogBox, Platform, AppState as AppStateCustom, AppStateEvent, AppStateStatus } from 'react-native';
 import { colores } from '@src/theme/app.theme';
-
+import {useEffect, useState} from 'react';
 
 const inAppUpdates = new SpInAppUpdates(
   true // isDebug

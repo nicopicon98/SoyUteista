@@ -1,20 +1,18 @@
 import { getFranjaByDayAsignatura } from '@src/services';
-import { FranjaByDayAsignatura } from '@src/models';
 import { useState } from 'react'
 
 export const useFranjaByDiaAsignatura = () => {
 
-  const [isLoadingFranjaByDiaAsignatura, setisLoadingFranjaByDiaAsignatura] = useState(true);
-  const [franjaByDiaAsignatura, setFranjaByDiaAsignatura] = useState<FranjaByDayAsignatura[]>()
+  const [isLoadingFranjaByDiaAsignatura, setisLoadingFranjaByDiaAsignatura] = useState(false);
 
-  const onLoadFranjaByDiaAsignatura = async (id_asignatura: string, day: string) => {
-    const resp = await getFranjaByDayAsignatura(id_asignatura, day);
-    setFranjaByDiaAsignatura(resp.data)
+  const onLoadFranjaByDiaAsignatura = async (id_course: string, day: string) => {
+    setisLoadingFranjaByDiaAsignatura(true);
+    const resp = await getFranjaByDayAsignatura(id_course, day);
     setisLoadingFranjaByDiaAsignatura(false);
+    return resp.data
   }
 
   return {
-    franjaByDiaAsignatura,
     isLoadingFranjaByDiaAsignatura,
     onLoadFranjaByDiaAsignatura,
   }

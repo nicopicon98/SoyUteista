@@ -1,4 +1,4 @@
-export * from './use-bring-tutor.hook';
+export * from './use-fetch-tutores.hook';
 export * from './use-courses-by-id_tutor.hook';
 export * from './use-courses.hook';
 export * from './use-day-by-asignatura.hook';

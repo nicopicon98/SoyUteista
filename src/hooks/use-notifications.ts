@@ -1,4 +1,5 @@
 import notifee, { AndroidStyle, Notification } from '@notifee/react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import messaging from '@react-native-firebase/messaging';
 import { useEffect } from 'react';
 
@@ -11,7 +12,7 @@ export const useNotifications = () => {
 		});
 		await messaging().registerDeviceForRemoteMessages();
 		const token = await messaging().getToken();
-		console.log(token, "userToken")
+		console.log(token)
 		let displayNotification: Notification;
 		if (!photo) {
 			displayNotification = {
@@ -39,8 +40,22 @@ export const useNotifications = () => {
 		}
 		await notifee.displayNotification(displayNotification);
 	}
+	const getData = async (key: string) => {
+		try {
+			const jsonValue = await AsyncStorage.getItem(key)
+			return jsonValue != null ? JSON.parse(jsonValue) : [];
+		} catch (e) {
+			// error reading value
+		}
+	}
+
+	const getToken = async () => {
+		const token = await messaging().getToken();
+		console.log(token)
+	}
 
 	useEffect(() => {
+		// getToken()
 		messaging()
 			.getInitialNotification()
 			.then(async remoteMessage => {
@@ -52,10 +67,13 @@ export const useNotifications = () => {
 			const body = remoteMessage.notification?.body;
 			const title = remoteMessage.notification?.title;
 			const image = remoteMessage.notification?.android?.imageUrl
-			onDisplayNotification(body ?? "", title ?? "", image);
+			await onDisplayNotification(body ?? "", title ?? "", image);
+			const notificationsData = await getData("notifications")
+			const addingNotification = [...notificationsData, { body, title, image }]
+			await AsyncStorage.setItem('notifications', JSON.stringify(addingNotification));
 		})
 		messaging().setBackgroundMessageHandler(async remoteMessage => {
-			console.log("background")
+
 		});
 	}, []);
 }

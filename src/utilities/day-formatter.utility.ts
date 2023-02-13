@@ -1,17 +1,17 @@
 export const dayToID = (day: string) : number => {
   switch (day) {
     case 'LUNES':
-      return 0;
+      return 1;
     case 'MARTES':
-      return 1
-    case 'MIERCOLES':
       return 2;
+    case 'MIERCOLES':
+      return 3;
     case 'JUEVES':
-      return 3
-    case 'VIERNES':
       return 4;
-    case 'SABADO':
+    case 'VIERNES':
       return 5;
+    case 'SABADO':
+      return 6;
     default:
       return 0;
   }

@@ -2,6 +2,7 @@ export * from './auth-user.model';
 export * from './carnet.model';
 export * from './custom-drawer-content.model';
 export * from './directorio-escolar.model';
+export * from './fab-screens.model';
 export * from './navigation.model';
 export * from './notas.model';
 export * from './revista.model';

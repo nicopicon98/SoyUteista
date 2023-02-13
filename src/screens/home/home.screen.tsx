@@ -1,14 +1,21 @@
-import { Alert, Appearance, FlatList, StyleSheet, Text, View, useWindowDimensions, RefreshControl } from 'react-native';
+import { Alert, Appearance, FlatList, StyleSheet, Text, View, useWindowDimensions, RefreshControl, Dimensions } from 'react-native';
+import { Dialog, Portal, Text as TextPaper, Button } from 'react-native-paper';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { SkeletonNews } from '@src/components/skeleton-news';
 import { AppBarComponent } from '@src/components/app-bar';
-import { useContext, useEffect, useState } from 'react';
-import { Noticia } from '@src/components/noticia';
-import { AuthContext } from '@src/context';
-import { useNoticias } from './hooks';
-import { fonts } from '@src/theme';
-import { FABGroup } from '@src/components/FAB-group';
 import { useNavigation } from '@react-navigation/native';
+import { useContext, useEffect, useState } from 'react';
+import { FABGroup } from '@src/components/FAB-group';
+import { Noticia } from '@src/components/noticia';
+import { Image } from 'react-native-elements';
+import { colores, fonts } from '@src/theme';
+import { AuthContext } from '@src/context';
 import { screens } from '@src/utilities';
+import { useNoticias } from './hooks';
+import { sharingInformationService } from '@src/services/sharing-information.service';
+import { SimpleDialog } from '@src/components/simple-dialog/simple-dialog.component';
+
+const { width } = Dimensions.get("window")
 
 export const HomeScreen = () => {
   const { isLoading, noticias, loadNoticia } = useNoticias();
@@ -16,18 +23,30 @@ export const HomeScreen = () => {
   const { width } = useWindowDimensions();
   const [isRefreshing, setIsRefreshing] = useState(false);
   const navigation = useNavigation<any>();
-
   const colorScheme = Appearance.getColorScheme();
-  useEffect(() => {
-    if (user!.userResult !== 1) {
-      Alert.alert(
-        "Atención",
-        user!.userError,
-        [
-          { text: "OK", onPress: () => console.log("OK Pressed") }
-        ]
-      );
+
+  const bajoRendimientoChecker = () => {
+    if (user?.userMoreInfo.C_ESTP_PROMEDIOGENERAL! > 3.4) {
+      sharingInformationService.setSubject(true);
     }
+  }
+  useEffect(() => {
+    bajoRendimientoChecker();
+  }, [])
+
+
+  const alertUseError = () => {
+    Alert.alert(
+      "Atención",
+      user!.userError,
+      [
+        { text: "OK", onPress: () => console.log("OK Pressed") }
+      ]
+    );
+  }
+
+  useEffect(() => {
+    if (user!.userResult !== 1) alertUseError()
   }, [])
 
   //pull to refresh
@@ -42,6 +61,7 @@ export const HomeScreen = () => {
 
   return (
     <>
+      {/* <ModalBajoRend /> */}
       <AppBarComponent title='Noticias' />
       <View style={{ ...styles.container, backgroundColor: colorScheme === 'dark' ? 'black' : 'white' }}>
         {(isLoading) && <SkeletonNews />}
@@ -75,7 +95,7 @@ export const HomeScreen = () => {
                 }
               />
             </View>
-            <FABGroup screens={screens(navigation)}/>
+            <FABGroup screens={screens(navigation)} />
           </>
         }
       </View>
@@ -84,11 +104,17 @@ export const HomeScreen = () => {
   );
 };
 
+
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
   title: {
     fontFamily: fonts.semibold,
-  }
+  },
+  imageLogo: {
+    width: width * 0.8,
+    height: width * 0.4,
+  },
 });

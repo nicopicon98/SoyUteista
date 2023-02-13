@@ -4,19 +4,17 @@ import { useState } from 'react'
 
 export const useDayByAsignatura = () => {
 
-  const [isLoadingDayByAsignatura, setIsLoadingDayByAsignatura] = useState(true);
-  const [dayByAsignatura, setDayByAsignatura] = useState<DaysByAsignatura[]>()
+  const [isLoadingDaysByAsignatura, setIsLoadingDaysByAsignatura] = useState(false)
 
-  const onLoadDiaByAsignatura = async (id_asignatura: string) => {
-    const rep = await getDaysByAsignatura(id_asignatura)
-    console.log(rep.data);
-    setDayByAsignatura(rep.data);
-    setIsLoadingDayByAsignatura(false);
+  const onLoadDayByAsignatura = async (id_course: string) => {
+    setIsLoadingDaysByAsignatura(true);
+    const rep = await getDaysByAsignatura(id_course)
+    setIsLoadingDaysByAsignatura(false);
+    return rep.data
   }
 
   return {
-    dayByAsignatura,
-    isLoadingDayByAsignatura,
-    onLoadDiaByAsignatura,
+    isLoadingDaysByAsignatura,
+    onLoadDayByAsignatura,
   }
 }

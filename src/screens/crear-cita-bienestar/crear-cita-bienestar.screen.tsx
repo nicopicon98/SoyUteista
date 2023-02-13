@@ -1,5 +1,5 @@
 import { createProfessionalItemsAdapter, createScheduleItemAdapter } from "./adapters";
-import { fromDMYSlashtoYMDHyphen, fromYMDHyphentoDMYSlash } from "@src/utilities";
+import { errorHandlerCelular, fromDMYSlashtoYMDHyphen, fromYMDHyphentoDMYSlash } from "@src/utilities";
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { SegmentedButtonsResponsive } from "./components/segmented-buttons";
 import { useGetAvailSchedule } from './hooks/use-get-avail-schedule.hook';
@@ -251,6 +251,7 @@ export const CrearCitaBienestarScreen = () => {
   const availableDates = schedules.map(e => {
     return { date: fromDMYSlashtoYMDHyphen(e.date) }
   })
+
   const calendar = <Controller
     control={control}
     rules={{
@@ -315,7 +316,7 @@ export const CrearCitaBienestarScreen = () => {
     name="id_horario"
   />
 
-  const submitButtonFirstPart = <TouchableOpacity
+  const submitButtonFirstPart = <View style={{ marginTop: width * 0.08 }}><TouchableOpacity
     activeOpacity={0.75}
     onPress={onSubmitFirstPart}
   >
@@ -325,23 +326,10 @@ export const CrearCitaBienestarScreen = () => {
       </View>
     </View>
   </TouchableOpacity>
+  </View>
 
-  // console.log("fields", control._formValues)
-  
 
-  const errorHandler = (type: string): JSX.Element => {
-    switch (type) {
-      case "required":
-        return <Text>El campo es requerido</Text>;
-      case "minLength":
-      case "pattern":
-        return <Text>Ingresa un numero de celular valido</Text>;
-      default:
-        return <></>;
-    }
-  }
-
-  const confModal = <Modal
+  const confModal = <View style={{ flex: 1, width: width * 0. }}><Modal
     animationType="fade"
     hardwareAccelerated={true}
     transparent={true}
@@ -485,9 +473,9 @@ export const CrearCitaBienestarScreen = () => {
               )}
               name="student_celphone"
             />
-            {errors.student_celphone?.type === 'required' && errorHandler("required")}
-            {errors.student_celphone?.type === 'minLength' && errorHandler("minLength")}
-            {errors.student_celphone?.type === 'pattern' && errorHandler("pattern")}
+            {errors.student_celphone?.type === 'required' && errorHandlerCelular("required")}
+            {errors.student_celphone?.type === 'minLength' && errorHandlerCelular("minLength")}
+            {errors.student_celphone?.type === 'pattern' && errorHandlerCelular("pattern")}
           </View>
 
           {/* Actions */}
@@ -525,25 +513,30 @@ export const CrearCitaBienestarScreen = () => {
       </View>
     </View>
   </Modal>
+  </View>
+
+  const segmentedButtons = <SegmentedButtonsResponsive
+    buttons={servicesButtonsFormatted}
+    value={field}
+    onValueChange={setField}
+  />
+
+  const loader = <ActivityIndicator color={colores.Pantone_383_C} />
 
   return (
     <>
       <CardBienestar>
         <SafeAreaView style={styles.container}>
-          <SegmentedButtonsResponsive
-            buttons={servicesButtonsFormatted}
-            value={field}
-            onValueChange={setField}
-          />
+          {segmentedButtons}
           {
             (isLoadingProfessionals)
-              ? <ActivityIndicator color={colores.Pantone_383_C} />
+              ? loader
               : professionalsView
           }
           {
             (showDependentElements)
               ? (isLoadingSchedules)
-                ? <ActivityIndicator color={colores.Pantone_383_C} />
+                ? loader
                 : <>
                   {calendar}
                   {franjas}
@@ -551,12 +544,12 @@ export const CrearCitaBienestarScreen = () => {
               : <></>
           }
           {validateButtonSubmit
-            ? <View style={{ marginTop: width * 0.08 }}>{submitButtonFirstPart}</View>
+            ?  submitButtonFirstPart 
             : <></>}
 
         </SafeAreaView>
       </CardBienestar>
-      <View style={{ flex: 1, width: width * 0. }}>{confModal}</View>
+      {confModal}
     </>
   )
 }

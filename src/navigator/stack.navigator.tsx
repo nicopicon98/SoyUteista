@@ -1,5 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import { LeftMenuNavigator } from './left-menu.navigator';
+import { LeftDrawerNavigator } from './left-drawer-navigator';
 import { AuthLoadingScreen } from '@src/screens/splash';
 import { useState, useContext, useEffect } from 'react'
 import { SignInScreen } from '@src/screens/sign-in';
@@ -35,7 +35,7 @@ export const StackNavigator = () => {
           <Stack.Screen name="SignInScreen" component={SignInScreen} />
           :
           <>
-            <Stack.Screen name="Main" component={LeftMenuNavigator} />
+            <Stack.Screen name="Main" component={LeftDrawerNavigator} />
           </>
       }
 

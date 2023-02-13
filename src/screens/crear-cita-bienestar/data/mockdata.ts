@@ -1,7 +1,7 @@
 export const mockFranjas = {
     data: [
         {
-            date: "02/02/2023",
+            date: "20/02/2023",
             franjas: [
                 {
                     id_horario: "1",

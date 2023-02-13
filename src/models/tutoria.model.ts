@@ -31,6 +31,6 @@ export interface DaysByAsignatura {
 }
 
 export interface FranjaByDayAsignatura {
-  franja: string;
+  id_franja: string;
   nombre_franja: string;
 }

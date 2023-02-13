@@ -1,0 +1,61 @@
+import { View, StyleSheet, Dimensions, ImageSourcePropType } from 'react-native';
+import { Dialog, Portal, Text } from "react-native-paper";
+import { Image } from "react-native-elements";
+
+const { width } = Dimensions.get("window")
+
+interface Props {
+  buttonsAction?: JSX.Element[] | JSX.Element;
+  topImg?: ImageSourcePropType;
+  hideDialog: () => void;
+  dialogContent?: string;
+  dialogIsOpen: boolean;
+  dialogTitle: string;
+}
+
+export const SimpleDialog = (
+  {
+    topImg = require('@src/resources/Images/bajo-ren.jpg'),
+    dialogTitle,
+    dialogContent,
+    dialogIsOpen,
+    hideDialog,
+    buttonsAction
+  }: Props
+) => {
+
+  return (
+    <Portal>
+      <Dialog
+        visible={dialogIsOpen}
+        onDismiss={hideDialog}
+        dismissable={true}
+        style={{ backgroundColor: 'white', alignItems: 'flex-end' }}
+      >
+        <View style={{ alignSelf: 'center' }}>
+          <Image
+            source={topImg}
+            resizeMode="contain"
+            style={styles.imageLogo}
+          />
+        </View>
+        <View style={{ alignSelf: 'flex-start' }}>
+          <Dialog.Title>{dialogTitle}</Dialog.Title>
+          <Dialog.Content>
+            <Text variant="bodyMedium">{dialogContent}</Text>
+          </Dialog.Content>
+        </View>
+        <Dialog.Actions>
+          {buttonsAction}
+        </Dialog.Actions>
+      </Dialog>
+    </Portal>
+  )
+}
+
+const styles = StyleSheet.create({
+  imageLogo: {
+    width: width * 0.8,
+    height: width * 0.4,
+  },
+})

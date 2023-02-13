@@ -1,16 +1,9 @@
 import { View, Appearance, Dimensions, Platform } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { FABGroup } from '@src/components/FAB-group';
-import { screens } from '@src/utilities';
-import { ScrollView } from 'react-native-gesture-handler';
 
 const colorScheme = Appearance.getColorScheme();
 const { width } = Dimensions.get("window")
 
 export const CardBienestar = ({ children }: { children: JSX.Element | JSX.Element[] }) => {
-
-  const navigation = useNavigation();
-  const bienestarFABScreen = screens(navigation).slice(1)
 
   return (
     <View style={{

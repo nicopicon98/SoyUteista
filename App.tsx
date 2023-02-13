@@ -1,16 +1,13 @@
-import SpInAppUpdates, { IAUUpdateKind, StartUpdateOptions } from 'sp-react-native-in-app-updates';
-import { AlertNotificationRoot } from 'react-native-alert-notification';
-import { StackNavigator } from '@src/navigator/stack.navigator';
-import { useNotifications } from '@src/hooks/use-notifications';
 import { NavigationContainer, NavigationContainerRef } from '@react-navigation/native';
-import { Provider as PaperProvider } from 'react-native-paper';
-import database from '@react-native-firebase/database';
-import { firebase } from '@react-native-firebase/database';
-
 import { AuthContext, AuthProvider } from '@src/context/auth.context';
-import { LogBox, Platform } from 'react-native';
+import { useNotifications } from '@src/hooks/use-notifications';
+import { StackNavigator } from '@src/navigator/stack.navigator';
 import { colores } from '@src/theme/app.theme';
-import { useContext, useEffect, useRef } from 'react';
+import { useContext, useRef } from 'react';
+import { LogBox, Platform } from 'react-native';
+import { AlertNotificationRoot } from 'react-native-alert-notification';
+import { Provider as PaperProvider } from 'react-native-paper';
+import SpInAppUpdates, { IAUUpdateKind, StartUpdateOptions } from 'sp-react-native-in-app-updates';
 
 
 const inAppUpdates = new SpInAppUpdates(
@@ -54,8 +51,7 @@ const App = () => {
   )
 }
 
-import React from 'react'
-import moment from 'moment';
+import React from 'react';
 
 const NavigationContainerCustom = () => {
 

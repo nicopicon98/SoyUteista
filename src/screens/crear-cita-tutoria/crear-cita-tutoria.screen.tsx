@@ -4,26 +4,30 @@ import {
   createTutorItemsAdapter,
   createDaysItemsAdapter
 } from './adapters';
-import { Dimensions, StyleSheet, Text, View, Modal, Pressable, ScrollView } from 'react-native';
+import { Dimensions, StyleSheet, Text, View, Modal, Pressable, ScrollView, ImageSourcePropType } from 'react-native';
 import { Capitalize, errorHandlerCelular, idToDay, isOneEmpty } from '@src/utilities';
 import { useFranjaByDiaAsignatura } from './hooks/use-franja-by-dia-asignatura.hook';
-import { useCourses, useDayByAsignatura, useFetchTutores } from "./hooks";
+import { useFetchCourses, useDayByAsignatura, useFetchTutores, useTutorInfo } from "./hooks";
 import { CustomCalendarComponent } from '@src/components/custom-calendar';
 import DropDownPicker, { ItemType } from "react-native-dropdown-picker";
-import { ALERT_TYPE, Toast } from 'react-native-alert-notification';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { ActivityIndicator, TextInput } from "react-native-paper";
+import { ActivityIndicator, Button, Snackbar, TextInput } from "react-native-paper";
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { GraphError } from '@microsoft/microsoft-graph-client';
+import { ITutorInfoResp, NavigationProps } from "@src/models";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { CardTutorias } from '@src/components/card-tutorias';
 import { Controller, useForm } from "react-hook-form";
 import { Image } from 'react-native-elements';
-import { NavigationProps } from "@src/models";
+import { getTutorPhoto } from '@src/services';
 import { useEffect, useState } from "react";
+import { ToastAndroid } from 'react-native';
+import axios, { AxiosError } from 'axios';
 import { colores } from "@src/theme";
 import moment from 'moment';
+import { useSnackbar } from '@src/context/snackbar';
 
-export type FormData = {
+export type TFormData = {
   id_course: string;
   day: string;
   franja: string;
@@ -38,32 +42,36 @@ const { width, height } = Dimensions.get("window")
 
 export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
 
+  // custom icons -> Optimization tip
+  const [customTutoresIcon, setCustomTutoresIcon] = useState(<Icon name="account" color={colores.Pantone_382_C} size={30} />);
+  const [customCoursesIcon, setCustomCoursesIcon] = useState(<Icon name='library' color={colores.Pantone_382_C} size={25} />);
+
+  //BTN Continuar
+  const [isLoadingBtnContinuar, setIsLoadingBtnContinuar] = useState(false);
   //EVENT INSERT TUTORIA
   const [clickInsertTutoria, setClickInsertTutoria] = useState(false);
-
   //TUTOR IMAGE
-  const [tutorPhoto, setTutorPhoto] = useState(require('@src/resources/Images/male-placeholder.jpeg'));
+  const [tutorPhoto, setTutorPhoto] = useState<ImageSourcePropType>(require('@src/resources/Images/male-placeholder.jpeg'));
   //TUTOR
-  const [tutorInfo, setTutorInfo] = useState();
-
+  const [tutorInfo, setTutorInfo] = useState<ITutorInfoResp>();
   //CONDITIONAL RENDERING
   const [showDependentElements, setShowDependenElements] = useState(false);
-
   //MODALS
   const [fullDateModalVisible, setFullDateModalVisible] = useState(false);
   const [confModalVisible, setConfModalVisible] = useState(false);
 
   //CUSTOM HOOKS
-  const { isLoadingCourses, courses } = useCourses();
-  const { isLoadingDaysByAsignatura, onLoadDayByAsignatura } = useDayByAsignatura();
+  const { onLoadCursos, isLoadingCourses } = useFetchCourses();
+  const { onLoadDayByAsignatura, isLoadingDaysByAsignatura } = useDayByAsignatura();
   const { onLoadFranjaByDiaAsignatura } = useFranjaByDiaAsignatura();
   const { onLoadTutores } = useFetchTutores();
+  const { onLoadInfoTutor } = useTutorInfo();
   const {
     handleSubmit,
     control,
     reset,
     formState: { errors },
-  } = useForm<FormData>({
+  } = useForm<TFormData>({
     defaultValues: {
       id_course: '',
       day: '',
@@ -110,11 +118,24 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
   const [dropDownTutores, setDropDownTutores] = useState('');
   const [tutoresItems, setTutoresItems] = useState<ItemType<string>[]>([])
 
+  // handling errors
+  const { showMessage } = useSnackbar();
+
+  const handleErrorResp = (code: string | undefined): void => {
+    if (code === 'ERR_BAD_REQUEST') return showMessage("En este momento estamos experimentando problemas con el servidor, intentalo mas tarde");
+    if (code === 'ImageNotFound') return showMessage("Ocurrio una excepcion trayendo la imagen del docente");
+    return showMessage("Ocurrio un error, intentalo mas tarde")
+  }
+
   // Adaptig professionals to dropdown Items format
-  const setCoursesAdaptedItems = () => {
-    const customIcon = <Icon name='library' color={colores.Pantone_382_C} size={25} />
-    const newCoursesItems = createCoursesItemsAdapter({ courses, customIcon });
-    setCoursesItems(newCoursesItems);
+  const onLoadCrearTutoriaScreen = async () => {
+    try {
+      const resp = await onLoadCursos();
+      const newCoursesItems = createCoursesItemsAdapter({ courses: resp, customIcon: customCoursesIcon });
+      setCoursesItems(newCoursesItems);
+    } catch (error) {
+      //
+    }
   }
 
   const franjaValue = (franjaId: string = '') => {
@@ -131,7 +152,6 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
    * when setDayItems is called
    */
   const onSelectCourse = async (id_course: string) => {
-    console.log(id_course);
     const customIcon = <Icon name="calendar-today" color={colores.Pantone_382_C} size={25} />
     /** http request to fetch day */
     const resp = await onLoadDayByAsignatura(id_course); //this changes schedule
@@ -171,27 +191,55 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
   }
 
   const onSelectSaveFullDateModal = async () => {
-    const customIcon = <Icon name="account" color={colores.Pantone_382_C} size={30} />
-    /** http request to fetch day */
-    const resp = await onLoadTutores(franja, id_course, day); //this changes schedule
-    setTutoresItems(createTutorItemsAdapter({ tutores: resp, customIcon }))
+    try {
+      const resp = await onLoadTutores(franja, id_course, day);
+      setTutoresItems(createTutorItemsAdapter({ tutores: resp, customIcon: customTutoresIcon }));
+    } catch (error) {
+      console.error(error);
+      //
+    }
   }
 
   // Click on submit to open confirmation modal
-  const onSubmitFirstPart = () => {
-    setConfModalVisible(true);
+  const onSubmitFirstPart = async () => {
+    setIsLoadingBtnContinuar(true);
+    try {
+      const tutorInfo = await onLoadInfoTutor(id_course, day, franja, id_tutor);
+      const tutorPhoto = await getTutorPhoto(tutorInfo.correo);
+      setTutorInfo(currentTutorInfo => {
+        // Only update state if new value differs from current
+        return JSON.stringify(currentTutorInfo) !== JSON.stringify(tutorInfo) ? tutorInfo : currentTutorInfo;
+      });
+      setTutorPhoto(currentTutorPhoto => {
+        // Only update state if new value differs from current
+        return currentTutorPhoto !== tutorPhoto ? tutorPhoto : currentTutorPhoto;
+      });
+      setConfModalVisible(true);
+    } catch (err) {
+      //first catch crucial errors
+      if (axios.isAxiosError(err)) {
+        return handleErrorResp(err.code)
+      }
+      // Handle the error consistently
+      if (err instanceof GraphError) {
+        setConfModalVisible(true);
+        return handleErrorResp(err.code!);
+      }
+    } finally {
+      setIsLoadingBtnContinuar(false);
+    }
   }
 
   // Click on submit to insert tutoria
-  const submitFinal = () => {
+  const onSubmitFinal = () => {
     setClickInsertTutoria(true);
   }
 
   //Once the component is loaded, we proceed to adapt the professionals to dropdown Items format
   //if courses change, the http request will be dispatched with the specific field
   useEffect(() => {
-    setCoursesAdaptedItems();
-  }, [courses])
+    onLoadCrearTutoriaScreen();
+  }, [])
 
   //VIEWS
   const loader = <ActivityIndicator
@@ -576,7 +624,11 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
   >
       <View style={{ alignItems: 'center', marginTop: width * 0.02 }}>
         <View style={styles.buttonContinuar}>
-          <Text style={{ ...styles.buttonContinuarText }}>Continuar</Text>
+          {
+            isLoadingBtnContinuar
+              ? <ActivityIndicator color='white' />
+              : <Text style={{ ...styles.buttonContinuarText }}>Continuar</Text>
+          }
         </View>
       </View>
     </TouchableOpacity>
@@ -690,264 +742,271 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
     <View style={styles.centeredViewFinalModal}>
       <View style={styles.modalFinalView}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={{ alignItems: 'center', marginVertical: width * 0.03 }}>
-            <Text
-              style={{
-                fontWeight: 'bold',
-                fontSize: width * 0.05,
-                textAlign: 'center',
-              }}>
-              Ya casi terminamos!
-            </Text>
-          </View>
-          {/* Teacher's image */}
-          <View style={{ alignItems: 'center' }}>
-            <Image
-              source={tutorPhoto}
-              resizeMode="contain"
-              style={{
-                borderRadius: 1000,
-                height: width * 0.4,
-                width: width * 0.4,
-              }}
-            />
-          </View>
-
-          {/*Teacher's name and email */}
-          <View style={{ alignItems: 'center', marginTop: width * 0.02 }}>
-            {/* Name */}
-            <Text
-              style={{
-                fontWeight: '700',
-                fontSize: width * 0.045,
-                textAlign: 'center',
-              }}>
-              John Doe
-            </Text>
-            {/* Email */}
-            <Text
-              style={{
-                fontWeight: '400',
-                fontStyle: 'italic',
-                fontSize: width * 0.03,
-              }}>
-              jhon@doe.com
-            </Text>
-          </View>
-
-          {/* All the info */}
-          <View
-            style={{
-              marginTop: width * 0.02,
-              borderColor: colores.Cool_Gray_5_C,
-              borderWidth: 0.8,
-              paddingHorizontal: width * 0.03,
-              paddingVertical: width * 0.02,
+          {/* Entire content */}
+          <View style={{}}>
+            <View style={{
+              alignItems: 'center',
+              marginVertical: width * 0.03
             }}>
-            {/* Asignatura */}
-            <View
-              style={{
-                flexDirection: 'row',
-                width: '100%',
-                marginTop: width * 0.03,
-              }}>
-              <View style={{ width: '50%', justifyContent: 'center' }}>
-                <Text style={{ fontWeight: '700' }}>Asignatura:</Text>
-              </View>
-              <View style={{ width: '50%' }}>
-                <Text style={{ fontWeight: '400' }}>
-                  {Capitalize(
-                    courses?.find(
-                      e =>
-                        e.id_curso === id_course,
-                    )?.nombre_curso
-                  )}
-                </Text>
-              </View>
+              <Text
+                style={{
+                  fontWeight: 'bold',
+                  fontSize: width * 0.04,
+                  textAlign: 'justify',
+                  width: '100%'
+                }}>
+                Por favor confirma que los datos a continuación sean correctos:
+              </Text>
             </View>
-
-            {/* Tema */}
-            <View
-              style={{
-                flexDirection: 'row',
-                width: '100%',
-                marginTop: width * 0.02,
-              }}>
-              <View style={{ width: '50%', justifyContent: 'center' }}>
-                <Text style={{ fontWeight: '700' }}>Tema:</Text>
-              </View>
-              <View style={{ width: '50%' }}>
-                <Text style={{ fontWeight: '400' }}>
-                  {tema}
-                </Text>
-              </View>
-            </View>
-
-            {/* Dia, fecha y franja, Modalidad, sede */}
-            <View
-              style={{
-                flexDirection: 'row',
-                width: '100%',
-                marginTop: width * 0.025,
-              }}>
-              <View style={{ width: '50%', justifyContent: 'center' }}>
-                <Text style={{ fontWeight: '700' }}>Dia:</Text>
-              </View>
-              <View style={{ width: '50%' }}>
-                <Text style={{ fontWeight: '400' }}>
-                  {Capitalize(idToDay(Number(day)))}
-                </Text>
-              </View>
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                width: '100%',
-              }}>
-              <View style={{ width: '50%', justifyContent: 'center' }}>
-                <Text style={{ fontWeight: '700' }}>Fecha:</Text>
-              </View>
-              <View style={{ width: '50%' }}>
-                <Text style={{ fontWeight: '400' }}>
-                  {fecha_tutoria}
-                </Text>
-              </View>
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                width: '100%',
-              }}>
-              <View style={{ width: '50%', justifyContent: 'center' }}>
-                <Text style={{ fontWeight: '700' }}>Franja:</Text>
-              </View>
-              <View style={{ width: '50%' }}>
-                <Text style={{ fontWeight: '400' }}>
-                  {
-                    franjasItems?.find(
-                      e => e.value === franja,
-                    )?.label
-                  }
-                </Text>
-              </View>
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                width: '100%',
-              }}>
-              <View style={{ width: '50%', justifyContent: 'center' }}>
-                <Text style={{ fontWeight: '700' }}>Modalidad:</Text>
-              </View>
-              <View style={{ width: '50%' }}>
-                <Text style={{ fontWeight: '400' }}>
-                  Virtual/Presencial
-                </Text>
-              </View>
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                width: '100%',
-              }}>
-              <View style={{ width: '50%', justifyContent: 'center' }}>
-                <Text style={{ fontWeight: '700' }}>Lugar:</Text>
-              </View>
-              <View style={{ width: '50%' }}>
-                <Text style={{ fontWeight: '400' }}>
-                  SEDE PRINCIPAL
-                </Text>
-              </View>
-            </View>
-
-            <View
-              style={{
-                flexDirection: 'row',
-                width: '100%',
-                marginTop: width * 0.02,
-              }}>
-              <View style={{ width: '50%', justifyContent: 'center' }}>
-                <Text style={{ fontWeight: '700' }}>Contacto:</Text>
-              </View>
-              <View style={{ width: '50%' }}>
-                <Text style={{ fontWeight: '400' }}>
-                  {celular}
-                </Text>
-              </View>
-            </View>
-          </View>
-
-          {/* Contacto */}
-          <View style={{ marginTop: width * 0.03 }}>
-            <Controller
-              control={control}
-              rules={{
-                required: true,
-                minLength: 10,
-                pattern: /3[0-9]{9}/gm, //colombian cel                
-              }}
-              render={({ field: { onChange, onBlur, value } }) => (
-                <TextInput
-                  mode="outlined"
-                  label="Comentarios Adicionales"
-                  outlineColor="black"
-                  activeOutlineColor="black"
-                  onChangeText={onChange}
-                  onBlur={onBlur}
-                  editable
-                  multiline
-                  maxLength={50}
-                  value={value}
-                  numberOfLines={2}
-                  right={<TextInput.Icon icon="pencil" size={20} />}
-                  style={{
-                    backgroundColor: 'white',
-                  }}
-                />
-              )}
-              name="celular"
-            />
-            {errors.celular?.type === 'required' && errorHandlerCelular("required")}
-            {errors.celular?.type === 'minLength' && errorHandlerCelular("minLength")}
-            {errors.celular?.type === 'pattern' && errorHandlerCelular("pattern")}
-          </View>
-
-          {/* Actions */}
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-evenly',
-              marginTop: width * 0.12,
-            }}>
-            {/* Salir sin guardar */}
-            <View style={styles.buttonGuardarContentChild}>
-              <Pressable
-                onPress={() => {
-                  !isOneEmpty(fecha_tutoria, day, franja)
-                    ? console.log('guardado')
-                    : Toast.show({
-                      type: ALERT_TYPE.DANGER,
-                      title: 'Avertencia!',
-                      textBody: 'Aun faltan datos por guardar',
-                      autoClose: 2000,
-                    });
-                  setConfModalVisible(false);
+            {/* Teacher's image */}
+            <View style={{ alignItems: 'center' }}>
+              <Image
+                source={tutorPhoto}
+                resizeMode="contain"
+                style={{
+                  borderRadius: 1000,
+                  height: width * 0.4,
+                  width: width * 0.4,
                 }}
-                style={styles.buttonEliminar}>
-                <Text style={styles.buttonGuardarText}>Volver</Text>
-              </Pressable>
+              />
             </View>
-            {/**Insertar cita */}
-            <View style={styles.buttonGuardarContentChild}>
-              <Pressable
-                onPress={handleSubmit(submitFinal)}
-                style={styles.buttonAgendar}>
-                {
-                  !clickInsertTutoria
-                    ? <Text style={styles.buttonGuardarText}>Agendar</Text>
-                    : <ActivityIndicator />
-                }
-              </Pressable>
+
+            {/*Teacher's name and email */}
+            <View style={{ alignItems: 'center', marginTop: width * 0.02 }}>
+              {/* Name */}
+              <Text
+                style={{
+                  fontWeight: '700',
+                  fontSize: width * 0.045,
+                  textAlign: 'center',
+                }}>
+                {tutoresItems.find(e => e.value === id_tutor)?.label}
+              </Text>
+              {/* Email */}
+              <Text
+                style={{
+                  fontWeight: '400',
+                  fontStyle: 'italic',
+                  fontSize: width * 0.03,
+                }}>
+                {tutorInfo?.correo}
+              </Text>
+            </View>
+
+            {/* All the info */}
+            <View
+              style={{
+                marginTop: width * 0.02,
+                borderColor: colores.Cool_Gray_5_C,
+                borderWidth: 0.8,
+                paddingHorizontal: width * 0.03,
+                paddingVertical: width * 0.02,
+              }}>
+              {/* Asignatura */}
+              <View
+                style={{
+                  flexDirection: 'row',
+                  width: '100%',
+                  marginTop: width * 0.03,
+                }}>
+                <View style={{ width: '50%', justifyContent: 'center' }}>
+                  <Text style={{ fontWeight: '700' }}>Asignatura:</Text>
+                </View>
+                <View style={{ width: '50%' }}>
+                  <Text style={{ fontWeight: '400' }}>
+                    {Capitalize(
+                      coursesItems?.find(
+                        e =>
+                          e.value === id_course,
+                      )?.label
+                    )}
+                  </Text>
+                </View>
+              </View>
+
+              {/* Tema */}
+              <View
+                style={{
+                  flexDirection: 'row',
+                  width: '100%',
+                  marginTop: width * 0.02,
+                }}>
+                <View style={{ width: '50%', justifyContent: 'center' }}>
+                  <Text style={{ fontWeight: '700' }}>Tema:</Text>
+                </View>
+                <View style={{ width: '50%' }}>
+                  <Text style={{ fontWeight: '400' }}>
+                    {tema}
+                  </Text>
+                </View>
+              </View>
+
+              {/* Dia, fecha y franja, Modalidad, sede */}
+              <View
+                style={{
+                  flexDirection: 'row',
+                  width: '100%',
+                  marginTop: width * 0.025,
+                }}>
+                <View style={{ width: '50%', justifyContent: 'center' }}>
+                  <Text style={{ fontWeight: '700' }}>Dia:</Text>
+                </View>
+                <View style={{ width: '50%' }}>
+                  <Text style={{ fontWeight: '400' }}>
+                    {Capitalize(day)}
+                  </Text>
+                </View>
+              </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  width: '100%',
+                }}>
+                <View style={{ width: '50%', justifyContent: 'center' }}>
+                  <Text style={{ fontWeight: '700' }}>Fecha:</Text>
+                </View>
+                <View style={{ width: '50%' }}>
+                  <Text style={{ fontWeight: '400' }}>
+                    {fecha_tutoria}
+                  </Text>
+                </View>
+              </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  width: '100%',
+                }}>
+                <View style={{ width: '50%', justifyContent: 'center' }}>
+                  <Text style={{ fontWeight: '700' }}>Franja:</Text>
+                </View>
+                <View style={{ width: '50%' }}>
+                  <Text style={{ fontWeight: '400' }}>
+                    {
+                      franjasItems?.find(
+                        e => e.value === franja,
+                      )?.label
+                    }
+                  </Text>
+                </View>
+              </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  width: '100%',
+                }}>
+                <View style={{ width: '50%', justifyContent: 'center' }}>
+                  <Text style={{ fontWeight: '700' }}>Modalidad:</Text>
+                </View>
+                <View style={{ width: '50%' }}>
+                  <Text style={{ fontWeight: '400' }}>
+                    Virtual/Presencial
+                  </Text>
+                </View>
+              </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  width: '100%',
+                }}>
+                <View style={{ width: '50%', justifyContent: 'center' }}>
+                  <Text style={{ fontWeight: '700' }}>Lugar:</Text>
+                </View>
+                <View style={{ width: '50%' }}>
+                  <Text style={{ fontWeight: '400' }}>
+                    {tutorInfo?.sede}
+                  </Text>
+                </View>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: 'row',
+                  width: '100%',
+                  marginTop: width * 0.02,
+                }}>
+                <View style={{ width: '50%', justifyContent: 'center' }}>
+                  <Text style={{ fontWeight: '700' }}>Ubicacion tutoria:</Text>
+                </View>
+                <View style={{ width: '50%' }}>
+                  <Text style={{ fontWeight: '400' }}>
+                    {`${tutorInfo?.ubicacion} ${tutorInfo?.nombre_lugar}`}
+                  </Text>
+                </View>
+              </View>
+            </View>
+
+            {/* Contacto */}
+            <View style={{
+              marginTop: width * 0.03,
+              alignItems: 'center',
+            }}>
+              <Controller
+                control={control}
+                rules={{
+                  required: true,
+                  minLength: 10,
+                  pattern: /3[0-9]{9}/gm, //colombian cel                
+                }}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextInput
+                    mode='outlined'
+                    placeholder='Ej: 3054762954'
+                    outlineColor={colores.Pantone_382_C}
+                    activeOutlineColor={colores.Pantone_382_C}
+                    onChangeText={onChange}
+                    onBlur={onBlur}
+                    maxLength={10}
+                    keyboardType='number-pad'
+                    value={value}
+                    right={
+                      <TextInput.Icon
+                        icon="cellphone"
+                        color={(isTextInputFocused: boolean) => {
+                          return isTextInputFocused ? colores.Pantone_383_C : colores.Pantone_382_C
+                        }}
+                        size={30} />
+                    }
+                    style={{
+                      backgroundColor: 'rgba(196, 215, 48, 0.1)',
+                      fontSize: height * 0.019,
+                      width: '100%'
+                    }}
+                  />
+                )}
+                name="celular"
+              />
+              {errors.celular?.type === 'required' && errorHandlerCelular("required")}
+              {errors.celular?.type === 'minLength' && errorHandlerCelular("minLength")}
+              {errors.celular?.type === 'pattern' && errorHandlerCelular("pattern")}
+            </View>
+
+            {/* Actions */}
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-evenly',
+                marginTop: width * 0.1,
+              }}>
+              {/* Salir sin guardar */}
+              <View style={styles.buttonGuardarContentChild}>
+                <Pressable
+                  onPress={() => setConfModalVisible(false)}
+                  style={styles.buttonEliminar}>
+                  <Text style={styles.buttonGuardarText}>Volver</Text>
+                </Pressable>
+              </View>
+              {/**Insertar cita */}
+              <View style={styles.buttonGuardarContentChild}>
+                <Pressable
+                  onPress={handleSubmit(onSubmitFinal)}
+                  style={styles.buttonAgendar}>
+                  {
+                    !clickInsertTutoria
+                      ? <Text style={styles.buttonGuardarText}>Agendar</Text>
+                      : <ActivityIndicator />
+                  }
+                </Pressable>
+              </View>
             </View>
           </View>
         </ScrollView>
@@ -955,9 +1014,19 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
     </View>
   </Modal>
 
+  
+  const [isVisible, setIsVisible] = useState(false);
+
+  const showMessagexd = () => {
+    setIsVisible(true);
+  }
+
+  const onDismiss = () => {
+    setIsVisible(false);
+  }
+
   //VALIDATE SUBMIT
   const validateButtonSubmit = !isOneEmpty(id_course, day, franja, fecha_tutoria, id_tutor);
-
 
   return (
     <>
@@ -969,6 +1038,7 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
                 ? loader
                 : coursesView
             }
+            <Button onPress={showMessagexd}>show</Button>
             {
               (showDependentElements)
                 ? (isLoadingDaysByAsignatura)
@@ -989,6 +1059,22 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
       </CardTutorias>
       {fullDateModal}
       {confModal}
+      <Snackbar
+        visible={true}
+        onDismiss={onDismiss}
+        duration={1000}
+        action={{
+          label: '',
+          onPress: onDismiss,
+          textColor: colores.White,
+        }}
+        style={{
+          marginBottom: height*0.1,
+          backgroundColor: colores.Pantone_383_C,
+        }}
+      >
+        <Text style={{color: 'black'}}>xs</Text>
+      </Snackbar>
     </>
   )
 }
@@ -1074,7 +1160,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
-    width: width * 0.9,
   },
   imageLogo: {
     width: width * 0.8,

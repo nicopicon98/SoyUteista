@@ -1,6 +1,5 @@
-import { ItemType } from "react-native-dropdown-picker";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { FranjaByDayAsignatura } from '@src/models';
+import { ItemType } from "react-native-dropdown-picker";
 import { numberToWords } from "@src/utilities";
 import { colores } from '@src/theme';
 
@@ -11,7 +10,6 @@ interface Params {
 export const createFranjasItemsAdapter =
   ({ franjas}: Params): ItemType<string>[] => {
     return franjas.map(e => {
-      console.log(e.nombre_franja.slice(0, 2));
       const iconName = `clock-time-${numberToWords(e.nombre_franja.slice(0, 2))}`;
       return {
         label: `${e.nombre_franja}`,

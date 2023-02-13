@@ -8,13 +8,9 @@ export const useAgendaInstitucional = () => {
   const [agendas, setAgendas] = useState<UTSPostsCategories[]>();
 
   const loadNoticia = async () => {
-    try {
-      const rep = await getAgendas();
-      setAgendas(rep.data);
-      setIsLoading(false);
-    } catch (error: any) {
-      console.log(error);
-    }
+    const rep = await getAgendas();
+    setAgendas(rep.data);
+    setIsLoading(false);
   }
 
   useEffect(() => {

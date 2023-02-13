@@ -5,10 +5,10 @@ import { blobToBase64 } from '@src/utilities';
 import { Image } from 'react-native-elements';
 import { GraphManager } from '@src/services';
 import { useEffect, useState } from 'react'
-import { TutoriaResp } from '@src/models';
+import { ITutoriaResp } from '@src/models';
 
 interface Props {
-  item: TutoriaResp
+  item: ITutoriaResp
 }
 
 export const Tutoria = ({ item }: Props) => {
@@ -27,7 +27,6 @@ export const Tutoria = ({ item }: Props) => {
       const photo: string[] = answerBase64.split(',');
       setTutorPhoto('data:image/png;base64,' + photo[1]);
     } catch (error) {
-      console.log(error);
       setTutorPhoto(imageLogo);
     }
   }

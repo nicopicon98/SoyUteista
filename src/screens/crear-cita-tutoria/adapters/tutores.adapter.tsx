@@ -9,7 +9,7 @@ interface Params {
 export const createTutorItemsAdapter =
   ({ tutores, customIcon }: Params): ItemType<string>[] => {
     return tutores.map(e => ({
-      label: `${e.nombre} - ${e.roll}`,
+      label: `${e.nombre}`,
       value: `${e.id_tutor}`,
       icon: () => customIcon
     }));

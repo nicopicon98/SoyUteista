@@ -13,7 +13,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useState, useEffect, useContext } from 'react';
 import { Controller, useForm } from "react-hook-form";
 import { Modal, Pressable } from 'react-native';
-import { AuthContext } from '@src/context';
+import { AuthContext } from '@src/context/auth';
 import { useGetProByField } from "./hooks";
 import { colores } from "@src/theme";
 import { servicesFn } from "./data";
@@ -115,7 +115,6 @@ export const CrearCitaBienestarScreen = () => {
   // Click on each field
   const pressFieldHandler = async function () {
     const _field = this.value;
-    console.log(_field)
     await fetchProfessionalsByField(_field);
   }
 
@@ -145,7 +144,6 @@ export const CrearCitaBienestarScreen = () => {
   const onSelectProfessional = async (value: string) => {
     /** http request to fetch available schedules */
     //TODO
-    console.log(value)
     await fetchSchedulesByIdProfessional(); //this changes schedule
     /** Show the rest */
     setShowDependenElements(true);
@@ -178,7 +176,6 @@ export const CrearCitaBienestarScreen = () => {
 
   //Click on Franja
   const onSelectFranja = (franja: string) => {
-    console.log(franja)
   }
 
   // Click on continue,
@@ -197,7 +194,6 @@ export const CrearCitaBienestarScreen = () => {
     //const { id_horario, student_celphone: userStudentCelphone } = data;
     //const userStudentEmail = user!.userEmail;
     //const obj = insertCitaBienestarAdapter({ id_horario, userStudentCelphone, userStudentEmail })
-    //console.log("sending", obj)
     //TODO -> control._formValues
   };
 

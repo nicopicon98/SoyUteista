@@ -1,13 +1,11 @@
-import SpInAppUpdates, {IAUUpdateKind, StartUpdateOptions} from 'sp-react-native-in-app-updates';
-import { AlertNotificationRoot } from 'react-native-alert-notification';
+import SpInAppUpdates, { IAUUpdateKind, StartUpdateOptions } from 'sp-react-native-in-app-updates';
 import { StackNavigator } from '@src/navigator/stack.navigator';
 import { useNotifications } from '@src/hooks/use-notifications';
 import { NavigationContainer } from '@react-navigation/native';
 import { Provider as PaperProvider } from 'react-native-paper';
-import { AuthProvider } from '@src/context/auth.context';
-import { LogBox, Platform, AppState as AppStateCustom, AppStateEvent, AppStateStatus } from 'react-native';
-import { colores } from '@src/theme/app.theme';
-import {useEffect, useState} from 'react';
+import { SnackbarProvider } from '@src/context/snackbar';
+import { AuthProvider } from '@src/context/auth';
+import { LogBox, Platform } from 'react-native';
 
 const inAppUpdates = new SpInAppUpdates(
   true // isDebug
@@ -39,7 +37,7 @@ export const AppState = ({ children }: { children: JSX.Element | JSX.Element[] }
 
 const App = () => {
 
-  if (Platform.OS === 'android'){
+  if (Platform.OS === 'android') {
     useNotifications()
   }
 
@@ -47,27 +45,9 @@ const App = () => {
     <NavigationContainer>
       <AppState>
         <PaperProvider>
-          <AlertNotificationRoot
-            colors={[{
-              label: 'white',
-              card: 'black',
-              overlay: 'red',
-              success: colores.Pantone_383_C,
-              danger: 'red',
-              warning: colores.Blue_Rey,
-            },
-            {
-              label: 'labelExampleLight',
-              card: 'cardExampleLight',
-              overlay: 'overlayExampleLight',
-              success: 'red',
-              danger: 'red',
-              warning: 'yellow',
-            }]}
-            theme='light'
-          >
+          <SnackbarProvider>
             <StackNavigator />
-          </AlertNotificationRoot>
+          </SnackbarProvider>
         </PaperProvider>
       </AppState>
     </NavigationContainer>

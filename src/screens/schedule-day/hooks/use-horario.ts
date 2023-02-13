@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react'
 import { MateriaInterface } from '../models';
 import { API_KEY } from '@src/config/auth';
-import { AuthContext } from '@src/context';
+import { AuthContext } from '@src/context/auth';
 import { getHorario } from '@src/services';
 
 export const useHorario = () => {
@@ -15,9 +15,8 @@ export const useHorario = () => {
       setMaterias(rep.data.data.MATERIAS);
       setIsLoading(false);
     } catch (error) {
-      setMaterias(null)
-      setIsLoading(false)
-      console.log("there was an error");
+      setMaterias(null);
+      setIsLoading(false);
     }
   }
 

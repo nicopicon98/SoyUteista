@@ -1,46 +1,37 @@
-import { Alert, Appearance, FlatList, StyleSheet, Text, View, useWindowDimensions, RefreshControl, Dimensions } from 'react-native';
-import { Dialog, Portal, Text as TextPaper, Button } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {
+  Alert,
+  Appearance,
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+  useWindowDimensions,
+  RefreshControl,
+  Dimensions
+} from 'react-native';
 import { SkeletonNews } from '@src/components/skeleton-news';
 import { AppBarComponent } from '@src/components/app-bar';
-import { useNavigation } from '@react-navigation/native';
 import { useContext, useEffect, useState } from 'react';
-import { FABGroup } from '@src/components/FAB-group';
 import { Noticia } from '@src/components/noticia';
-import { Image } from 'react-native-elements';
-import { colores, fonts } from '@src/theme';
-import { AuthContext } from '@src/context';
-import { screens } from '@src/utilities';
+import { fonts } from '@src/theme';
+import { AuthContext } from '@src/context/auth';
 import { useNoticias } from './hooks';
-import { sharingInformationService } from '@src/services/sharing-information.service';
-import { SimpleDialog } from '@src/components/simple-dialog/simple-dialog.component';
 
-const { width } = Dimensions.get("window")
+const { width } = Dimensions.get("window");
 
 export const HomeScreen = () => {
   const { isLoading, noticias, loadNoticia } = useNoticias();
   const { authState: { user } } = useContext(AuthContext);
   const { width } = useWindowDimensions();
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const navigation = useNavigation<any>();
   const colorScheme = Appearance.getColorScheme();
-
-  const bajoRendimientoChecker = () => {
-    if (user?.userMoreInfo.C_ESTP_PROMEDIOGENERAL! > 3.4) {
-      sharingInformationService.setSubject(true);
-    }
-  }
-  useEffect(() => {
-    bajoRendimientoChecker();
-  }, [])
-
 
   const alertUseError = () => {
     Alert.alert(
       "Atención",
       user!.userError,
       [
-        { text: "OK", onPress: () => console.log("OK Pressed") }
+        { text: "OK", onPress: () => { } }
       ]
     );
   }
@@ -95,7 +86,6 @@ export const HomeScreen = () => {
                 }
               />
             </View>
-            <FABGroup screens={screens(navigation)} />
           </>
         }
       </View>

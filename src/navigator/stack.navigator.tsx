@@ -3,7 +3,7 @@ import { LeftDrawerNavigator } from './left-drawer-navigator';
 import { AuthLoadingScreen } from '@src/screens/splash';
 import { useState, useContext, useEffect } from 'react'
 import { SignInScreen } from '@src/screens/sign-in';
-import { AuthContext } from '@src/context';
+import { AuthContext } from '@src/context/auth';
 
 const Stack = createStackNavigator();
 

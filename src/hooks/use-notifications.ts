@@ -52,7 +52,7 @@ export const useNotifications = () => {
 			onDisplayNotification(body ?? "", title ?? "", image);
 		})
 		messaging().setBackgroundMessageHandler(async remoteMessage => {
-			console.log("background")
+			//
 		});
 	}, []);
 }

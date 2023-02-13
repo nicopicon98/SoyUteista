@@ -1,5 +1,4 @@
 import { getDaysByAsignatura } from '@src/services';
-import { DaysByAsignatura } from '@src/models';
 import { useState } from 'react'
 
 export const useDayByAsignatura = () => {

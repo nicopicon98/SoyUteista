@@ -2,11 +2,12 @@ import * as React from 'react';
 import { FAB, Portal } from 'react-native-paper';
 import { colores } from '@src/theme';
 import { FabScreens } from '@src/models/fab-screens.model';
+import { Dimensions } from 'react-native';
 
 interface Props {
   screens: FabScreens[]
 }
-
+const {width} = Dimensions.get("screen");
 export const FABGroup = ({ screens }: Props) => {
   const [state, setState] = React.useState({ open: false });
 
@@ -24,13 +25,13 @@ export const FABGroup = ({ screens }: Props) => {
         onStateChange={onStateChange}
         onPress={() => {
           if (!open) {
-            console.log("opened")
+            //
           }
         }}
+        variant="surface"
         fabStyle={{
           borderRadius: 1000,
-          backgroundColor:
-            colores.Pantone_383_C,
+          backgroundColor: colores.Pantone_383_C,
         }}
       />
     </Portal>

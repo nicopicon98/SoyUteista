@@ -5,7 +5,7 @@ export interface TutorResp {
   correo: string;
 }
 
-export interface TutorInfoResp {
+export interface ITutorInfoResp {
   sede: string;
   correo: string;
   sala_virtual: string;

@@ -12,7 +12,7 @@ export const ConvocatoriasScreen = () => {
         style={{
           flex: 1,
           marginBottom: bottom,
-          backgroundColor: 'white'
+          backgroundColor: 'white',
         }}>
           <ListConvocatorias/>
         </View>

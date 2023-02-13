@@ -30,6 +30,7 @@ export const ListConvocatorias = () => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: 'white',
     marginTop: 10,
     marginHorizontal: 10,

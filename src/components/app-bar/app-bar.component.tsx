@@ -23,7 +23,7 @@ export const AppBarComponent = (props: Props) => {
         size={30}
       />
       <Appbar.Content title={props.title} color={'white'} />
-      <Appbar.Action icon="bell" onPress={() => { }} color={'white'} />
+      <Appbar.Action icon="bell" onPress={() => { navigate.navigate('PushNotification' as never) }} color={'white'} />
     </Appbar.Header>
   );
 };

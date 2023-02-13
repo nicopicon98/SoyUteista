@@ -7,13 +7,9 @@ export const useNoticias = () => {
   const [noticias, setNoticias] = useState<UTSPostsCategories[]>([]);
 
   const loadNoticia = async () => {
-    try {
-      const rep = await getNoticias();
-      setNoticias(rep.data);
-      setIsLoading(false);
-    } catch (error: any) {
-      console.log(error);
-    }
+    const rep = await getNoticias();
+    setNoticias(rep.data);
+    setIsLoading(false);
   }
 
   //Disparamos la peticion http

@@ -1,14 +1,12 @@
-import { NavigationContainer, NavigationContainerRef } from '@react-navigation/native';
-import { AuthContext, AuthProvider } from '@src/context/auth.context';
-import { useNotifications } from '@src/hooks/use-notifications';
-import { StackNavigator } from '@src/navigator/stack.navigator';
-import { colores } from '@src/theme/app.theme';
-import { useContext, useRef } from 'react';
-import { LogBox, Platform } from 'react-native';
+import SpInAppUpdates, {IAUUpdateKind, StartUpdateOptions} from 'sp-react-native-in-app-updates';
 import { AlertNotificationRoot } from 'react-native-alert-notification';
+import { StackNavigator } from '@src/navigator/stack.navigator';
+import { useNotifications } from '@src/hooks/use-notifications';
+import { NavigationContainer } from '@react-navigation/native';
 import { Provider as PaperProvider } from 'react-native-paper';
-import SpInAppUpdates, { IAUUpdateKind, StartUpdateOptions } from 'sp-react-native-in-app-updates';
-
+import { SnackbarProvider } from '@src/context/snackbar';
+import { AuthProvider } from '@src/context/auth';
+import { LogBox, Platform } from 'react-native';
 
 // const inAppUpdates = new SpInAppUpdates(
 //   true // isDebug
@@ -40,66 +38,20 @@ export const AppState = ({ children }: { children: JSX.Element | JSX.Element[] }
 }
 
 const App = () => {
-  console.log(Platform.OS)
+
   if (Platform.OS === 'android') {
     useNotifications()
   }
 
   return (
-    <AppState>
-      <NavigationContainerCustom />
-    </AppState>
-  )
-}
-
-import React from 'react';
-
-const NavigationContainerCustom = () => {
-
-  const navigationRef = useRef<NavigationContainerRef<ReactNavigation.RootParamList> | null>(null);
-  const { authState: { user } } = useContext(AuthContext)
-
-  return (
-    <NavigationContainer
-    // ref={navigationRef}
-    // onStateChange={async () => {
-    //   const actualScreen = (navigationRef.current?.getCurrentRoute()?.name) ?? "No screen"
-    //   firebase
-    //     .app()
-    //     .database('https://soyuteista-cf8a2-default-rtdb.firebaseio.com/')
-    //     .ref('/entrys')
-    //     .push()
-    //     .set({
-    //       screen: actualScreen,
-    //       email: user?.userEmail,
-    //       time: moment().format()
-    //     }).then((e) => console.log(e))
-    //   // console.log(resp)
-    // }}
-    >
-      <PaperProvider>
-        <AlertNotificationRoot
-          colors={[{
-            label: 'white',
-            card: 'black',
-            overlay: 'red',
-            success: colores.Pantone_383_C,
-            danger: 'red',
-            warning: colores.Blue_Rey,
-          },
-          {
-            label: 'labelExampleLight',
-            card: 'cardExampleLight',
-            overlay: 'overlayExampleLight',
-            success: 'red',
-            danger: 'red',
-            warning: 'yellow',
-          }]}
-          theme='light'
-        >
-          <StackNavigator />
-        </AlertNotificationRoot>
-      </PaperProvider>
+    <NavigationContainer>
+      <AppState>
+        <PaperProvider>
+          <SnackbarProvider>
+            <StackNavigator />
+          </SnackbarProvider>
+        </PaperProvider>
+      </AppState>
     </NavigationContainer>
   )
 }

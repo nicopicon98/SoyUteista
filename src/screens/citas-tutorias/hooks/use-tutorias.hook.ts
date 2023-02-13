@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react'
 import { getAllTutoriasByUser } from '@src/services';
 import { replaceNull } from '@src/utilities';
-import { AuthContext } from '@src/context';
+import { AuthContext } from '@src/context/auth';
 import { TutoriaResp } from '@src/models';
 
 export const useTutorias = () => {

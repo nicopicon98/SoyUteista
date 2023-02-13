@@ -3,7 +3,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import { Image } from 'react-native-elements';
 import { useContext, useState } from 'react';
-import { AuthContext } from '@src/context';
+import { AuthContext } from '@src/context/auth';
 import { colores } from '@src/theme';
 
 

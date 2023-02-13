@@ -2,7 +2,7 @@ import { DrawerNavigationHelpers } from '@react-navigation/drawer/lib/typescript
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Text, StyleSheet, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { AuthContext } from '@src/context';
+import { AuthContext } from '@src/context/auth';
 import { useContext } from 'react'
 
 type TouchableLeftMenuType = "signOut" | "navigate";

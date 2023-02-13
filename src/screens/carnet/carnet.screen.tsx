@@ -4,7 +4,7 @@ import { Text } from 'react-native-animatable';
 import { Image } from 'react-native-elements';
 import { colores, fonts } from '@src/theme';
 import QRCode from 'react-native-qrcode-svg';
-import { AuthContext } from '@src/context';
+import { AuthContext } from '@src/context/auth';
 import { useContext } from 'react'
 
 const { width } = Dimensions.get('window');

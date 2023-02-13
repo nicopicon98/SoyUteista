@@ -16,8 +16,6 @@ export const GradesScreen = () => {
 
   const colorScheme = Appearance.getColorScheme();
 
-  if (isLoading === false) console.log(notasEstudiante);
-
   useEffect(() => {
     if (!isLoading) {
       if (Array.isArray(notasEstudiante)) return setIsEmpty(false);
@@ -27,7 +25,7 @@ export const GradesScreen = () => {
           "Mensaje:",
           "No hay notas del semestre actual disponibles, podrás observarlas después de las evaluaciones del corte 1.",
           [
-            { text: "OK", onPress: () => console.log("OK Pressed") }
+            { text: "OK", onPress: () => { } }
           ]
         );
       }

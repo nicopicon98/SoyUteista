@@ -1,4 +1,4 @@
-export interface TutoriaResp {
+export interface ITutoriaResp {
   nombre_tutor: string;
   estado: string;
   correo_tutor: string;
@@ -21,16 +21,16 @@ export interface CreateCitaResp {
   error: string;
 }
 
-export interface BringCourseByTutor {
+export interface IBringCourseByTutor {
   id_asignatura: string;
   curso: string;
 }
 
-export interface DaysByAsignatura {
+export interface IDaysByAsignatura {
   dia: string;
 }
 
-export interface FranjaByDayAsignatura {
+export interface IFranjaByDayAsignatura {
   id_franja: string;
   nombre_franja: string;
 }

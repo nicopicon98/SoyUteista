@@ -15,9 +15,12 @@ import { BienestarTabs } from '../bienestar-tabs';
 import { HomeScreen } from '@src/screens/home';
 import { ScheduleTabs } from '../schedule.tabs';
 import { TutoriasTabs } from '../tutorias.tabs';
-import { AuthContext } from '@src/context';
+import { AuthContext } from '@src/context/auth';
 import { colores } from '@src/theme';
 import { useContext } from 'react';
+import { FABGroup } from '@src/components/FAB-group';
+import { screens } from '@src/utilities';
+import { useNavigation } from '@react-navigation/native';
 
 const Drawer = createDrawerNavigator();
 
@@ -26,11 +29,13 @@ export const LeftDrawerNavigator = () => {
   const colorScheme = Appearance.getColorScheme();
   const { authState: { user } } = useContext(AuthContext);
 
+  const navigation = useNavigation<any>();
   useCheckBajoRendimiento(user!); //dispatch rx-js subscriber to show up modal
 
   return (
     <>
       <ModalBajoRend />
+      <FABGroup screens={screens(navigation)} />
       <Drawer.Navigator
         drawerType={(width >= 768) ? 'permanent' : 'front'}
         screenOptions={{
@@ -63,7 +68,6 @@ export const LeftDrawerNavigator = () => {
         <Drawer.Screen name='ExitoEscolar' component={ExitoEscolarScreen} />
         <Drawer.Screen name='DirectorioEscolar' component={DirectorioEscolarScreen} />
         <Drawer.Screen name='Convocatorias' component={ConvocatoriasScreen} />
-        {/* <Drawer.Screen name='Tutorias' component={TutoriasTemporal} options={{ headerTitle: 'Tutorias' }} /> */}
         <Drawer.Screen name="Bienestar" component={BienestarTabs} />
         <Drawer.Screen name='Tutorias' component={TutoriasTabs} />
       </Drawer.Navigator>

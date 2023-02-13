@@ -1,7 +1,9 @@
-import { serviciosAPI } from "@src/api";
+import { API_KEY } from '@src/config/auth';
+import { serviciosAPI, webserviceAPI } from "@src/api";
 import { ConvocatoriasResp } from "@src/screens/convocatorias/models";
 
-export const getServiciosAcademicos = async () => {
-  const resp = await serviciosAPI.get<ConvocatoriasResp[]>('/convocatorias');
+export const getServiciosAcademicos = async (email: string, API_KEY: string) => {
+  const resp = await webserviceAPI.get<ConvocatoriasResp[]>(`/convocatorias/?email=${email}&key=${API_KEY}`);
+  console.log(resp.data)
   return resp
 }

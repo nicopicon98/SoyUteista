@@ -16,6 +16,7 @@ const usePushNotification = () => {
     }
     const getNotifications = async () => {
         const notifications = await getData("notifications");
+        
         setNotifications(notifications)
         setIsLoading(false)
     }

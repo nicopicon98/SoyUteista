@@ -4,7 +4,7 @@ import { AuthLoadingScreen } from '@src/screens/splash';
 import { useState, useContext, useEffect } from 'react'
 import { SignInScreen } from '@src/screens/sign-in';
 import { AuthContext } from '@src/context/auth';
-import PushNotificationScreen from "@src/screens/push-notification/push-notification.screen";
+import { PushNotificationScreen } from "@src/screens/push-notification";
 
 const Stack = createStackNavigator();
 

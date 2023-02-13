@@ -1073,7 +1073,9 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
           backgroundColor: colores.Pantone_383_C,
         }}
       >
+        <View>
         <Text style={{color: 'black'}}>xs</Text>
+        </View>
       </Snackbar>
     </>
   )

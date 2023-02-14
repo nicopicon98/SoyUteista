@@ -469,9 +469,9 @@ export const CrearCitaBienestarScreen = () => {
               )}
               name="student_celphone"
             />
-            {errors.student_celphone?.type === 'required' && errorHandlerCelular("required")}
-            {errors.student_celphone?.type === 'minLength' && errorHandlerCelular("minLength")}
-            {errors.student_celphone?.type === 'pattern' && errorHandlerCelular("pattern")}
+            {errors.student_celphone
+              ? <Text>{errorHandlerCelular(errors.student_celphone?.type)}</Text>
+              : <></>}
           </View>
 
           {/* Actions */}
@@ -540,7 +540,7 @@ export const CrearCitaBienestarScreen = () => {
               : <></>
           }
           {validateButtonSubmit
-            ?  submitButtonFirstPart 
+            ? submitButtonFirstPart
             : <></>}
 
         </SafeAreaView>

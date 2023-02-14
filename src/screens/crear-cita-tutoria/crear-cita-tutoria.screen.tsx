@@ -37,7 +37,7 @@ export type TFormData = {
   celular: string;
 };
 
-const { width, height,  } = Dimensions.get("window")
+const { width, height, } = Dimensions.get("window")
 
 export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
   // custom icons -> Optimization tip
@@ -822,7 +822,6 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
                   </Text>
                 </View>
               </View>
-
               {/* Tema */}
               <View
                 style={{
@@ -839,8 +838,7 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
                   </Text>
                 </View>
               </View>
-
-              {/* Dia, fecha y franja, Modalidad, sede */}
+              {/* Dia */}
               <View
                 style={{
                   flexDirection: 'row',
@@ -856,6 +854,7 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
                   </Text>
                 </View>
               </View>
+              {/* Fecha */}
               <View
                 style={{
                   flexDirection: 'row',
@@ -870,6 +869,7 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
                   </Text>
                 </View>
               </View>
+              {/* Franja */}
               <View
                 style={{
                   flexDirection: 'row',
@@ -888,6 +888,7 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
                   </Text>
                 </View>
               </View>
+              {/* Modalidad */}
               <View
                 style={{
                   flexDirection: 'row',
@@ -902,6 +903,7 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
                   </Text>
                 </View>
               </View>
+              {/* Sede */}
               <View
                 style={{
                   flexDirection: 'row',
@@ -916,7 +918,7 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
                   </Text>
                 </View>
               </View>
-
+              {/* Ubicacion */}
               <View
                 style={{
                   flexDirection: 'row',
@@ -974,9 +976,9 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
                 )}
                 name="celular"
               />
-              {errors.celular?.type === 'required' && errorHandlerCelular("required")}
-              {errors.celular?.type === 'minLength' && errorHandlerCelular("minLength")}
-              {errors.celular?.type === 'pattern' && errorHandlerCelular("pattern")}
+              {errors.celular
+                ? <Text>{errorHandlerCelular(errors.celular?.type)}</Text>
+                : <></>}
             </View>
 
             {/* Actions */}

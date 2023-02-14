@@ -4,7 +4,7 @@ import { VideosInterface } from './../models/get-videos.model';
 import { useEffect, useState, useContext } from 'react';
 import { PodcastInterface } from '../models';
 import { API_KEY } from '@src/config/auth';
-import { AuthContext } from '@src/context';
+import { AuthContext } from '@src/context/auth';
 
 export const useVideosPodcast = () => {
   const { authState: { user } } = useContext(AuthContext);

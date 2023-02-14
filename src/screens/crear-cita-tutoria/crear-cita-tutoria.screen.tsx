@@ -4,28 +4,27 @@ import {
   createTutorItemsAdapter,
   createDaysItemsAdapter
 } from './adapters';
-import { Dimensions, StyleSheet, Text, View, Modal, Pressable, ScrollView, ImageSourcePropType } from 'react-native';
-import { Capitalize, errorHandlerCelular, idToDay, isOneEmpty } from '@src/utilities';
-import { useFranjaByDiaAsignatura } from './hooks/use-franja-by-dia-asignatura.hook';
+import { Dimensions, StyleSheet, Text, View, Modal, Pressable, ScrollView, ImageSourcePropType, Platform } from 'react-native';
+import { Capitalize, errorHandlerCelular, isOneEmpty } from '@src/utilities';
+import { useFranjaByDiaAsignatura } from './hooks';
 import { useFetchCourses, useDayByAsignatura, useFetchTutores, useTutorInfo } from "./hooks";
 import { CustomCalendarComponent } from '@src/components/custom-calendar';
+import { ActivityIndicator, Portal, TextInput } from "react-native-paper";
 import DropDownPicker, { ItemType } from "react-native-dropdown-picker";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { ActivityIndicator, Button, Snackbar, TextInput } from "react-native-paper";
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { GraphError } from '@microsoft/microsoft-graph-client';
 import { ITutorInfoResp, NavigationProps } from "@src/models";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { CardTutorias } from '@src/components/card-tutorias';
 import { Controller, useForm } from "react-hook-form";
+import { useSnackbar } from '@src/context/snackbar';
 import { Image } from 'react-native-elements';
 import { getTutorPhoto } from '@src/services';
 import { useEffect, useState } from "react";
-import { ToastAndroid } from 'react-native';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { colores } from "@src/theme";
 import moment from 'moment';
-import { useSnackbar } from '@src/context/snackbar';
 
 export type TFormData = {
   id_course: string;
@@ -38,10 +37,9 @@ export type TFormData = {
   celular: string;
 };
 
-const { width, height } = Dimensions.get("window")
+const { width, height,  } = Dimensions.get("window")
 
 export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
-
   // custom icons -> Optimization tip
   const [customTutoresIcon, setCustomTutoresIcon] = useState(<Icon name="account" color={colores.Pantone_382_C} size={30} />);
   const [customCoursesIcon, setCustomCoursesIcon] = useState(<Icon name='library' color={colores.Pantone_382_C} size={25} />);
@@ -122,9 +120,9 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
   const { showMessage } = useSnackbar();
 
   const handleErrorResp = (code: string | undefined): void => {
-    if (code === 'ERR_BAD_REQUEST') return showMessage("En este momento estamos experimentando problemas con el servidor, intentalo mas tarde");
-    if (code === 'ImageNotFound') return showMessage("Ocurrio una excepcion trayendo la imagen del docente");
-    return showMessage("Ocurrio un error, intentalo mas tarde")
+    if (code === 'ERR_BAD_REQUEST') return showMessage("En este momento estamos experimentando problemas con el servidor, intentalo mas tarde", 'info');
+    if (code === 'ImageNotFound') return showMessage("Ocurrio una excepcion trayendo la imagen del docente", 'info');
+    return showMessage("Ocurrio un error, intentalo mas tarde", 'danger')
   }
 
   // Adaptig professionals to dropdown Items format
@@ -204,15 +202,15 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
   const onSubmitFirstPart = async () => {
     setIsLoadingBtnContinuar(true);
     try {
-      const tutorInfo = await onLoadInfoTutor(id_course, day, franja, id_tutor);
-      const tutorPhoto = await getTutorPhoto(tutorInfo.correo);
+      const tutorInfoResp = await onLoadInfoTutor(id_course, day, franja, id_tutor);
       setTutorInfo(currentTutorInfo => {
         // Only update state if new value differs from current
-        return JSON.stringify(currentTutorInfo) !== JSON.stringify(tutorInfo) ? tutorInfo : currentTutorInfo;
+        return JSON.stringify(currentTutorInfo) !== JSON.stringify(tutorInfoResp) ? tutorInfoResp : currentTutorInfo;
       });
+      const tutorPhotoResp = await getTutorPhoto(tutorInfoResp.correo);
       setTutorPhoto(currentTutorPhoto => {
         // Only update state if new value differs from current
-        return currentTutorPhoto !== tutorPhoto ? tutorPhoto : currentTutorPhoto;
+        return currentTutorPhoto !== tutorPhotoResp ? tutorPhotoResp : currentTutorPhoto;
       });
       setConfModalVisible(true);
     } catch (err) {
@@ -222,6 +220,7 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
       }
       // Handle the error consistently
       if (err instanceof GraphError) {
+        setTutorPhoto(require('@src/resources/Images/male-placeholder.jpeg')) //set to image not found
         setConfModalVisible(true);
         return handleErrorResp(err.code!);
       }
@@ -731,7 +730,7 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
     </View>
   </Modal>
 
-  const confModal = <Modal
+  const confModal = <Portal><Modal
     animationType="fade"
     hardwareAccelerated={true}
     transparent={true}
@@ -1013,21 +1012,11 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
       </View>
     </View>
   </Modal>
+  </Portal>
 
-  
-  const [isVisible, setIsVisible] = useState(false);
-
-  const showMessagexd = () => {
-    setIsVisible(true);
-  }
-
-  const onDismiss = () => {
-    setIsVisible(false);
-  }
 
   //VALIDATE SUBMIT
   const validateButtonSubmit = !isOneEmpty(id_course, day, franja, fecha_tutoria, id_tutor);
-
   return (
     <>
       <CardTutorias>
@@ -1038,7 +1027,6 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
                 ? loader
                 : coursesView
             }
-            <Button onPress={showMessagexd}>show</Button>
             {
               (showDependentElements)
                 ? (isLoadingDaysByAsignatura)
@@ -1054,29 +1042,12 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
             {validateButtonSubmit
               ? submitBtnContinueView
               : <></>}
+            {fullDateModal}
+            {confModal}
           </SafeAreaView>
         </ScrollView>
       </CardTutorias>
-      {fullDateModal}
-      {confModal}
-      <Snackbar
-        visible={true}
-        onDismiss={onDismiss}
-        duration={1000}
-        action={{
-          label: '',
-          onPress: onDismiss,
-          textColor: colores.White,
-        }}
-        style={{
-          marginBottom: height*0.1,
-          backgroundColor: colores.Pantone_383_C,
-        }}
-      >
-        <View>
-        <Text style={{color: 'black'}}>xs</Text>
-        </View>
-      </Snackbar>
+
     </>
   )
 }
@@ -1147,12 +1118,13 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     width: width * 0.95,
-    height: height * 0.95
+    height: height * 0.95,
+    top: Platform.OS === 'ios' ? 50 : 0
   },
   modalFinalView: {
     marginBottom: 0,
     backgroundColor: 'white',
-    borderRadius: 0,
+    borderRadius: 20,
     padding: 20,
     shadowColor: '#000',
     shadowOffset: {
@@ -1162,6 +1134,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+    top: Platform.OS === 'ios' ? 0 : 0,
+    width: width * 0.95,
+    height: height * 0.9
   },
   imageLogo: {
     width: width * 0.8,

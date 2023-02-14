@@ -18,7 +18,12 @@ export const colores = {
 
   //opacity
   GreenLightOpacity: 'rgba(196, 215, 48, 0.5)',
-  GreenGrassOpacity: 'rgba(0, 42, 20, 1)'
+  GreenGrassOpacity: 'rgba(0, 42, 20, 1)',
+
+  //notifications
+  warning: '#FFA500',
+  info: '#00687A',
+  danger: '#800000'
 }
 
 export const fonts = {

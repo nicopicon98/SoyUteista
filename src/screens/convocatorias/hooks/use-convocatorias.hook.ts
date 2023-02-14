@@ -1,5 +1,5 @@
 import { API_KEY } from '@src/config/auth';
-import { AuthContext } from '@src/context';
+import { AuthContext } from '@src/context/auth';
 import { getServiciosAcademicos } from '@src/services';
 import { useEffect, useState, useContext } from 'react';
 import { ConvocatoriasResp } from '../models';

@@ -19,7 +19,7 @@ export const getTutorPhoto = async (correo_tutor: string): Promise<{ uri: string
 };
 
 export const getInfoTutor = async (id_course: string, day: string, franja: string, id_tutor: string, sede: string = "SEDE PRINCIPAL") => {
-  const resp = await tutoriasAPI.get<ITutorInfoResp>(`/buscar_info_tuto.php?sede=${sede}&id_curso=${id_course}&dia=${day}&franja=${franja}&id_tutor=${id_tutor}`);
+  const resp = await tutoriasAPI.get<ITutorInfoResp>(`/buscar_info_tutor.php?sede=${sede}&id_curso=${id_course}&dia=${day}&franja=${franja}&id_tutor=${id_tutor}`);
   return resp;
 }
 

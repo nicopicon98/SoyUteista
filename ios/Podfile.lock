@@ -20,11 +20,19 @@ PODS:
     - ReactCommon/turbomodule/core (= 0.67.4)
   - Firebase (10.3.0):
     - Firebase/Core (= 10.3.0)
+  - Firebase/Analytics (10.3.0):
+    - Firebase/Core
   - Firebase/Core (10.3.0):
     - Firebase/CoreOnly
     - FirebaseAnalytics (~> 10.3.0)
   - Firebase/CoreOnly (10.3.0):
     - FirebaseCore (= 10.3.0)
+  - Firebase/Crashlytics (10.3.0):
+    - Firebase/CoreOnly
+    - FirebaseCrashlytics (~> 10.3.0)
+  - Firebase/Database (10.3.0):
+    - Firebase/CoreOnly
+    - FirebaseDatabase (~> 10.3.0)
   - Firebase/Messaging (10.3.0):
     - Firebase/CoreOnly
     - FirebaseMessaging (~> 10.3.0)
@@ -54,6 +62,16 @@ PODS:
     - FirebaseCore (~> 10.0)
   - FirebaseCoreInternal (10.5.0):
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
+  - FirebaseCrashlytics (10.3.0):
+    - FirebaseCore (~> 10.0)
+    - FirebaseInstallations (~> 10.0)
+    - GoogleDataTransport (~> 9.2)
+    - GoogleUtilities/Environment (~> 7.8)
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+    - PromisesObjC (~> 2.1)
+  - FirebaseDatabase (10.3.0):
+    - FirebaseCore (~> 10.0)
+    - leveldb-library (~> 1.22)
   - FirebaseInstallations (10.5.0):
     - FirebaseCore (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
@@ -189,6 +207,7 @@ PODS:
     - GoogleUtilities/Logger
   - JWT (3.0.0-beta.12):
     - Base64 (~> 1.1.2)
+  - leveldb-library (1.22.1)
   - libevent (2.1.12)
   - nanopb (2.30909.0):
     - nanopb/decode (= 2.30909.0)
@@ -414,6 +433,8 @@ PODS:
     - react-native-video/Video (= 5.2.1)
   - react-native-video/Video (5.2.1):
     - React-Core
+  - react-native-webview (11.26.1):
+    - React-Core
   - React-perflogger (0.67.4)
   - React-RCTActionSheet (0.67.4):
     - React-Core/RCTActionSheetHeaders (= 0.67.4)
@@ -489,9 +510,22 @@ PODS:
     - React-Core
   - RNDeviceInfo (10.0.2):
     - React-Core
+  - RNFBAnalytics (17.0.0):
+    - Firebase/Analytics (= 10.3.0)
+    - React-Core
+    - RNFBApp
   - RNFBApp (16.5.1):
     - Firebase/CoreOnly (= 10.3.0)
     - React-Core
+  - RNFBCrashlytics (17.0.0):
+    - Firebase/Crashlytics (= 10.3.0)
+    - FirebaseCoreExtension (= 10.3.0)
+    - React-Core
+    - RNFBApp
+  - RNFBDatabase (17.0.0):
+    - Firebase/Database (= 10.3.0)
+    - React-Core
+    - RNFBApp
   - RNFBMessaging (16.5.1):
     - Firebase/Messaging (= 10.3.0)
     - FirebaseCoreExtension (= 10.3.0)
@@ -593,6 +627,7 @@ DEPENDENCIES:
   - react-native-pure-jwt (from `../node_modules/react-native-pure-jwt`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-video (from `../node_modules/react-native-video`)
+  - react-native-webview (from `../node_modules/react-native-webview`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -610,7 +645,10 @@ DEPENDENCIES:
   - "RNCPicker (from `../node_modules/@react-native-picker/picker`)"
   - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
+  - "RNFBAnalytics (from `../node_modules/@react-native-firebase/analytics`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
+  - "RNFBCrashlytics (from `../node_modules/@react-native-firebase/crashlytics`)"
+  - "RNFBDatabase (from `../node_modules/@react-native-firebase/database`)"
   - "RNFBMessaging (from `../node_modules/@react-native-firebase/messaging`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - "RNNotifee (from `../node_modules/@notifee/react-native`)"
@@ -630,6 +668,8 @@ SPEC REPOS:
     - FirebaseCore
     - FirebaseCoreExtension
     - FirebaseCoreInternal
+    - FirebaseCrashlytics
+    - FirebaseDatabase
     - FirebaseInstallations
     - FirebaseMessaging
     - Flipper
@@ -646,6 +686,7 @@ SPEC REPOS:
     - GoogleDataTransport
     - GoogleUtilities
     - JWT
+    - leveldb-library
     - libevent
     - nanopb
     - OpenSSL-Universal
@@ -699,6 +740,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-video:
     :path: "../node_modules/react-native-video"
+  react-native-webview:
+    :path: "../node_modules/react-native-webview"
   React-perflogger:
     :path: "../node_modules/react-native/ReactCommon/reactperflogger"
   React-RCTActionSheet:
@@ -733,8 +776,14 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/datetimepicker"
   RNDeviceInfo:
     :path: "../node_modules/react-native-device-info"
+  RNFBAnalytics:
+    :path: "../node_modules/@react-native-firebase/analytics"
   RNFBApp:
     :path: "../node_modules/@react-native-firebase/app"
+  RNFBCrashlytics:
+    :path: "../node_modules/@react-native-firebase/crashlytics"
+  RNFBDatabase:
+    :path: "../node_modules/@react-native-firebase/database"
   RNFBMessaging:
     :path: "../node_modules/@react-native-firebase/messaging"
   RNGestureHandler:
@@ -766,6 +815,8 @@ SPEC CHECKSUMS:
   FirebaseCore: 988754646ab3bd4bdcb740f1bfe26b9f6c0d5f2a
   FirebaseCoreExtension: 93d252fabdc9696bf14a73b04d84877ab9b3a832
   FirebaseCoreInternal: e463f41bb935cd049505bf7e9a5bdd7dcea90df6
+  FirebaseCrashlytics: f20d956f8229010b645e534693c39e0b7843c268
+  FirebaseDatabase: d0732ba8aece0eccfa0cfb3ef540e7ba6fa1c6a6
   FirebaseInstallations: 935bc4abb6f7a035cab7a0c31cb777b2be3dd254
   FirebaseMessaging: e345b219fd15d325f0cf2fef28cb8ce00d851b3f
   Flipper: 30e8eeeed6abdc98edaf32af0cda2f198be4b733
@@ -783,6 +834,7 @@ SPEC CHECKSUMS:
   GoogleDataTransport: ea169759df570f4e37bdee1623ec32a7e64e67c4
   GoogleUtilities: c2bdc4cf2ce786c4d2e6b3bcfd599a25ca78f06f
   JWT: 9b5c05abbcc1a0e69c3c91e1655b3387fc7e581d
+  leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   OpenSSL-Universal: 1aa4f6a6ee7256b83db99ec1ccdaa80d10f9af9b
@@ -804,6 +856,7 @@ SPEC CHECKSUMS:
   react-native-pure-jwt: 94a3662655c6d677acb7b16048ed69b88b93073d
   react-native-safe-area-context: 99b24a0c5acd0d5dcac2b1a7f18c49ea317be99a
   react-native-video: c26780b224543c62d5e1b2a7244a5cd1b50e8253
+  react-native-webview: 9f111dfbcfc826084d6c507f569e5e03342ee1c1
   React-perflogger: 0afaf2f01a47fd0fc368a93bfbb5bd3b26db6e7f
   React-RCTActionSheet: 59f35c4029e0b532fc42114241a06e170b7431a2
   React-RCTAnimation: aae4f4bed122e78bdab72f7118d291d70a932ce2
@@ -821,7 +874,10 @@ SPEC CHECKSUMS:
   RNCPicker: 0250e95ad170569a96f5b0555cdd5e65b9084dca
   RNDateTimePicker: 7658208086d86d09e1627b5c34ba0cf237c60140
   RNDeviceInfo: 0a7c1d2532aa7691f9b9925a27e43af006db4dae
+  RNFBAnalytics: 6f137d71353c579a34fa7e824123020c6129610e
   RNFBApp: 1f48f0e6e976f8b7cc1ead051479fa4051727eb8
+  RNFBCrashlytics: 4cd39cece7db30bb9efd510535413723e89922e5
+  RNFBDatabase: 727bce8c393efbd5dc5acbdc776820d95e53f983
   RNFBMessaging: b825eb010383a5d21616082071f521a8883be2f5
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNNotifee: da8dcf09f079ea22f46e239d7c406e10d4525a5f

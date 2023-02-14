@@ -1,13 +1,15 @@
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import React, { createContext, useContext, useState } from 'react';
 import { Snackbar, Portal } from 'react-native-paper';
-import { Text } from 'react-native';
+import { Dimensions, Text, View } from 'react-native';
+import { colores } from '@src/theme';
 
 interface SnackbarProps {
   isVisible: boolean;
-  showMessage: (msg: string) => void;
+  showMessage: (msg: string, type: string) => void;
   hideMessage: () => void;
 }
-
+const { height } = Dimensions.get("screen");
 // Create a context for the Snackbar provider
 const SnackbarContext = createContext({} as SnackbarProps);
 
@@ -16,11 +18,13 @@ export const useSnackbar = () => useContext(SnackbarContext);
 
 // Create the Snackbar provider component
 export const SnackbarProvider = ({ children }) => {
+  const [type, setType] = useState('info')
   const [message, setMessage] = useState('');
   const [isVisible, setIsVisible] = useState(false);
 
   // Function to show the Snackbar with a message
-  const showMessage = (msg: string) => {
+  const showMessage = (msg: string, type: string) => {
+    setType(type);
     setMessage(msg);
     setIsVisible(true);
   }
@@ -37,18 +41,56 @@ export const SnackbarProvider = ({ children }) => {
       hideMessage
     }}>
       {children}
-      <Snackbar
-        visible={isVisible}
-        onDismiss={hideMessage}
-        duration={7000}
-        action={{
-          label: 'OK',
-          onPress: hideMessage
-        }}
-        wrapperStyle={{top: 0}}
-      >
-        <Text style={{ backgroundColor: 'red' }}>xs</Text>
-      </Snackbar>
+      <Portal>
+        <Snackbar
+          visible={isVisible}
+          onDismiss={hideMessage}
+          duration={3000}
+          action={{
+            label: '',
+            onPress: hideMessage,
+            textColor: colores.White,
+          }}
+          elevation={5}
+          wrapperStyle={{
+            top: 0, // Set the bottom value to the height of your Modal
+          }}
+          style={{
+            marginBottom: height * 0.1,
+            backgroundColor: type === 'success'
+              ? colores.Pantone_383_C
+              : type === 'warning'
+                ? colores.warning
+                : type === 'info'
+                  ? colores.info
+                  : type === 'danger'
+                    ? colores.danger
+                    : colores.Pantone_383_C,
+          }}
+        >
+          {type === 'success' && <View style={{ display: 'flex', flexDirection: 'row', }}>
+            <Icon name="check-circle-outline" size={20} color={colores.White} />
+            <Text style={{ color: 'white', marginLeft: 5 }}>This is a success message!</Text>
+          </View>}
+
+          {/* Warning */}
+          {type === 'warning' && <View style={{ display: 'flex', flexDirection: 'row', }}>
+            <Icon name="alert-outline" size={20} color={colores.White} />
+            <Text style={{ color: 'white', marginLeft: 5 }}>This is a warning message!</Text>
+          </View>}
+
+          {type === 'info' && <View style={{ display: 'flex', flexDirection: 'row', }}>
+            <Icon name="information-outline" size={20} color={colores.White} />
+            <Text style={{ color: 'white', marginLeft: 5 }}>This is a info message!</Text>
+          </View>}
+
+          {/* Danger */}
+          {type === 'danger' && <View style={{ display: 'flex', flexDirection: 'row', }}>
+            <Icon name="close-octagon" size={20} color={colores.White} />
+            <Text style={{ color: 'white', marginLeft: 5 }}>{message}</Text>
+          </View>}
+        </Snackbar>
+      </Portal>
     </SnackbarContext.Provider>
   );
 }

@@ -1,5 +1,5 @@
 import { API_KEY } from '@src/config/auth';
-import { AuthContext } from '@src/context';
+import { AuthContext } from '@src/context/auth';
 import { getDirectorioEscolar } from '@src/services';
 import { DirectorioEscolar } from '@src/models';
 import { useState, useEffect, useContext } from 'react';

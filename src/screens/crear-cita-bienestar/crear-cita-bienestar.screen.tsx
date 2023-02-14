@@ -470,7 +470,7 @@ export const CrearCitaBienestarScreen = () => {
               name="student_celphone"
             />
             {errors.student_celphone
-              ? <Text>{errorHandlerCelular(errors.student_celphone?.type)}</Text>
+              ? <Text style={{color: colores.danger, fontWeight: '500'}}>{errorHandlerCelular(errors.student_celphone?.type)}</Text>
               : <></>}
           </View>
 

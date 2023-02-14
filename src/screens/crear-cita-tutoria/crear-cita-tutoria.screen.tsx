@@ -230,7 +230,8 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
   }
 
   // Click on submit to insert tutoria
-  const onSubmitFinal = () => {
+  const onSubmit = (data: TFormData) => {
+    //console.log("click en submit")
     setClickInsertTutoria(true);
   }
 
@@ -730,7 +731,7 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
     </View>
   </Modal>
 
-  const confModal = <Portal><Modal
+  const confModal = <Modal
     animationType="fade"
     hardwareAccelerated={true}
     transparent={true}
@@ -977,7 +978,9 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
                 name="celular"
               />
               {errors.celular
-                ? <Text>{errorHandlerCelular(errors.celular?.type)}</Text>
+                ? <View style={{width: '100%', marginLeft: width*0.01}}>
+                  <Text style={{color: colores.danger, fontWeight: '500'}}>{errorHandlerCelular(errors.celular?.type)}</Text>
+                </View>
                 : <></>}
             </View>
 
@@ -999,7 +1002,7 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
               {/**Insertar cita */}
               <View style={styles.buttonGuardarContentChild}>
                 <Pressable
-                  onPress={handleSubmit(onSubmitFinal)}
+                  onPress={handleSubmit(onSubmit)}
                   style={styles.buttonAgendar}>
                   {
                     !clickInsertTutoria
@@ -1014,7 +1017,6 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
       </View>
     </View>
   </Modal>
-  </Portal>
 
 
   //VALIDATE SUBMIT

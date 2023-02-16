@@ -185,16 +185,8 @@ export const CrearCitaBienestarScreen = () => {
   };
 
   // Click on insert Appointment
-  const onSubmit = async (data: FormData) => {
-    /**Check number is inserted properly, use Regex */
-    //TODO
-    /**Start activity indicator */
-    setInsert(true);
-    /**Get all info */
-    //const { id_horario, student_celphone: userStudentCelphone } = data;
-    //const userStudentEmail = user!.userEmail;
-    //const obj = insertCitaBienestarAdapter({ id_horario, userStudentCelphone, userStudentEmail })
-    //TODO -> control._formValues
+  const onSubmitFinal = async (data: FormData) => {
+    console.log("click en enviar")
   };
 
   // Add pressFieldHandler function to catch each field's value and send the http request
@@ -325,7 +317,7 @@ export const CrearCitaBienestarScreen = () => {
   </View>
 
 
-  const confModal = <View style={{ flex: 1, width: width * 0. }}><Modal
+  const confModal = <Modal
     animationType="fade"
     hardwareAccelerated={true}
     transparent={true}
@@ -495,7 +487,7 @@ export const CrearCitaBienestarScreen = () => {
 
             <View style={styles.buttonGuardarContentChild}>
               <Pressable
-                onPress={handleSubmit(onSubmit)}
+                onPress={handleSubmit(onSubmitFinal)}
                 style={styles.buttonAgendar}>
                 {
                   !insert
@@ -509,7 +501,6 @@ export const CrearCitaBienestarScreen = () => {
       </View>
     </View>
   </Modal>
-  </View>
 
   const segmentedButtons = <SegmentedButtonsResponsive
     buttons={servicesButtonsFormatted}

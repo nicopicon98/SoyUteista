@@ -35,14 +35,15 @@ export const AuthProvider = ({ children }: any) => {
   //Revisamos aca en el context si ya tiene token
   const checkToken = async () => {
     //Nos traemos el token del async storage
-    const tokenReceived = await AuthManager.getAccessTokenAsync();
+    const token = await AuthManager.getAccessTokenAsync();
     //Lo pintamos
     // console.log(tokenReceived);
     //No token, no autenticado
-    if (!tokenReceived) return dispatch({ type: 'notAuthenticated' })
+    if (!token) return dispatch({ type: 'notAuthenticated' })
     //Hay token
     try {
-      const rep = await authValidatorRole(tokenReceived!);
+      console.log(token);
+      const rep = await authValidatorRole(token!);
       if (rep.user!.userResult !== 2 && rep.user!.userResult !== 69) {
         dispatch({ type: 'signIn', payload: { token: rep.token!, user: rep.user! } })
       }

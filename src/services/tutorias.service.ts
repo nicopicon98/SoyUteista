@@ -24,12 +24,12 @@ export const getInfoTutor = async (id_course: string, day: string, franja: strin
 }
 
 export const getAllCourses = async (sede: string = "SEDE PRINCIPAL") => {
-  const resp = await tutoriasAPI.get<ICourse[]>(`load_cursos.php?sede=${sede}`);
+  const resp = await tutoriasAPI.get<ICourse[]>(`buscar_cursos.php?sede=${sede}`);
   return resp;
 }
 
 export const getAllTutoriasByUser = async (id: string) => {
-  const resp = await tutoriasAPI.get<ITutoriaResp>(`/listar_tutorias_todas_estudiante.php?documento=${id}`);
+  const resp = await tutoriasAPI.get<ITutoriaResp>(`/buscar_tutorias_estudiante.php?documento=${id}`);
   return resp;
 }
 
@@ -39,7 +39,7 @@ export const getCourseByTutor = async (id_tutor: string) => {
 }
 
 export const getAllTutors = async (franja: string, id_curso: string, day: string, sede: string = "SEDE PRINCIPAL") => {
-  const resp = await tutoriasAPI.get<ITutor[]>(`load_tutor.php?&sede=${sede}&franja=${franja}&id_curso=${id_curso}&dia=${day}`);
+  const resp = await tutoriasAPI.get<ITutor[]>(`buscar_tutor.php?&sede=${sede}&franja=${franja}&id_curso=${id_curso}&dia=${day}`);
   return resp;
 }
 
@@ -59,5 +59,6 @@ export const getFranjaByDayAsignatura = async (id_curso: string, day: string, se
 }
 
 export const postInsertTutoria = async (obj: ICreateCita) => {
-
+  const resp = await tutoriasAPI.post('/crear_cita.php', obj)
+  return resp.data
 }

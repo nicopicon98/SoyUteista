@@ -9,7 +9,7 @@ import { Capitalize, errorHandlerCelular, isOneEmpty } from '@src/utilities';
 import { useFranjaByDiaAsignatura } from './hooks';
 import { useFetchCourses, useDayByAsignatura, useFetchTutores, useTutorInfo } from "./hooks";
 import { CustomCalendarComponent } from '@src/components/custom-calendar';
-import { ActivityIndicator, Portal, TextInput } from "react-native-paper";
+import { ActivityIndicator, TextInput } from "react-native-paper";
 import DropDownPicker, { ItemType } from "react-native-dropdown-picker";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -20,10 +20,12 @@ import { CardTutorias } from '@src/components/card-tutorias';
 import { Controller, useForm } from "react-hook-form";
 import { useSnackbar } from '@src/context/snackbar';
 import { Image } from 'react-native-elements';
-import { getTutorPhoto } from '@src/services';
-import { useEffect, useState } from "react";
-import axios from 'axios';
+import { getTutorPhoto, postInsertTutoria } from '@src/services';
+import { useEffect, useState, useContext } from "react";
+import { AuthContext } from '@src/context/auth';
+import { ICreateCita } from './models';
 import { colores } from "@src/theme";
+import axios from 'axios';
 import moment from 'moment';
 
 export type TFormData = {
@@ -57,6 +59,9 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
   //MODALS
   const [fullDateModalVisible, setFullDateModalVisible] = useState(false);
   const [confModalVisible, setConfModalVisible] = useState(false);
+
+  //CONTEXT
+  const { authState: { user } } = useContext(AuthContext);
 
   //CUSTOM HOOKS
   const { onLoadCursos, isLoadingCourses } = useFetchCourses();
@@ -230,9 +235,52 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
   }
 
   // Click on submit to insert tutoria
-  const onSubmit = (data: TFormData) => {
-    //console.log("click en submit")
+  const onSubmit = async (data: TFormData) => {
+    //we first set the loader so the user knows he clicked on it
     setClickInsertTutoria(true);
+    //prepare the object to be sent
+    const obj: ICreateCita = {
+      id_crearCitas: tutorInfo!.id_crearCitas,
+      documento: user!.userMoreInfo.C_PEGE_DOCUMENTOIDENTIDAD,
+      nombre: user!.userFullName,
+      programa: user!.userMoreInfo.C_PROG_NOMBRE,
+      jornada: user!.userMoreInfo.C_FRAN_DESCRIPCION,
+      correo: user!.userMoreInfo.C_PENG_EMAILINSTITUCIONAL,
+      celular: data.celular,
+      comentarios: data.comments,
+      tema: data.tema,
+      fecha_tutoria: data.fecha_tutoria
+    }
+    console.log(obj)
+    const objTest: ICreateCita = {
+      id_crearCitas: '8586',
+      documento: '1098813165',
+      nombre: 'Nicolas Picon',
+      programa: 'Tecnologia en desarrollo de sistemas informaticos',
+      jornada: 'DIURNA',
+      correo: 'npiconj@uts.edu.co',
+      celular: '3054762954',
+      comentarios: 'prueba insercion 16 feb',
+      tema: 'prueba insercion a las 2:00 am',
+      fecha_tutoria: '2023-02-16'
+    }
+    try {
+      const insertResp = await postInsertTutoria(objTest);
+      if (insertResp) {
+        setClickInsertTutoria(false);
+        setConfModalVisible(false);
+        showMessage('tutoria insertada con exito', 'success');
+        navigation.navigate('Tutorías Agendadas');
+        return;
+      }
+      setClickInsertTutoria(false);
+      setConfModalVisible(false);
+      showMessage('Hubo un error al insertar la tutoria, porfavor intente mas tarde', 'danger');
+    } catch (error) {
+      setClickInsertTutoria(false);
+      setConfModalVisible(false);
+      showMessage('Hubo un error al insertar la tutoria, porfavor intente mas tarde', 'danger');
+    }
   }
 
   //Once the component is loaded, we proceed to adapt the professionals to dropdown Items format
@@ -485,13 +533,10 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
       </Text>
       <Controller
         control={control}
-        rules={{
-          required: true,
-        }}
         render={({ field: { onChange, onBlur, value } }) => (
           <DropDownPicker
             addCustomItem={false}
-            placeholder={'Selecciona el profesional'}
+            placeholder={'Selecciona el tutor'}
             listMode="MODAL"
             searchable
             searchPlaceholder='Ingresa un tutor...'
@@ -530,13 +575,10 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
         maxWidth: width * 0.9,
         alignSelf: 'flex-start'
       }}>
-        A continuación describe el tema de la consulta
+        ¿En cuál tema tiene dudas?
       </Text>
       <Controller
         control={control}
-        rules={{
-          required: true,
-        }}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
             mode='outlined'
@@ -581,7 +623,7 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
       <Controller
         control={control}
         rules={{
-          required: true,
+          // required: true,
         }}
         render={({ field: { onChange, onBlur, value, } }) => (
           <TextInput
@@ -942,6 +984,9 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
               marginTop: width * 0.03,
               alignItems: 'center',
             }}>
+              <Text style={{ maxWidth: width * 0.9, alignSelf: 'flex-start' }}>
+                A continuación ingresa un numero de contacto
+              </Text>
               <Controller
                 control={control}
                 rules={{
@@ -978,8 +1023,8 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
                 name="celular"
               />
               {errors.celular
-                ? <View style={{width: '100%', marginLeft: width*0.01}}>
-                  <Text style={{color: colores.danger, fontWeight: '500'}}>{errorHandlerCelular(errors.celular?.type)}</Text>
+                ? <View style={{ width: '100%', marginLeft: width * 0.01 }}>
+                  <Text style={{ color: colores.danger, fontWeight: '500' }}>{errorHandlerCelular(errors.celular?.type)}</Text>
                 </View>
                 : <></>}
             </View>
@@ -989,8 +1034,10 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
               style={{
                 flexDirection: 'row',
                 justifyContent: 'space-evenly',
-                marginTop: width * 0.1,
+                marginTop: width * 0.05,
+                marginBottom: width * 0.2
               }}>
+
               {/* Salir sin guardar */}
               <View style={styles.buttonGuardarContentChild}>
                 <Pressable
@@ -1007,7 +1054,7 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
                   {
                     !clickInsertTutoria
                       ? <Text style={styles.buttonGuardarText}>Agendar</Text>
-                      : <ActivityIndicator />
+                      : <ActivityIndicator color={colores.White} />
                   }
                 </Pressable>
               </View>

@@ -70,18 +70,18 @@ export const SnackbarProvider = ({ children }) => {
         >
           {type === 'success' && <View style={{ display: 'flex', flexDirection: 'row', }}>
             <Icon name="check-circle-outline" size={20} color={colores.White} />
-            <Text style={{ color: 'white', marginLeft: 5 }}>This is a success message!</Text>
+            <Text style={{ color: 'white', marginLeft: 5 }}>{message}</Text>
           </View>}
 
           {/* Warning */}
           {type === 'warning' && <View style={{ display: 'flex', flexDirection: 'row', }}>
             <Icon name="alert-outline" size={20} color={colores.White} />
-            <Text style={{ color: 'white', marginLeft: 5 }}>This is a warning message!</Text>
+            <Text style={{ color: 'white', marginLeft: 5 }}>{message}</Text>
           </View>}
 
           {type === 'info' && <View style={{ display: 'flex', flexDirection: 'row', }}>
             <Icon name="information-outline" size={20} color={colores.White} />
-            <Text style={{ color: 'white', marginLeft: 5 }}>This is a info message!</Text>
+            <Text style={{ color: 'white', marginLeft: 5 }}>{message}</Text>
           </View>}
 
           {/* Danger */}

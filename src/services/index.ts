@@ -12,3 +12,4 @@ export * from './revista.service';
 export * from './servicios-academicos.service';
 export * from './sharing-information.service';
 export * from './tutorias.service';
+export * from './enable-screens.service';

@@ -1,15 +1,20 @@
 import { useContext, useState } from 'react'
 import { getAllCourses } from '@src/services';
 import { AuthContext } from '@src/context/auth';
+import { useSnackbar } from '@src/context/snackbar';
 
 export const useFetchCourses = () => {
   const [isLoadingCourses, setIsLoadingCourses] = useState(true);
   const { authState: { user } } = useContext(AuthContext)
-
+  const { showMessage } = useSnackbar();
   const onLoadCursos = async () => {
-    const resp = await getAllCourses(user?.userMoreInfo?.C_UNID_NOMBRE);
-    setIsLoadingCourses(false);
-    return resp.data
+    try {
+      const resp = await getAllCourses(user?.userMoreInfo?.C_UNID_NOMBRE);
+      setIsLoadingCourses(false);
+      return resp.data
+    } catch (error) {
+      showMessage('En este momento estamos experimentando problemas con el servidor, intentalo mas tarde', 'warning')
+    }   
   }
 
   return {

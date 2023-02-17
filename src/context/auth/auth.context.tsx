@@ -5,6 +5,7 @@ import { authReducer, AuthState } from './auth.reducer';
 import { UserAuthResponse } from '@src/models';
 import { API_KEY } from '@src/config/auth';
 import jwt_decode from 'jwt-decode';
+import { useSnackbar } from '../snackbar';
 
 //Lo que se pasara desde el arbol principal
 export interface AuthContextProps {
@@ -25,6 +26,7 @@ export const AuthContext = createContext({} as AuthContextProps);
 export const AuthProvider = ({ children }: any) => {
 
   const [state, dispatch] = useReducer(authReducer, authInitialState);
+  const { showMessage } = useSnackbar();
 
 
   useEffect(() => {
@@ -48,6 +50,7 @@ export const AuthProvider = ({ children }: any) => {
         dispatch({ type: 'signIn', payload: { token: rep.token!, user: rep.user! } })
       }
     } catch (error) {
+      showMessage('En este momento estamos experimentando problemas con el servidor, intentalo mas tarde', 'warning')
       // it will go in catch block only if response has error status code like 503 (internal server error), 400 (bad request)
       return dispatch({ type: 'notAuthenticated' })
     }
@@ -79,11 +82,13 @@ export const AuthProvider = ({ children }: any) => {
 
   //validate if student or not
   const authValidatorRole = async (token: string): Promise<AuthState> => {
-    const user: UserAuthResponse = jwt_decode(token);
-    const { data } = await getCarnet(user.upn, API_KEY);
     let photo: string = "";
     let userPhotoError: boolean = false;
+    let dataValue: any;
+    const user: UserAuthResponse = jwt_decode(token);
     try {
+      const { data } = await getCarnet(user.upn, API_KEY);
+      dataValue = data;
       const userImage: Blob = await GraphManager.getPhotoAsync();
       const answerBase64: any = await blobToBase64(userImage);
       const Fullphoto: string[] = answerBase64.split(',');
@@ -98,14 +103,14 @@ export const AuthProvider = ({ children }: any) => {
       ...state,
       token,
       user: {
-        userResult: data!.result,
-        userError: data!.error,
+        userResult: dataValue!.result,
+        userError: dataValue!.error,
         userFirstName: Capitalize(user.given_name),
         userFullName: Capitalize((user.name).replace(/\s+/g, ' ')),
         userEmail: user.upn,
         userPhoto: photo,
         userPhotoError,
-        userMoreInfo: data!.data
+        userMoreInfo: dataValue!.data
       }
     }
 

@@ -10,3 +10,4 @@ export * from './tutor.model';
 export * from './tutoria.model';
 export * from './user.model';
 export * from './uts-posts-categories.model';
+export * from './type-with-key.model'

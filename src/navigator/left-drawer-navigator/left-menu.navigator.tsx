@@ -25,6 +25,8 @@ import { IEnable } from '@src/screens/temp/models';
 import { TempScreen } from '@src/screens/temp';
 import { SkeletonNews } from '@src/components/skeleton-news'
 import { getDataMock } from './data/mockData';
+import { fetchEnabledScreensService } from '@src/services';
+import { PushNotificationScreen } from '@src/screens/push-notification';
 
 const Drawer = createDrawerNavigator();
 
@@ -45,12 +47,16 @@ export const LeftDrawerNavigator = () => {
     return 2 //doesn't exist
   }
 
+  const fetchEnabledScreens = async () => {
+    const resp = await fetchEnabledScreensService(user!.userEmail);
+    setGetData(resp.data);
+    setIsLoading(false);
+  }
+
   const navigation = useNavigation<any>();
   useCheckBajoRendimiento(user!); //dispatch rx-js subscriber to show up modal
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000)
+    fetchEnabledScreens();
   }, [])
 
   return (
@@ -141,6 +147,11 @@ export const LeftDrawerNavigator = () => {
               enableChecker(getData, 'Tutorias') == 1 || enableChecker(getData, 'Tutorias') == 2
                 ? <Drawer.Screen name='Tutorias' component={TutoriasTabs} />
                 : <Drawer.Screen name='Tutorias' component={TempScreen} />
+            }
+            {
+              enableChecker(getData, 'PushNotification') == 1 || enableChecker(getData, 'PushNotification') == 2
+                ? <Drawer.Screen name='PushNotification' component={PushNotificationScreen} />
+                : <Drawer.Screen name='PushNotification' component={TempScreen} />
             }
           </Drawer.Navigator>
         </>

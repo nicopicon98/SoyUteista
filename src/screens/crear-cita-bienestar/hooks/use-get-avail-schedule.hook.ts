@@ -9,9 +9,6 @@ export const useGetAvailSchedule = () => {
 
   const fetchSchedulesByIdProfessional = async (user_id: string = "") => {
     setIsLoadingSchedules(true)
-    // const resp = await getScheduleByUserId(user_id, "npiconj@uts.edu.co");
-    // setSchedules(resp.data)
-    // setIsLoadingSchedules(false)
     setTimeout(() => {
       const resp = mockFranjas;
       setSchedules(resp.data);

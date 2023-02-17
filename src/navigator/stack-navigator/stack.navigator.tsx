@@ -5,9 +5,10 @@ import { useState, useContext, useEffect } from 'react'
 import { SignInScreen } from '@src/screens/sign-in';
 import { AuthContext } from '@src/context/auth';
 import { PushNotificationScreen } from "@src/screens/push-notification";
+import { AuthInterceptor } from "@src/interceptors";
 
 const Stack = createStackNavigator();
-
+AuthInterceptor();
 export const StackNavigator = () => {
 
   const [loadingSplash, setLoadingSplash] = useState(true);
@@ -37,7 +38,7 @@ export const StackNavigator = () => {
           :
           <>
             <Stack.Screen name="Main" component={LeftDrawerNavigator} />
-            <Stack.Screen name="PushNotification" component={PushNotificationScreen} />
+            {/* <Stack.Screen name="PushNotification" component={PushNotificationScreen} /> */}
           </>
       }
 

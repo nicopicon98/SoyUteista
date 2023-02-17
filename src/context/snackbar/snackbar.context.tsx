@@ -4,9 +4,11 @@ import { Snackbar, Portal } from 'react-native-paper';
 import { Dimensions, Text, View } from 'react-native';
 import { colores } from '@src/theme';
 
+type TSnackbar = 'success' | 'warning' | 'danger' | 'info';
+
 interface SnackbarProps {
   isVisible: boolean;
-  showMessage: (msg: string, type: string) => void;
+  showMessage: (msg: string, type: TSnackbar, duration?: number) => void;
   hideMessage: () => void;
 }
 const { height } = Dimensions.get("screen");
@@ -20,12 +22,14 @@ export const useSnackbar = () => useContext(SnackbarContext);
 export const SnackbarProvider = ({ children }) => {
   const [type, setType] = useState('info')
   const [message, setMessage] = useState('');
+  const [duration, setDuration] = useState(3000);
   const [isVisible, setIsVisible] = useState(false);
 
   // Function to show the Snackbar with a message
-  const showMessage = (msg: string, type: string) => {
+  const showMessage = (msg: string, type: string, durationArg: number = 3000) => {
     setType(type);
     setMessage(msg);
+    setDuration(durationArg)
     setIsVisible(true);
   }
 
@@ -45,7 +49,7 @@ export const SnackbarProvider = ({ children }) => {
         <Snackbar
           visible={isVisible}
           onDismiss={hideMessage}
-          duration={3000}
+          duration={duration}
           action={{
             label: '',
             onPress: hideMessage,
@@ -76,7 +80,7 @@ export const SnackbarProvider = ({ children }) => {
           {/* Warning */}
           {type === 'warning' && <View style={{ display: 'flex', flexDirection: 'row', }}>
             <Icon name="alert-outline" size={20} color={colores.White} />
-            <Text style={{ color: 'white', marginLeft: 5 }}>{message}</Text>
+            <Text style={{ color: 'white', marginLeft: 5 }}>{message}{duration}</Text>
           </View>}
 
           {type === 'info' && <View style={{ display: 'flex', flexDirection: 'row', }}>

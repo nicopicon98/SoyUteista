@@ -1,1 +1,1 @@
-export * from './enable.module';
+export * from './enable.model';

@@ -11,7 +11,6 @@ const usePushNotification = () => {
 			const jsonValue = await AsyncStorage.getItem(key)
 			return jsonValue != null ? JSON.parse(jsonValue) : [];
 		} catch (e) {
-			
 		}
 	}
 	const getNotifications = async () => {

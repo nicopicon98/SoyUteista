@@ -11,7 +11,6 @@ import { useState } from 'react';
 const { width } = Dimensions.get("screen");
 
 export const ConvocatoriasScreen = () => {
-  const { bottom } = useSafeAreaInsets();
   const colorScheme = Appearance.getColorScheme();
   const { convocatorias, getConvocatorias, isLoading } = useConvocatorias();
   const [isRefreshing, setIsRefreshing] = useState(false);

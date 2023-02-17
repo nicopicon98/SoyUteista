@@ -12,3 +12,6 @@ export * from './obj-show-formatter.utility';
 export * from './replace-null.utility';
 export * from './subject-manager.utility';
 export * from './string-arr-is-empty.utility';
+export * from './empty-spaces-removal.utility'
+export * from './snackbar-manager.utility';
+export * from './get-validation-error.utility'

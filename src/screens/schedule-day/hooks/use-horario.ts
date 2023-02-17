@@ -3,11 +3,13 @@ import { MateriaInterface } from '../models';
 import { API_KEY } from '@src/config/auth';
 import { AuthContext } from '@src/context/auth';
 import { getHorario } from '@src/services';
+import { useSnackbar } from '@src/context/snackbar';
 
 export const useHorario = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [materias, setMaterias] = useState<MateriaInterface[] | null>([]);
   const { authState: { user } } = useContext(AuthContext);
+  const { showMessage } = useSnackbar();
 
   const loadMateria = async () => {
     try {
@@ -16,7 +18,7 @@ export const useHorario = () => {
       setIsLoading(false);
     } catch (error) {
       setMaterias(null);
-      setIsLoading(false);
+      showMessage('En este momento estamos experimentando problemas con el servidor, intentalo mas tarde', 'warning')
     }
   }
 

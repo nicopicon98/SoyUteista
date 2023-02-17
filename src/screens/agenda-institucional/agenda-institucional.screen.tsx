@@ -5,6 +5,7 @@ import { Noticia } from '@src/components/noticia';
 import { useAgendaInstitucional } from './hooks';
 import { fonts } from '@src/theme/app.theme';
 import { useState } from 'react';
+import { useSnackbar } from '@src/context/snackbar';
 
 
 export const AgendaInstitucionalScreen = () => {
@@ -13,28 +14,34 @@ export const AgendaInstitucionalScreen = () => {
   const { width } = useWindowDimensions();
 
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const {showMessage} = useSnackbar();
 
   //pull to refresh
   const loadNoticiasFromBackend = async () => {
     //primero, ponemos la pantalla en modo de carga
     setIsRefreshing(true);
     //cargamos la info
-    await loadNoticia();
+    try {
+      await loadNoticia();
+      setIsRefreshing(false);
+    } catch (error) {
+      showMessage('En este momento estamos experimentando problemas con el servidor, intentalo mas tarde', 'warning')
+    }
     //finalmente, ponemos la pantalla en modo false
-    setIsRefreshing(false);
+    
   }
 
   return (
     <>
     <AppBarComponent title='Agenda'/>
     <View style={{ ...styles.container, backgroundColor: colorScheme === 'dark' ? 'black' : 'white' }}>
-      {isLoading && <SkeletonNews />}
-
-      {!isLoading &&
-        <View style={{
+      {isLoading 
+      ? <SkeletonNews />
+      : <View style={{
+          flex: 1,
           alignItems: 'center',
           backgroundColor: colorScheme === 'dark' ? 'black' : 'white',
-          marginHorizontal: width * 0.06
+          marginHorizontal: width * 0.037
         }}>
           <FlatList
             data={agendas}
@@ -50,7 +57,7 @@ export const AgendaInstitucionalScreen = () => {
                 fontSize: width * 0.09,
               }}>Agenda institucional</Text>
             )}
-            renderItem={({ item, index }) => <Noticia item={item} />}
+            renderItem={Noticia}
             refreshControl={
               <RefreshControl
                 refreshing={isRefreshing}

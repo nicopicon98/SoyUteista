@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, Appearance, Dimensions, TouchableOpacity } from
 import { ScrollView } from 'react-native-gesture-handler';
 import { useDirectorioEscolar } from '../../hooks';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Capitalize } from '@src/utilities';
+import { Capitalize, removeSpaces } from '@src/utilities';
 
 import { ActivityIndicator, Divider, List } from 'react-native-paper';
 import { colores } from '@src/theme';
@@ -12,8 +12,9 @@ export const CardsDirectorioEscolar = () => {
   const { directories, isLoading } = useDirectorioEscolar();
   const colorScheme = Appearance.getColorScheme();
 
-  return (
+  // console.log(JSON.stringify(directories, null, 2));
 
+  return (
     <View style={{
       flex: 1,
       backgroundColor: colorScheme === 'dark' ? 'black' : 'white',
@@ -42,15 +43,15 @@ export const CardsDirectorioEscolar = () => {
                           <List.Item
                             title={
                               <View>
-                                <InfoDependencia label="Nombre" value={e.nombre} />
+                                <InfoDependencia label="Nombre" value={removeSpaces(e.nombre)} />
                                 <InfoDependencia
                                   label="Cargo"
-                                  value={e.profesion}
+                                  value={removeSpaces(e.profesion)}
                                   icon="briefcase"
                                 />
                                 <InfoDependencia
                                   label="Correo"
-                                  value={e.correo}
+                                  value={removeSpaces(e.correo)}
                                   icon="email"
                                 />
                                 <InfoDependencia

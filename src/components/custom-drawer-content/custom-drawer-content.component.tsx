@@ -1,9 +1,11 @@
 import { DrawerContentScrollView } from '@react-navigation/drawer';
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { TouchableLeftMenu } from '../touchable-left-menu';
 import { CustomDrawerContentProps } from '@src/models';
-import { View, Text, StyleSheet } from 'react-native';
 import { colores, GlobalStyles } from '@src/theme';
 import { Image } from 'react-native-elements';
+
+const { width, height } = Dimensions.get("screen");
 
 export const CustomDrawerContent = (props: CustomDrawerContentProps) => {
   return (
@@ -13,8 +15,9 @@ export const CustomDrawerContent = (props: CustomDrawerContentProps) => {
         ...styles.menuGlobalContainer,
         backgroundColor: props.darkMode === 'dark' ? 'black' : 'white',
       }}>
-      {/* Profile Image */}
+      {/* Profile: Image, Name, E-mail */}
       <View style={GlobalStyles.profileView}>
+        {/* Profile Image */}
         <Image
           source={{
             uri: props.userPhotoError
@@ -24,6 +27,7 @@ export const CustomDrawerContent = (props: CustomDrawerContentProps) => {
           resizeMode="contain"
           style={GlobalStyles.profilePhoto}
         />
+        {/* Profile User Name */}
         <Text
           style={{
             ...GlobalStyles.profileUserName,
@@ -31,15 +35,15 @@ export const CustomDrawerContent = (props: CustomDrawerContentProps) => {
           }}>
           {props.userName}
         </Text>
+        {/* Profile Email */}
         <Text style={GlobalStyles.profileEmail}>{props.userEmail}</Text>
       </View>
-      {/* End Profile Image */}
 
       {/* Menu */}
       <View
         style={{
           ...styles.menuContainer,
-          height: props.height,
+          height: height * 0.75,
         }}>
         {/* Inicio */}
         <TouchableLeftMenu
@@ -119,15 +123,15 @@ export const CustomDrawerContent = (props: CustomDrawerContentProps) => {
           />
         )}
 
-        {/* Directorio Escolar  */}
+        {/* Directorio Institucional  */}
         {props.userResult === 1 && (
           <TouchableLeftMenu
             type="navigate"
             iconColor={colores.Cool_Gray_5_C}
             iconSize={30}
             iconName="at-circle"
-            menuText="Directorio Escolar"
-            screenDestiny="DirectorioEscolar"
+            menuText="Directorio Institucional"
+            screenDestiny="DirectorioInstitucional"
             navigation={props.navigation}
           />
         )}
@@ -180,14 +184,16 @@ export const CustomDrawerContent = (props: CustomDrawerContentProps) => {
           <Image
             source={require('@resources/Images/Logo-UTS-1.png')}
             resizeMode="contain"
-            style={GlobalStyles.logo}
+            style={{
+              width: width * 0.38,
+              height: width * 0.38,
+            }}
           />
         </View>
       </View>
       {/* Franja */}
       <View
         style={{
-          marginTop: props.height! * 0.00001,
           backgroundColor: colores.Pantone_382_C,
           width: '100%',
           borderWidth: props.height! * 0.00001,
@@ -207,8 +213,8 @@ const styles = StyleSheet.create({
   },
   menuContainer: {
     flex: 1,
-    marginTop: 30,
-    marginHorizontal: 40,
+    marginTop: width * 0.04,
+    marginHorizontal: width * 0.06,
   },
   menuBtn: {
     marginVertical: 8,

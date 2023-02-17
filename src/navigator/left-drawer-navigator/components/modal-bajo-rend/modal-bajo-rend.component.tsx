@@ -9,10 +9,7 @@ import { colores } from "@src/theme";
 export const ModalBajoRend = () => {
   const [dialogIsOpen, setDialogIsOpen] = useState(false);
   const showDialog = () => setDialogIsOpen(true);
-  const hideDialog = async () => {
-    setDialogIsOpen(false);
-    BajoRendManager.setFirstTimeAsync();
-  };
+  const hideDialog = () => setDialogIsOpen(false);
 
   const subscription$ = sharingInformationService.getSubject();
   const { navigate } = useNavigation<any>();
@@ -43,9 +40,9 @@ export const ModalBajoRend = () => {
 
   const dialog = <SimpleDialog
     dialogTitle='Hey!'
-    dialogContent='Sabemos cuan dificil se pueden tornar las actividades academicas.
+    dialogContent='Sabemos cuan difícil se pueden tornar las actividades académicas.
     Por eso, hemos abierto un espacio para que puedas mejorar tus notas
-    en la seccion de tutorias.'
+    en la sección de de servicios academicos en su modulo de tutorías.'
     dialogIsOpen={dialogIsOpen}
     hideDialog={hideDialog}
     buttonsAction={actionButton}

@@ -1,78 +1,84 @@
-import { TutoriaResp } from '@src/models';
 import { colores } from '@src/theme';
-import {  Modal, Text, StyleSheet, View, Pressable, Appearance } from 'react-native';
+import { Modal, Text, StyleSheet, View, Pressable, Appearance, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { ITutoriaResp } from '@src/models';
 
 interface Props {
   modalVisible: boolean;
   setModalVisible: (visible: boolean) => void;
-  infoTutoria: TutoriaResp;
+  infoTutoria: ITutoriaResp;
 }
+
+const { width } = Dimensions.get("screen");
 
 export const TutoriaModal = ({ modalVisible, setModalVisible, infoTutoria }: Props) => {
   return (
-      <Modal
-        animationType="fade"
-        hardwareAccelerated={true}
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            {/* Close modal */}
-            <Pressable
-              onPress={() => {
-                setModalVisible(!modalVisible)
-              }}
-              style={styles.buttonClose}
-            >
-              <Icon
-                name="close-circle"
-                size={25}
-                color={colores.Cool_Gray_5_C}
-                />
-            </Pressable>
+    <Modal
+      animationType="fade"
+      hardwareAccelerated={true}
+      transparent={true}
+      visible={modalVisible}
+      onRequestClose={() => {
+        setModalVisible(!modalVisible);
+      }}
+    >
+      <View style={styles.centeredView}>
+        <View style={styles.modalView}>
+          {/* Close modal */}
+          <Pressable
+            onPress={() => {
+              setModalVisible(!modalVisible)
+            }}
+            style={styles.buttonClose}
+          >
+            <Icon
+              name="close-circle"
+              size={25}
+              color={colores.Cool_Gray_5_C}
+            />
+          </Pressable>
+          <View style={{
+            paddingHorizontal: width * 0.03,
+          }}>
             {/* Nombre tutor */}
-            <View style={{ ...styles.modalText, marginTop: 10, flexDirection: 'row' }}>
-              <Text style={{ fontWeight: 'bold', color: 'black' }}>Nombre tutor: </Text>
-              <Text style={{ textTransform: 'capitalize', color: 'black' }}>{infoTutoria.nombre_tutor}</Text>
+            <View style={{ ...styles.modalTextContainer }}>
+              <Text style={{ ...styles.modalTextContainerLabel }}>Nombre tutor: </Text>
+              <Text style={{ ...styles.modalTextContainerValue }}>{infoTutoria.nombre_tutor}</Text>
             </View>
             {/* Asignatura */}
-            <View style={{ ...styles.modalText, flexDirection: 'row' }}>
-              <Text style={{ fontWeight: 'bold', color: 'black' }}>Asignatura: </Text>
-              <Text style={{ textTransform: 'capitalize', color: 'black' }}>{infoTutoria.nombre_asignatura}</Text>
+            <View style={{ ...styles.modalTextContainer }}>
+              <Text style={{ ...styles.modalTextContainerLabel }}>Asignatura: </Text>
+              <Text style={{ ...styles.modalTextContainerValue }}>{infoTutoria.nombre_asignatura}</Text>
             </View>
             {/* Tema */}
-            <View style={{ ...styles.modalText, flexDirection: 'row' }}>
-              <Text style={{ fontWeight: 'bold', color: 'black' }}>Tema: </Text>
-              <Text style={{ textTransform: 'capitalize', color: 'black' }}>{infoTutoria.tema}</Text>
+            <View style={{ ...styles.modalTextContainer }}>
+              <Text style={{ ...styles.modalTextContainerLabel }}>Tema: </Text>
+              <Text style={{ ...styles.modalTextContainerValue }}>{infoTutoria.tema}</Text>
             </View>
             {/* Lugar */}
-            <View style={{ ...styles.modalText, flexDirection: 'row' }}>
-              <Text style={{ fontWeight: 'bold', color: 'black' }}>Lugar: </Text>
-              <Text style={{ textTransform: 'capitalize', color: 'black' }}>{infoTutoria.lugar}</Text>
+            <View style={{ ...styles.modalTextContainer }}>
+              <Text style={{ ...styles.modalTextContainerLabel }}>Lugar: </Text>
+              <Text style={{ ...styles.modalTextContainerValue }}>{infoTutoria.lugar}</Text>
             </View>
             {/* Dia */}
-            <View style={{ ...styles.modalText, flexDirection: 'row' }}>
-              <Text style={{ fontWeight: 'bold', color: 'black' }}>Dia: </Text>
-              <Text style={{ textTransform: 'capitalize', color: 'black' }}>{infoTutoria.dia}</Text>
+            <View style={{ ...styles.modalTextContainer }}>
+              <Text style={{ ...styles.modalTextContainerLabel }}>Dia: </Text>
+              <Text style={{ ...styles.modalTextContainerValue }}>{infoTutoria.dia}</Text>
             </View>
             {/* Franja Horaria */}
-            <View style={{ ...styles.modalText, flexDirection: 'row' }}>
-              <Text style={{ fontWeight: 'bold', color: 'black' }}>Hora: </Text>
-              <Text style={{ textTransform: 'capitalize', color: 'black' }}>{infoTutoria.franja_nombre}</Text>
+            <View style={{ ...styles.modalTextContainer }}>
+              <Text style={{ ...styles.modalTextContainerLabel }}>Hora: </Text>
+              <Text style={{ ...styles.modalTextContainerValue }}>{infoTutoria.franja_nombre}</Text>
             </View>
             {/* Fecha Solicitud */}
-            <View style={{ ...styles.modalText, flexDirection: 'row' }}>
-              <Text style={{ fontWeight: 'bold', color: 'black' }}>Fecha de la solicitud: </Text>
-              <Text style={{ textTransform: 'capitalize', color: 'black' }}>{infoTutoria.fecha_solicitud}</Text>
+            <View style={{ ...styles.modalTextContainer, alignItems: 'center' }}>
+              <Text style={{ ...styles.modalTextContainerLabel }}>Fecha de solicitud: </Text>
+              <Text style={{ ...styles.modalTextContainerValue }}>{infoTutoria.fecha_solicitud}</Text>
             </View>
           </View>
         </View>
-      </Modal>
+      </View>
+    </Modal>
   );
 }
 
@@ -88,7 +94,8 @@ const styles = StyleSheet.create({
     margin: 0,
     backgroundColor: "white",
     borderRadius: 20,
-    padding: 35,
+    paddingHorizontal: 20,
+    paddingVertical: 20,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -96,7 +103,8 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 5
+    elevation: 5,
+    maxWidth: width * 0.9,
   },
   button: {
     borderRadius: 20,
@@ -116,7 +124,18 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center"
   },
-  modalText: {
+  modalTextContainer: {
     marginBottom: 0,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    maxWidth: '100%',
+  },
+  modalTextContainerLabel: {
+    fontWeight: 'bold', color: 'black',
+    flexBasis: '40%'
+  },
+  modalTextContainerValue: {
+    flexBasis: '60%',
+    textTransform: 'capitalize', color: 'black'
   }
 });

@@ -52,6 +52,7 @@ export const GlobalStyles = StyleSheet.create({
   profileEmail: {
     fontWeight: '700',
     fontSize: 14,
+    fontStyle: 'italic'
   },
   logo: {
     width: 120,

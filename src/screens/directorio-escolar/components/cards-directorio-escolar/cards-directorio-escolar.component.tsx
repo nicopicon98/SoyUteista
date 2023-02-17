@@ -1,49 +1,102 @@
+import { View, Text, StyleSheet, Appearance, Dimensions, TouchableOpacity } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { View, Text, StyleSheet } from 'react-native';
 import { useDirectorioEscolar } from '../../hooks';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Capitalize } from '@src/utilities';
 
+import { ActivityIndicator, Divider, List } from 'react-native-paper';
+import { colores } from '@src/theme';
+
+const { width } = Dimensions.get("screen");
 export const CardsDirectorioEscolar = () => {
-  const { state } = useDirectorioEscolar();
+  const { directories, isLoading } = useDirectorioEscolar();
+  const colorScheme = Appearance.getColorScheme();
+
   return (
-    <View style={{ flex: 1, backgroundColor: 'white' }}>
-      <ScrollView>
-        {state?.map((elemento, index) => {
-          return (
-            <>
-              <View key={index} style={styles.container}>
-                <View style={{ marginHorizontal: 10, marginVertical: 10 }}>
-                  <Text style={{ fontSize: 24 }}>
-                    Dependencia: {elemento.dependencia}
-                  </Text>
-                  {elemento.infoDependencia.map((elementoD, indexD) => {
-                    return (
-                      <>
-                        <View
-                          style={{
-                            marginTop: 10,
-                            backgroundColor: '#f2f2f2',
-                            borderRadius: 10,
-                          }}
-                          key={indexD}>
-                          <View style={{ marginHorizontal: 10, marginVertical: 8 }}>
-                            <Text>Nombre: {elementoD.nombre}</Text>
-                            <Text>Cargo: {elementoD.profesion}</Text>
-                            <Text>Correo: {elementoD.correo}</Text>
-                            <Text>Extension: {elementoD.extension}</Text>
-                          </View>
-                        </View>
-                      </>
-                    );
-                  })}
-                </View>
-              </View>
-            </>
-          );
-        })}
-      </ScrollView>
+
+    <View style={{
+      flex: 1,
+      backgroundColor: colorScheme === 'dark' ? 'black' : 'white',
+      padding: width * 0.03,
+    }}>
+      {isLoading
+        ? <ActivityIndicator />
+        : <ScrollView>
+          {directories?.map((directory, index1) => {
+            return (
+              <List.AccordionGroup>
+                <List.Accordion
+                  theme={{
+                    colors: {
+                      primary: colores.Pantone_382_C,
+                      background: colores.White,
+                    }
+                  }}
+                  left={props => <List.Icon {...props} icon="folder" color={colores.Pantone_382_C} />}
+                  title={directory.dependencia}
+                  id="0">
+                  {
+                    directory.infoDependencia.map((e, index) => {
+                      return (
+                        <>
+                          <List.Item
+                            title={
+                              <View>
+                                <InfoDependencia label="Nombre" value={e.nombre} />
+                                <InfoDependencia
+                                  label="Cargo"
+                                  value={e.profesion}
+                                  icon="briefcase"
+                                />
+                                <InfoDependencia
+                                  label="Correo"
+                                  value={e.correo}
+                                  icon="email"
+                                />
+                                <InfoDependencia
+                                  label="Extension"
+                                  value={`${e.extension}`}
+                                  icon="cellphone"
+                                />
+                              </View>
+                            }
+                          />
+                          <Divider />
+                        </>
+                      )
+                    })
+                  }
+                </List.Accordion>
+              </List.AccordionGroup>
+            )
+          })}
+        </ScrollView>
+      }
     </View>
-  );
-};
+  )
+}
+
+interface IInfoDependenciaProps {
+  label: string;
+  value: string;
+  icon?: string;
+}
+
+const InfoDependencia = ({ label, value, icon = "account" }: IInfoDependenciaProps) => {
+  return (
+    <View style={{ flexDirection: 'row' }}>
+      <Icon
+        color={colores.Pantone_382_C}
+        size={width * 0.05}
+        name={icon}
+      />
+      <Text>
+        <Text style={{ fontWeight: 'bold', color: colores.Pantone_382_C }}>{label}: </Text>
+        {Capitalize(value)}
+      </Text>
+    </View>
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -59,5 +112,16 @@ const styles = StyleSheet.create({
     shadowRadius: 5.46,
     borderRadius: 15,
     elevation: 9,
+  },
+  overflow: {
+    overflow: 'hidden',
+    backgroundColor: '#efefef',
+  },
+  button: {
+    textAlign: 'center',
+  },
+  buttonText: {
+    color: 'black',
+    fontWeight: 'bold'
   },
 });

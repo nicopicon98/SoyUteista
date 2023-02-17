@@ -1,9 +1,10 @@
 import { DrawerNavigationHelpers } from '@react-navigation/drawer/lib/typescript/src/types';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { Text, StyleSheet, Dimensions } from 'react-native';
+import { Text, StyleSheet, Dimensions, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { AuthContext } from '@src/context/auth';
 import { useContext } from 'react'
+import { Divider } from 'react-native-paper';
 
 type TouchableLeftMenuType = "signOut" | "navigate";
 
@@ -29,34 +30,34 @@ export const TouchableLeftMenu = ({
   menuText,
   screenDestiny = "",
   navigation,
-  textStyles = styles.menuText,
-  buttonStyles = styles.menuBtn }: TouchableLeftMenuProps) => {
+  textStyles = styles.menuText, }: TouchableLeftMenuProps) => {
   const { signOut } = useContext(AuthContext);
   return (
-    <TouchableOpacity
-      onPress={
-        type === "navigate"
-          ? () => navigation!.navigate(screenDestiny)
-          : () => signOut()
-      }
-      style={buttonStyles}
-    >
-      <Text><Icon name={iconName} size={iconSize} color={iconColor} /></Text>
-      <Text style={textStyles}> {menuText}</Text>
-    </TouchableOpacity>
+    <>
+      <TouchableOpacity
+        onPress={
+          type === "navigate"
+            ? () => navigation!.navigate(screenDestiny)
+            : () => signOut()
+        }
+      >
+        <View style={{...styles.btnContainer}}>
+          <Text><Icon name={iconName} size={width * 0.06} color={iconColor} /></Text>
+          <Text style={textStyles}> {menuText}</Text>
+        </View>
+      </TouchableOpacity>
+      <Divider />
+    </>
   )
 }
 
 const styles = StyleSheet.create({
-  menuBtn: {
-    marginVertical: width*0.02,
-    flexDirection: 'row'
+  btnContainer: {
+    marginVertical: width * 0.02,
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   menuText: {
-    fontSize: 20,
-    marginTop: 2,
-    marginLeft: 8,
+    fontSize: width * 0.05,
   }
 });
-
-// async () => await signOut()

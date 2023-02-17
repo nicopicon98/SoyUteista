@@ -23,8 +23,8 @@ const CardNotification = ({ notification }: Props) => {
             backgroundColor: 'white',
         }}>
             <View style={{ marginVertical: screenSize.height * 0.005, marginHorizontal: screenSize.width * 0.02 }}>
-                <Text style={{ fontSize: screenSize.fontScale * 18, color: 'black' }}>{notification.title}</Text>
-                <Text style={{ fontSize: screenSize.fontScale * 18, color: 'black' }}>{notification.body}</Text>
+                <Text style={{ fontSize: screenSize.fontScale * 17, color: 'black' }}>{notification.title}</Text>
+                <Text style={{ fontSize: screenSize.fontScale * 12, color: 'black' }}>{notification.body}</Text>
             </View>
 
         </View>

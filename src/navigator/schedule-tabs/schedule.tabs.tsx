@@ -1,26 +1,26 @@
+import { Dimensions, ActivityIndicator, View, StyleSheet, Appearance } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { useHorario } from '@src/screens/schedule-day/hooks';
 import { AppBarComponent } from '@src/components/app-bar';
-import { Appearance, Dimensions, StyleSheet } from 'react-native';
-import { View } from 'react-native-animatable';
-import { ActivityIndicator } from 'react-native-paper';
-import { useVideosPodcast } from './hooks';
+import { ScheduleDay } from '@src/screens/schedule-day';
 import { colores } from '@src/theme';
-import CardPodcast from './components/CardPodcast';
-import CardVideo from './components/CardVideo';
+
 
 const Tab = createMaterialTopTabNavigator();
 const { width } = Dimensions.get('window');
 
-export const ExitoEscolarScreen = () => {
-  const { isLoading, podcast, videos } = useVideosPodcast()
+export const ScheduleTabs = () => {
+
+  const { isLoading, materias } = useHorario();
   const colorScheme = Appearance.getColorScheme();
+
   return (
     <>
-      <AppBarComponent title="Exito Escolar" />
+      <AppBarComponent title='Horario' />
       <View style={{ flex: 1 }}>
-        {isLoading && <ActivityIndicator style={styles.loader} color={colores.Pantone_382_C} animating={isLoading} size='large' />}
-        {!isLoading &&
-          <Tab.Navigator
+        {isLoading
+          ? <ActivityIndicator style={styles.loader} color={colores.Pantone_382_C} animating={isLoading} size='large' />
+          : <Tab.Navigator
             style={{
               paddingTop: 0
             }}
@@ -47,18 +47,31 @@ export const ExitoEscolarScreen = () => {
             })}
           >
 
-            <Tab.Screen name="Podcasts">
-              {() => <CardPodcast podcast={podcast.data} />}
+            <Tab.Screen name="Lun">
+              {() => <ScheduleDay materias={materias!.filter(e => e.DIA == 1)} />}
             </Tab.Screen>
-            <Tab.Screen name="Videos">
-              {() => <CardVideo videos={videos.data} />}
+            <Tab.Screen name="Mar">
+              {() => <ScheduleDay materias={materias!.filter(e => e.DIA == 2)} />}
+            </Tab.Screen>
+            <Tab.Screen name="Mie">
+              {() => <ScheduleDay materias={materias!.filter(e => e.DIA == 3)} />}
+            </Tab.Screen>
+            <Tab.Screen name="Jue">
+              {() => <ScheduleDay materias={materias!.filter(e => e.DIA == 4)} />}
+            </Tab.Screen>
+            <Tab.Screen name="Vie">
+              {() => <ScheduleDay materias={materias!.filter(e => e.DIA == 5)} />}
+            </Tab.Screen>
+            <Tab.Screen name="Sab">
+              {() => <ScheduleDay materias={materias!.filter(e => e.DIA == 6)} />}
             </Tab.Screen>
           </Tab.Navigator>
         }
       </View>
     </>
-  );
-};
+
+  )
+}
 
 
 const styles = StyleSheet.create({

@@ -6,12 +6,12 @@ import { useState, useEffect, useContext } from 'react';
 
 export const useDirectorioEscolar = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [state, setState] = useState<DirectorioEscolar[]>();
+  const [directories, setDirectories] = useState<DirectorioEscolar[]>();
+  const { authState: { user } } = useContext(AuthContext);
 
   const getDirectorios = async () => {
-    const { authState: { user } } = useContext(AuthContext);
     const directorioPromise = await getDirectorioEscolar(user?.userEmail!, API_KEY);
-    setState(directorioPromise.data);
+    setDirectories(directorioPromise.data);
     setIsLoading(false);
   };
 
@@ -20,7 +20,7 @@ export const useDirectorioEscolar = () => {
   }, []);
 
   return {
-    state,
+    directories,
     isLoading
   };
 };

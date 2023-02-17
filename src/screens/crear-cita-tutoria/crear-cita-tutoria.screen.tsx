@@ -251,21 +251,8 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
       tema: data.tema,
       fecha_tutoria: data.fecha_tutoria
     }
-    console.log(obj)
-    const objTest: ICreateCita = {
-      id_crearCitas: '8586',
-      documento: '1098813165',
-      nombre: 'Nicolas Picon',
-      programa: 'Tecnologia en desarrollo de sistemas informaticos',
-      jornada: 'DIURNA',
-      correo: 'npiconj@uts.edu.co',
-      celular: '3054762954',
-      comentarios: 'prueba insercion 16 feb',
-      tema: 'prueba insercion a las 2:00 am',
-      fecha_tutoria: '2023-02-16'
-    }
     try {
-      const insertResp = await postInsertTutoria(objTest);
+      const insertResp = await postInsertTutoria(obj);
       if (insertResp) {
         setClickInsertTutoria(false);
         setConfModalVisible(false);

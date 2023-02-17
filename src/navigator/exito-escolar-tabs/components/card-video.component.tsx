@@ -8,7 +8,7 @@ interface Props {
   videos: Video[]
 }
 
-const CardVideo = ({ videos }: Props) => {
+export const CardVideo = ({ videos }: Props) => {
   return (
     <View style={{ flex: 1, alignItems: 'center' }}>
       <FlatList
@@ -23,5 +23,3 @@ const CardVideo = ({ videos }: Props) => {
     </View>
   )
 }
-
-export default CardVideo

@@ -3,7 +3,7 @@ import { CustomDrawerContent } from '@src/components/custom-drawer-content';
 import { DirectorioEscolarScreen } from '@src/screens/directorio-escolar';
 import { ConvocatoriasScreen } from '@src/screens/convocatorias';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { ExitoEscolarScreen } from '@src/screens/exito-escolar';
+import { ExitoEscolarScreen } from '@src/navigator/exito-escolar-tabs';
 import { Appearance, useWindowDimensions } from 'react-native';
 import { ModalBajoRend } from './components/modal-bajo-rend';
 import { RevistaScreen } from '@src/screens/revista';
@@ -13,14 +13,18 @@ import { GradesScreen } from '@src/screens/grades';
 import { useCheckBajoRendimiento } from './hooks';
 import { BienestarTabs } from '../bienestar-tabs';
 import { HomeScreen } from '@src/screens/home';
-import { ScheduleTabs } from '../schedule.tabs';
-import { TutoriasTabs } from '../tutorias.tabs';
+import { ScheduleTabs } from '../schedule-tabs';
+import { TutoriasTabs } from '../tutorias-tabs';
 import { AuthContext } from '@src/context/auth';
 import { colores } from '@src/theme';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { FABGroup } from '@src/components/FAB-group';
 import { screens } from '@src/utilities';
 import { useNavigation } from '@react-navigation/native';
+import { IEnable } from '@src/screens/temp/models';
+import { TempScreen } from '@src/screens/temp';
+import { SkeletonNews } from '@src/components/skeleton-news'
+import { getDataMock } from './data/mockData';
 
 const Drawer = createDrawerNavigator();
 
@@ -29,48 +33,118 @@ export const LeftDrawerNavigator = () => {
   const colorScheme = Appearance.getColorScheme();
   const { authState: { user } } = useContext(AuthContext);
 
+  const [isLoading, setIsLoading] = useState(true);
+  const [getData, setGetData] = useState(getDataMock);
+
+  const enableChecker = (obj: IEnable[], screenStr: string) => {
+    const exist = obj.find(e => e.nombre === screenStr);
+    if (exist) {
+      const availability = obj.filter(e => e.nombre === screenStr)
+      return availability[0].habilitado
+    }
+    return 2 //doesn't exist
+  }
+
   const navigation = useNavigation<any>();
   useCheckBajoRendimiento(user!); //dispatch rx-js subscriber to show up modal
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000)
+  }, [])
 
   return (
     <>
-      <ModalBajoRend />
-      <FABGroup screens={screens(navigation)} />
-      <Drawer.Navigator
-        drawerType={(width >= 768) ? 'permanent' : 'front'}
-        screenOptions={{
-          headerShown: false,
-          headerStyle: {
-            backgroundColor: colores.Pantone_382_C,
-          },
-          headerTintColor: 'white',
-        }}
-        drawerContent={(props) => (
-          <CustomDrawerContent
-            {...props}
-            userName={user!.userFullName}
-            userEmail={user!.userEmail}
-            userPhoto={user!.userPhoto}
-            height={user!.userResult !== 1 ? height * 0.62 : height}
-            userPhotoError={user!.userPhotoError}
-            userResult={user!.userResult}
-            darkMode={colorScheme}
-            userFranDesc={user!.userMoreInfo.C_FRAN_DESCRIPCION}
-          />
-        )}>
-        <Drawer.Screen name='Inicio' component={HomeScreen} />
-        <Drawer.Screen name='Horario' component={ScheduleTabs} />
-        <Drawer.Screen name='Carnet' component={CarnetScreen} />
-        <Drawer.Screen name='Perfil' component={ProfileScreen} />
-        <Drawer.Screen name='Notas' component={GradesScreen} />
-        <Drawer.Screen name='Revista' component={RevistaScreen} />
-        <Drawer.Screen name='Agenda' component={AgendaInstitucionalScreen} />
-        <Drawer.Screen name='ExitoEscolar' component={ExitoEscolarScreen} />
-        <Drawer.Screen name='DirectorioEscolar' component={DirectorioEscolarScreen} />
-        <Drawer.Screen name='Convocatorias' component={ConvocatoriasScreen} />
-        <Drawer.Screen name="Bienestar" component={BienestarTabs} />
-        <Drawer.Screen name='Tutorias' component={TutoriasTabs} />
-      </Drawer.Navigator>
+      {isLoading
+        ? <SkeletonNews />
+        : <>
+          <ModalBajoRend />
+          <FABGroup screens={screens(navigation)} />
+          <Drawer.Navigator
+            drawerType={(width >= 768) ? 'permanent' : 'front'}
+            screenOptions={{
+              headerShown: false,
+              headerStyle: {
+                backgroundColor: colores.Pantone_382_C,
+              },
+              headerTintColor: 'white',
+            }}
+            drawerContent={(props) => (
+              <CustomDrawerContent
+                {...props}
+                userName={user!.userFullName}
+                userEmail={user!.userEmail}
+                userPhoto={user!.userPhoto}
+                height={user!.userResult !== 1 ? height * 0.62 : height}
+                userPhotoError={user!.userPhotoError}
+                userResult={user!.userResult}
+                darkMode={colorScheme}
+                userFranDesc={user!.userMoreInfo.C_FRAN_DESCRIPCION}
+              />
+            )}>
+            {
+              enableChecker(getData, 'Inicio') == 1 || enableChecker(getData, 'Inicio') == 2
+                ? <Drawer.Screen name='Inicio' component={HomeScreen} />
+                : <Drawer.Screen name='Inicio' component={TempScreen} />
+            }
+            {
+              enableChecker(getData, 'Horario') == 1 || enableChecker(getData, 'Horario') == 2
+                ? <Drawer.Screen name='Horario' component={ScheduleTabs} />
+                : <Drawer.Screen name='Horario' component={TempScreen} />
+            }
+            {
+              enableChecker(getData, 'Carnet') == 1 || enableChecker(getData, 'Carnet') == 2
+                ? <Drawer.Screen name='Carnet' component={CarnetScreen} />
+                : <Drawer.Screen name='Carnet' component={TempScreen} />
+            }
+            {
+              enableChecker(getData, 'Perfil') == 1 || enableChecker(getData, 'Perfil') == 2
+                ? <Drawer.Screen name='Perfil' component={ProfileScreen} />
+                : <Drawer.Screen name='Perfil' component={TempScreen} />
+            }
+            {
+              enableChecker(getData, 'Notas') == 1 || enableChecker(getData, 'Notas') == 2
+                ? <Drawer.Screen name='Notas' component={GradesScreen} />
+                : <Drawer.Screen name='Notas' component={TempScreen} />
+            }
+            {
+              enableChecker(getData, 'Revista') == 1 || enableChecker(getData, 'Revista') == 2
+                ? <Drawer.Screen name='Revista' component={RevistaScreen} />
+                : <Drawer.Screen name='Revista' component={TempScreen} />
+            }
+            {
+              enableChecker(getData, 'Agenda') == 1 || enableChecker(getData, 'Agenda') == 2
+                ? <Drawer.Screen name='Agenda' component={AgendaInstitucionalScreen} />
+                : <Drawer.Screen name='Agenda' component={TempScreen} />
+            }
+            {
+              enableChecker(getData, 'ExitoEscolar') == 1 || enableChecker(getData, 'ExitoEscolar') == 2
+                ? <Drawer.Screen name='ExitoEscolar' component={ExitoEscolarScreen} />
+                : <Drawer.Screen name='ExitoEscolar' component={TempScreen} />
+            }
+            {
+              enableChecker(getData, 'DirectorioInstitucional') == 1 || enableChecker(getData, 'DirectorioInstitucional') == 2
+                ? <Drawer.Screen name='DirectorioInstitucional' component={DirectorioEscolarScreen} />
+                : <Drawer.Screen name='DirectorioInstitucional' component={TempScreen} />
+            }
+            {
+              enableChecker(getData, 'Convocatorias') == 1 || enableChecker(getData, 'Convocatorias') == 2
+                ? <Drawer.Screen name='Convocatorias' component={ConvocatoriasScreen} />
+                : <Drawer.Screen name='Convocatorias' component={TempScreen} />
+            }
+            {
+              enableChecker(getData, 'Bienestar') == 1 || enableChecker(getData, 'Bienestar') == 2
+                ? <Drawer.Screen name='Bienestar' component={BienestarTabs} />
+                : <Drawer.Screen name='Bienestar' component={TempScreen} />
+            }
+            {
+              enableChecker(getData, 'Tutorias') == 1 || enableChecker(getData, 'Tutorias') == 2
+                ? <Drawer.Screen name='Tutorias' component={TutoriasTabs} />
+                : <Drawer.Screen name='Tutorias' component={TempScreen} />
+            }
+          </Drawer.Navigator>
+        </>
+      }
     </>
   );
 }

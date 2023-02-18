@@ -1,11 +1,13 @@
 import { AgendaInstitucionalScreen } from '@src/screens/agenda-institucional';
 import { CustomDrawerContent } from '@src/components/custom-drawer-content';
 import { DirectorioEscolarScreen } from '@src/screens/directorio-escolar';
+import { PushNotificationScreen } from '@src/screens/push-notification';
+import { ExitoEscolarScreen } from '@src/navigator/exito-escolar-tabs';
 import { ConvocatoriasScreen } from '@src/screens/convocatorias';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { ExitoEscolarScreen } from '@src/navigator/exito-escolar-tabs';
 import { Appearance, useWindowDimensions } from 'react-native';
 import { ModalBajoRend } from './components/modal-bajo-rend';
+import { SkeletonNews } from '@src/components/skeleton-news';
 import { RevistaScreen } from '@src/screens/revista';
 import { ProfileScreen } from '@src/screens/profile';
 import { CarnetScreen } from '@src/screens/carnet';
@@ -23,10 +25,9 @@ import { screens } from '@src/utilities';
 import { useNavigation } from '@react-navigation/native';
 import { IEnable } from '@src/screens/temp/models';
 import { TempScreen } from '@src/screens/temp';
-import { SkeletonNews } from '@src/components/skeleton-news'
 import { getDataMock } from './data/mockData';
 import { fetchEnabledScreensService } from '@src/services';
-import { PushNotificationScreen } from '@src/screens/push-notification';
+import { View } from 'react-native';
 
 const Drawer = createDrawerNavigator();
 
@@ -39,12 +40,13 @@ export const LeftDrawerNavigator = () => {
   const [getData, setGetData] = useState(getDataMock);
 
   const enableChecker = (obj: IEnable[], screenStr: string) => {
-    const exist = obj.find(e => e.nombre === screenStr);
-    if (exist) {
-      const availability = obj.filter(e => e.nombre === screenStr)
-      return availability[0].habilitado
-    }
-    return 2 //doesn't exist
+    // const exist = obj.find(e => e.nombre === screenStr);
+    // if (exist) {
+    //   const availability = obj.filter(e => e.nombre === screenStr)
+    //   return availability[0].habilitado
+    // }
+    // return 2 //doesn't exist
+    return 1
   }
 
   const fetchEnabledScreens = async () => {
@@ -62,7 +64,9 @@ export const LeftDrawerNavigator = () => {
   return (
     <>
       {isLoading
-        ? <SkeletonNews />
+        ? <View style={{ flex: 1, backgroundColor: colorScheme === 'dark' ? 'black' : 'white' }}>
+          <SkeletonNews />
+        </View>
         : <>
           <ModalBajoRend />
           <FABGroup screens={screens(navigation)} />

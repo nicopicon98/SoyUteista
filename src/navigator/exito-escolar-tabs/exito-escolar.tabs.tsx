@@ -16,10 +16,10 @@ export const ExitoEscolarScreen = () => {
   return (
     <>
       <AppBarComponent title="Exito Escolar" />
-      <View style={{ flex: 1 }}>
-        {isLoading && <ActivityIndicator style={styles.loader} color={colores.Pantone_382_C} animating={isLoading} size='large' />}
-        {!isLoading &&
-          <Tab.Navigator
+      <View style={{ flex: 1, backgroundColor: colorScheme === 'dark' ? 'black' : 'white' }}>
+        {isLoading
+          ? <ActivityIndicator style={styles.loader} color={colorScheme === 'dark' ? 'white' : colores.Pantone_382_C} animating={isLoading} size='large' />
+          : <Tab.Navigator
             style={{
               paddingTop: 0
             }}

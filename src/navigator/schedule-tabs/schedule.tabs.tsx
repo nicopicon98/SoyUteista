@@ -17,9 +17,9 @@ export const ScheduleTabs = () => {
   return (
     <>
       <AppBarComponent title='Horario' />
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: colorScheme === 'dark' ? 'black' : 'white' }}>
         {isLoading
-          ? <ActivityIndicator style={styles.loader} color={colores.Pantone_382_C} animating={isLoading} size='large' />
+          ? <ActivityIndicator style={styles.loader} color={colorScheme === 'dark' ? colores.White : colores.Pantone_383_C } animating={isLoading} size='large' />
           : <Tab.Navigator
             style={{
               paddingTop: 0

@@ -14,7 +14,8 @@ export const createCoursesItemsAdapter =
       return {
         label: e.nombre_curso,
         value: `${e.id_curso}`,
-        icon: () => customIcon
+        icon: () => customIcon,
+        color: 'red'
       }
     });
   }

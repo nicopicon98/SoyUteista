@@ -80,7 +80,7 @@ export const SnackbarProvider = ({ children }) => {
           {/* Warning */}
           {type === 'warning' && <View style={{ display: 'flex', flexDirection: 'row', }}>
             <Icon name="alert-outline" size={20} color={colores.White} />
-            <Text style={{ color: 'white', marginLeft: 5 }}>{message}{duration}</Text>
+            <Text style={{ color: 'white', marginLeft: 5 }}>{message}</Text>
           </View>}
 
           {type === 'info' && <View style={{ display: 'flex', flexDirection: 'row', }}>

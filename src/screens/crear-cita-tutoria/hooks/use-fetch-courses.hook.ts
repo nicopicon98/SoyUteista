@@ -7,6 +7,7 @@ export const useFetchCourses = () => {
   const [isLoadingCourses, setIsLoadingCourses] = useState(true);
   const { authState: { user } } = useContext(AuthContext)
   const { showMessage } = useSnackbar();
+  
   const onLoadCursos = async () => {
     try {
       const resp = await getAllCourses(user?.userMoreInfo?.C_UNID_NOMBRE);

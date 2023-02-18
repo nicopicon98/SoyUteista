@@ -6,7 +6,7 @@ import { useGetAvailSchedule } from './hooks/use-get-avail-schedule.hook';
 import DropDownPicker, { ItemType } from "react-native-dropdown-picker";
 import { CustomCalendarComponent } from "./components/custom-calendar";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { StyleSheet, Text, Dimensions, View } from 'react-native';
+import { StyleSheet, Text, Dimensions, View, Appearance } from 'react-native';
 import { ActivityIndicator, TextInput } from "react-native-paper";
 import { CardBienestar } from "@src/components/card-bienestar";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -33,6 +33,9 @@ export const CrearCitaBienestarScreen = () => {
   const [field, setField] = useState<string>('odontologia');
 
   const { authState: { user } } = useContext(AuthContext);
+
+  //ColorScheme
+  const colorScheme = Appearance.getColorScheme();
 
   //Final Modal
   const [modalFinalVisible, setModalFinalVisible] = useState(false);
@@ -511,7 +514,7 @@ export const CrearCitaBienestarScreen = () => {
   const loader = <ActivityIndicator color={colores.Pantone_383_C} />
 
   return (
-    <>
+    <View style={{flex: 1, backgroundColor: colorScheme === 'dark' ? 'black' : 'white'}}>
       <CardBienestar>
         <SafeAreaView style={styles.container}>
           {segmentedButtons}
@@ -537,10 +540,10 @@ export const CrearCitaBienestarScreen = () => {
         </SafeAreaView>
       </CardBienestar>
       {confModal}
-    </>
+    </View>
   )
 }
-
+// colorScheme === 'dark' ? 'dark' : 'white'
 
 const styles = StyleSheet.create({
   container: {

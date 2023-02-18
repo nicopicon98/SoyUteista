@@ -2,11 +2,11 @@ import { getFranjaByDayAsignatura } from '@src/services';
 import { useState } from 'react'
 import { useSnackbar } from '@src/context/snackbar';
 export const useFranjaByDiaAsignatura = () => {
-
+  const { showMessage } = useSnackbar();
   const [isLoadingFranjaByDiaAsignatura, setisLoadingFranjaByDiaAsignatura] = useState(false);
 
   const onLoadFranjaByDiaAsignatura = async (id_course: string, day: string) => {
-    const { showMessage } = useSnackbar();
+    
     try {
       setisLoadingFranjaByDiaAsignatura(true);
       const resp = await getFranjaByDayAsignatura(id_course, day);

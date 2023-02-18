@@ -6,16 +6,16 @@ export const useDayByAsignatura = () => {
 
   const [isLoadingDaysByAsignatura, setIsLoadingDaysByAsignatura] = useState(false)
   const { showMessage } = useSnackbar();
-  
+
   const onLoadDayByAsignatura = async (id_course: string) => {
     try {
       setIsLoadingDaysByAsignatura(true);
-    const rep = await getDaysByAsignatura(id_course)
-    setIsLoadingDaysByAsignatura(false);
-    return rep.data
+      const rep = await getDaysByAsignatura(id_course)
+      setIsLoadingDaysByAsignatura(false);
+      return rep.data
     } catch (error) {
       showMessage('En este momento estamos experimentando problemas con el servidor, intentalo mas tarde', 'warning')
-    }  
+    }
   }
 
   return {

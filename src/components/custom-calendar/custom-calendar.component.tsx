@@ -111,10 +111,13 @@ const styles = StyleSheet.create({
 	markedStylesContainer: {
 		backgroundColor: colores.Pantone_383_C,
 		borderRadius: 100,
+		alignItems: 'center',
+		justifyContent: 'center',
 		width: width * 0.07,
 	},
 	markedStylesText: {
-		color: 'white',
+		color: colores.White,
 		textAlign: 'center',
+		padding: 1
 	}
 })

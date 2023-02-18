@@ -21,7 +21,6 @@ export const SegmentedButtonsResponsive = ({ buttons, value, onValueChange }: Pr
       onValueChange={onValueChange}
       buttons={buttons}
       style={style.segmentedButtons}
-      
     />
   })
 

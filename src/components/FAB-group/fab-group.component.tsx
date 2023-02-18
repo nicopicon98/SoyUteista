@@ -7,7 +7,7 @@ import { Dimensions } from 'react-native';
 interface Props {
   screens: FabScreens[]
 }
-const {width} = Dimensions.get("screen");
+const { width } = Dimensions.get("screen");
 export const FABGroup = ({ screens }: Props) => {
   const [state, setState] = React.useState({ open: false });
 

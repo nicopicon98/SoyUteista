@@ -4,29 +4,29 @@ import {
   createTutorItemsAdapter,
   createDaysItemsAdapter
 } from './adapters';
-import { Dimensions, StyleSheet, Text, View, Modal, Pressable, ScrollView, ImageSourcePropType, Platform } from 'react-native';
-import { Capitalize, errorHandlerCelular, isOneEmpty } from '@src/utilities';
-import { useFranjaByDiaAsignatura } from './hooks';
+import { Dimensions, StyleSheet, Text, View, Modal, Pressable, ScrollView, ImageSourcePropType, Platform, Appearance } from 'react-native';
 import { useFetchCourses, useDayByAsignatura, useFetchTutores, useTutorInfo } from "./hooks";
+import { Capitalize, errorHandlerCelular, isOneEmpty } from '@src/utilities';
 import { CustomCalendarComponent } from '@src/components/custom-calendar';
-import { ActivityIndicator, TextInput } from "react-native-paper";
 import DropDownPicker, { ItemType } from "react-native-dropdown-picker";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { ActivityIndicator, TextInput } from "react-native-paper";
+import { getTutorPhoto, postInsertTutoria } from '@src/services';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { GraphError } from '@microsoft/microsoft-graph-client';
 import { ITutorInfoResp, NavigationProps } from "@src/models";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { CardTutorias } from '@src/components/card-tutorias';
+import { useEffect, useState, useContext } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useSnackbar } from '@src/context/snackbar';
+import { useFranjaByDiaAsignatura } from './hooks';
 import { Image } from 'react-native-elements';
-import { getTutorPhoto, postInsertTutoria } from '@src/services';
-import { useEffect, useState, useContext } from "react";
 import { AuthContext } from '@src/context/auth';
 import { ICreateCita } from './models';
 import { colores } from "@src/theme";
-import axios from 'axios';
 import moment from 'moment';
+import axios from 'axios';
 
 export type TFormData = {
   id_course: string;
@@ -42,9 +42,12 @@ export type TFormData = {
 const { width, height, } = Dimensions.get("window")
 
 export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
+
+  const colorSchema = Appearance.getColorScheme();
+
   // custom icons -> Optimization tip
-  const [customTutoresIcon, setCustomTutoresIcon] = useState(<Icon name="account" color={colores.Pantone_382_C} size={30} />);
-  const [customCoursesIcon, setCustomCoursesIcon] = useState(<Icon name='library' color={colores.Pantone_382_C} size={25} />);
+  const [customTutoresIcon, setCustomTutoresIcon] = useState(<Icon name="account" color={colorSchema === 'dark' ? colores.Cool_Gray_5_C : colores.Pantone_382_C} size={30} />);
+  const [customCoursesIcon, setCustomCoursesIcon] = useState(<Icon name='library' color={colorSchema === 'dark' ? colores.Cool_Gray_5_C : colores.Pantone_382_C} size={25} />);
 
   //BTN Continuar
   const [isLoadingBtnContinuar, setIsLoadingBtnContinuar] = useState(false);
@@ -132,13 +135,9 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
 
   // Adaptig professionals to dropdown Items format
   const onLoadCrearTutoriaScreen = async () => {
-    try {
-      const resp = await onLoadCursos();
-      const newCoursesItems = createCoursesItemsAdapter({ courses: resp, customIcon: customCoursesIcon });
-      setCoursesItems(newCoursesItems);
-    } catch (error) {
-      //
-    }
+    const resp = await onLoadCursos();
+    const newCoursesItems = createCoursesItemsAdapter({ courses: resp!, customIcon: customCoursesIcon });
+    setCoursesItems(newCoursesItems);
   }
 
   const franjaValue = (franjaId: string = '') => {
@@ -158,7 +157,7 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
     const customIcon = <Icon name="calendar-today" color={colores.Pantone_382_C} size={25} />
     /** http request to fetch day */
     const resp = await onLoadDayByAsignatura(id_course); //this changes schedule
-    setDaysItems(createDaysItemsAdapter({ days: resp, customIcon }))
+    setDaysItems(createDaysItemsAdapter({ days: resp!, customIcon }))
     /** Show the rest */
     setShowDependenElements(true);
     //reset everything down there to 0
@@ -186,7 +185,8 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
   const onSelectDay = async (day: string) => {
     /** http request to fetch day */
     const resp = await onLoadFranjaByDiaAsignatura(id_course, day); //this changes schedule
-    setFranjasItems(createFranjasItemsAdapter({ franjas: resp }))
+    console.log(resp, 'franjas')
+    setFranjasItems(createFranjasItemsAdapter({ franjas: resp! }))
   }
 
   const onSelectDate = async (date: string) => {
@@ -194,13 +194,8 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
   }
 
   const onSelectSaveFullDateModal = async () => {
-    try {
-      const resp = await onLoadTutores(franja, id_course, day);
-      setTutoresItems(createTutorItemsAdapter({ tutores: resp, customIcon: customTutoresIcon }));
-    } catch (error) {
-      console.error(error);
-      //
-    }
+    const resp = await onLoadTutores(franja, id_course, day);
+    setTutoresItems(createTutorItemsAdapter({ tutores: resp!, customIcon: customTutoresIcon }));
   }
 
   // Click on submit to open confirmation modal
@@ -279,7 +274,7 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
   //VIEWS
   const loader = <ActivityIndicator
     style={{ marginTop: width * 0.1 }}
-    color={colores.Pantone_383_C}
+    color={colorSchema === 'dark' ? 'white' : colores.Pantone_383_C}
     size={width * 0.1}
   />
 
@@ -302,6 +297,10 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
             placeholder={'Selecciona el profesional'}
             listMode="MODAL"
             searchable
+            searchTextInputProps={{
+              maxLength: 25
+            }}
+            theme={colorSchema === 'dark' ? 'DARK' : 'LIGHT'}
             searchPlaceholder='Ingresa un curso...'
             open={openCourses}
             value={dropDownCourses}
@@ -320,10 +319,7 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
             }}
             listItemContainerStyle={{
               width: '100%',
-              borderBottomColor: 'black',
-              borderBottomWidth: 1,
-              borderBottomStartRadius: 16,
-              borderBottomEndRadius: 16,
+              borderBottomWidth: 1
             }}
             containerStyle={styles.dropdownCommonContainer}
           />

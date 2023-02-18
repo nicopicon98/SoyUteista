@@ -8,7 +8,6 @@ import { ActivityIndicator } from 'react-native-paper';
 
 export const DirectorioEscolarScreen = () => {
   const { bottom } = useSafeAreaInsets()
-  const { directories, isLoading } = useDirectorioEscolar();
   return (
     <>
       <AppBarComponent title='Directorio Institucional' />

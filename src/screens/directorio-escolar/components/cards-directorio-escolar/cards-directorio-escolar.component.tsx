@@ -21,7 +21,7 @@ export const CardsDirectorioEscolar = () => {
       padding: width * 0.03,
     }}>
       {isLoading
-        ? <ActivityIndicator />
+        ? <ActivityIndicator style={{flex: 1, justifyContent: 'center', alignItems: 'center'}} />
         : <ScrollView>
           {directories?.map((directory, index1) => {
             return (
@@ -29,11 +29,11 @@ export const CardsDirectorioEscolar = () => {
                 <List.Accordion
                   theme={{
                     colors: {
-                      primary: colores.Pantone_382_C,
-                      background: colores.White,
+                      primary: colorScheme === 'dark' ? 'white' : colores.Pantone_382_C,
+                      background: colorScheme === 'dark' ? 'black' : 'white',
                     }
                   }}
-                  left={props => <List.Icon {...props} icon="folder" color={colores.Pantone_382_C} />}
+                  left={props => <List.Icon {...props} icon="folder" color={colorScheme === 'dark' ? 'white' : colores.Pantone_382_C } />}
                   title={directory.dependencia}
                   id="0">
                   {
@@ -84,15 +84,18 @@ interface IInfoDependenciaProps {
 }
 
 const InfoDependencia = ({ label, value, icon = "account" }: IInfoDependenciaProps) => {
+
+  const colorScheme = Appearance.getColorScheme();
+
   return (
     <View style={{ flexDirection: 'row' }}>
       <Icon
-        color={colores.Pantone_382_C}
+        color={colorScheme === 'dark' ? colores.White  : colores.Pantone_382_C }
         size={width * 0.05}
         name={icon}
       />
       <Text>
-        <Text style={{ fontWeight: 'bold', color: colores.Pantone_382_C }}>{label}: </Text>
+        <Text style={{ fontWeight: 'bold', color: colorScheme === 'dark' ? colores.Cool_Gray_5_C : colores.Pantone_382_C  }}>{label}: </Text>
         {Capitalize(value)}
       </Text>
     </View>

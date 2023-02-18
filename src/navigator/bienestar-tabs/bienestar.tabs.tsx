@@ -1,11 +1,11 @@
 import { BottomNavigation, DefaultTheme } from 'react-native-paper';
 import { useBienestarTabs } from './hooks/useBienestarTabs.hooks';
-import { View, Text, TextStyle, StyleProp } from 'react-native';
+import { View, Text, TextStyle, StyleProp, Appearance } from 'react-native';
 import { AppBarComponent } from "@src/components/app-bar";
 import { colores } from "@src/theme";
 
 export const BienestarTabs = () => {
-
+  const colorscheme = Appearance.getColorScheme();
   const { index, renderScene, routes, setIndex, setBadgeVisible } = useBienestarTabs(2);
 
   const labelStyle = (focused: boolean): StyleProp<TextStyle> => {
@@ -29,6 +29,7 @@ export const BienestarTabs = () => {
           ...DefaultTheme,
           colors: {
             ...DefaultTheme.colors,
+            // backgoundColor: colorscheme === 'dark' ? 'black' : 'white',
             secondaryContainer: colores.GreenLightOpacity, // Use transparent to disable the little highlighting oval
           },
         }}

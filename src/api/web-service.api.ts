@@ -1,3 +1,4 @@
 import axios from 'axios';
-const baseURL = 'https://webservice.uts.edu.co/api/v1/production/soyuteista';
-export const webserviceAPI = axios.create({ baseURL })
+import { PROD_UTS_WEBSERVICE_API_BASE_URL } from "@env"
+
+export const webserviceAPI = axios.create({ baseURL : PROD_UTS_WEBSERVICE_API_BASE_URL })

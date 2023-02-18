@@ -1,3 +1,4 @@
 import axios from 'axios';
-const baseURL = 'https://www.uts.edu.co/sitio/wp-json/last-post/v2/category';
-export const utsPostsCategoriesAPI = axios.create({ baseURL })
+import { PROD_UTS_POSTS_API_BASE_URL } from "@env"
+
+export const utsPostsCategoriesAPI = axios.create({ baseURL : PROD_UTS_POSTS_API_BASE_URL })

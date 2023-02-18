@@ -1,3 +1,4 @@
 import axios from 'axios';
-const baseURL = 'https://soyuteista.uts.edu.co/revista/notAnEndpoint';
-export const revistaAPI = axios.create({ baseURL })
+import { PROD_UTS_SOY_UTEISTA_API_BASE_URL } from "@env"
+
+export const revistaAPI = axios.create({ baseURL : PROD_UTS_SOY_UTEISTA_API_BASE_URL })

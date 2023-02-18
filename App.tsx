@@ -8,6 +8,7 @@ import { SnackbarProvider } from '@src/context/snackbar';
 import { AuthProvider } from '@src/context/auth';
 import { LogBox, Platform } from 'react-native';
 
+
 const inAppUpdates = new SpInAppUpdates(
   false // isDebug
 );
@@ -28,6 +29,7 @@ inAppUpdates.checkNeedsUpdate().then((result) => {
 
 LogBox.ignoreLogs(["EventEmitter.removeListener"]);
 LogBox.ignoreAllLogs();
+
 
 export const AppState = ({ children }: { children: JSX.Element | JSX.Element[] }) => { //le puedo pasar children como un elmento jsx o como muchos
   return (

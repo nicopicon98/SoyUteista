@@ -1,4 +1,4 @@
-import { serviciosAPI, webserviceAPI } from "@src/api";
+import { webserviceAPI } from "@src/api";
 import { DirectorioEscolar } from "@src/models";
 
 export const getDirectorioEscolar = async (email: string, API_KEY: string) => {

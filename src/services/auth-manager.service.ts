@@ -6,12 +6,14 @@ import moment from 'moment';
 export class AuthManager {
   static signInAsync = async () => {
     //here the magic occurrs
-    const result = await authorize(config);
-
-    // Store the access token, refresh token, and expiration time in storage
-    await AsyncStorage.setItem('userToken', result.accessToken);
-    await AsyncStorage.setItem('refreshToken', result.refreshToken);
-    await AsyncStorage.setItem('expireTime', result.accessTokenExpirationDate);
+    try {
+      const result = await authorize(config);
+      await AsyncStorage.setItem('userToken', result.accessToken);
+      await AsyncStorage.setItem('refreshToken', result.refreshToken);
+      await AsyncStorage.setItem('expireTime', result.accessTokenExpirationDate);
+    } catch (error) {
+      console.log(error, 'sign in async')
+    }
   };
 
   static signOutAsync = async () => {

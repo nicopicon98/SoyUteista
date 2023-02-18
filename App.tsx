@@ -9,7 +9,7 @@ import { AuthProvider } from '@src/context/auth';
 import { LogBox, Platform } from 'react-native';
 
 const inAppUpdates = new SpInAppUpdates(
-  true // isDebug
+  false // isDebug
 );
 
 // // curVersion is optional if you don't provide it will automatically take from the app using react-native-device-info

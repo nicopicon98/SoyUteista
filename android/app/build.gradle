@@ -136,8 +136,8 @@ android {
         applicationId "com.soyuteista"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion 33
-        versionCode 10
-        versionName "1.0.8"
+        versionCode 12
+        versionName "2.0.0"
         manifestPlaceholders = [ appAuthRedirectScheme: 'app-uts-sistemas']
     }
     splits {

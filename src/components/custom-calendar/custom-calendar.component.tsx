@@ -1,6 +1,6 @@
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import { CalendarSingleComponent } from '../calendar-single';
-import { Dimensions, View, StyleSheet } from 'react-native';
+import { Dimensions, View, StyleSheet, Appearance } from 'react-native';
 import { colores } from '@src/theme';
 import { Component } from 'react'
 
@@ -35,7 +35,7 @@ interface Props {
 }
 
 const { width } = Dimensions.get('window');
-
+const colorSchema = Appearance.getColorScheme();
 export class CustomCalendarComponent extends Component<Props> {
 
 	constructor(props: Props) {
@@ -53,9 +53,13 @@ export class CustomCalendarComponent extends Component<Props> {
 			onChangeDate,
 		} = this.props;
 		return (
-			<View style={{ alignSelf: 'center'}}>
+			<View style={{ alignSelf: 'center' }}>
 				{/* Close modal */}
 				<Calendar
+					theme={{
+						calendarBackground: colorSchema === 'dark' ? 'black' : 'white',
+					}}
+					style={{ backgroundColor: colorSchema === 'dark' ? 'black' : 'white' }}
 					markingType={"custom"}
 					hideExtraDays={true}
 					showTodayButton={true}

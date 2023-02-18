@@ -8,6 +8,9 @@ export const colores = {
   Blue_Rey: '#0b4a75',
   Brown: '#5A4F4C',
 
+  //background dark theme
+  bgDark : 'rgb(40, 45, 63)',
+
   //Palette
   Green_Grass: '#70D730',
   Green_Light: '#30D744',

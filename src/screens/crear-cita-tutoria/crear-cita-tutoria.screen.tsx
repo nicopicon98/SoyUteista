@@ -40,10 +40,9 @@ export type TFormData = {
 };
 
 const { width, height, } = Dimensions.get("window")
+const colorSchema = Appearance.getColorScheme();
 
 export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
-
-  const colorSchema = Appearance.getColorScheme();
 
   // custom icons -> Optimization tip
   const [customTutoresIcon, setCustomTutoresIcon] = useState(<Icon name="account" color={colorSchema === 'dark' ? colores.Cool_Gray_5_C : colores.Pantone_382_C} size={30} />);
@@ -345,13 +344,14 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
               borderWidth: 1,
               borderRadius: 8,
               alignItems: 'center',
+              backgroundColor: colorSchema === 'dark' ? colores.bgDark : 'white'
             }}>
             {/* left icon */}
             <Text style={{ marginLeft: width * 0.023 }}>
               <Icon
                 name={'calendar-outline'}
                 size={28}
-                color={colores.Pantone_382_C}
+                color={colorSchema === 'dark' ? 'white' : colores.Pantone_382_C}
               />
             </Text>
             {/* Show day, hour and date */}
@@ -364,32 +364,32 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
                 <Text style={{
                   fontWeight: 'bold',
                   fontSize: 14,
-                  color: colores.Pantone_382_C
+                  color: colorSchema === 'dark' ? 'white' : colores.Pantone_382_C
                 }}>
                   {fecha_tutoria.length > 0
                     ? <>
                       Fecha:{' '}
-                      <Text style={{ fontWeight: '400', color: 'black' }}>
+                      <Text style={{ fontWeight: '300', color: colorSchema === 'dark' ? 'white' : 'black' }}>
                         {fecha_tutoria}
                       </Text>
                     </>
                     : <></>}
                 </Text>
-                <Text style={{ fontWeight: 'bold', fontSize: 14, color: colores.Pantone_382_C }}>
+                <Text style={{ fontWeight: 'bold', fontSize: 14, color: colorSchema === 'dark' ? 'white' : colores.Pantone_382_C }}>
                   {day.length > 0
                     ? <>
                       Día:{' '}
-                      <Text style={{ fontWeight: '400', color: 'black' }}>
+                      <Text style={{ fontWeight: '300', color: colorSchema === 'dark' ? 'white' : 'black' }}>
                         {Capitalize(day)}
                       </Text>
                     </>
                     : <></>}
                 </Text>
-                <Text style={{ fontWeight: 'bold', fontSize: 14, color: colores.Pantone_382_C }}>
+                <Text style={{ fontWeight: colorSchema === 'dark' ? '500' : 'bold', fontSize: 14, color: colorSchema === 'dark' ? 'white' : colores.Pantone_382_C }}>
                   {franja.length > 0
                     ? <>
                       Franja:{' '}
-                      <Text style={{ fontWeight: '400', color: 'black' }}>
+                      <Text style={{ fontWeight: '300', color: colorSchema === 'dark' ? 'white' : 'black' }}>
                         {franjaValue(franja)}
                       </Text>
                     </>
@@ -403,8 +403,8 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
             <Text style={{ marginRight: width * 0.02 }}>
               <Icon
                 name={'chevron-down'}
-                size={width * 0.08}
-                color={'black'}
+                size={width * 0.07}
+                color={colorSchema === 'dark' ? 'white' : 'black'}
               />
             </Text>
           </View>
@@ -420,6 +420,7 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
     }}
     render={({ field: { onChange, onBlur, value } }) => (
       <DropDownPicker
+        theme={colorSchema === 'dark' ? 'DARK' : 'LIGHT'}
         placeholder={`Seleccione un dia`}
         value={dropDownDays}
         open={openDays}
@@ -458,6 +459,7 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
     }}
     render={({ field: { onChange, onBlur, value } }) => (
       <DropDownPicker
+      theme={colorSchema === 'dark' ? 'DARK' : 'LIGHT'}
         dropDownDirection="BOTTOM"
         placeholder={`Seleccione una franja`}
         value={dropDownFranjas}
@@ -518,6 +520,7 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
         control={control}
         render={({ field: { onChange, onBlur, value } }) => (
           <DropDownPicker
+            theme={colorSchema === 'dark' ? 'DARK' : 'LIGHT'}
             addCustomItem={false}
             placeholder={'Selecciona el tutor'}
             listMode="MODAL"
@@ -584,7 +587,7 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
             }
             style={[styles.dropdownCommonContainer,
             {
-              backgroundColor: 'rgba(196, 215, 48, 0.1)',
+              backgroundColor: colorSchema === 'dark' ? colores.bgDark : 'rgba(196, 215, 48, 0.1)',
               fontSize: height * 0.019
             }
             ]}
@@ -631,7 +634,7 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
             style={[
               styles.dropdownCommonContainer,
               {
-                backgroundColor: 'rgba(196, 215, 48, 0.1)',
+                backgroundColor: colorSchema === 'dark' ? colores.bgDark : 'rgba(196, 215, 48, 0.1)',
                 fontSize: height * 0.019
               }]}
           />
@@ -997,7 +1000,7 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
                         size={30} />
                     }
                     style={{
-                      backgroundColor: 'rgba(196, 215, 48, 0.1)',
+                      backgroundColor: colorSchema === 'dark' ? colores.bgDark : 'rgba(196, 215, 48, 0.1)',
                       fontSize: height * 0.019,
                       width: '100%'
                     }}
@@ -1140,7 +1143,7 @@ const styles = StyleSheet.create({
   },
   modalView: {
     marginBottom: 0,
-    backgroundColor: 'white',
+    backgroundColor: colorSchema === 'dark' ? 'black' : 'white',
     borderRadius: 20,
     padding: 20,
     shadowColor: '#000',
@@ -1157,7 +1160,7 @@ const styles = StyleSheet.create({
   },
   modalFinalView: {
     marginBottom: 0,
-    backgroundColor: 'white',
+    backgroundColor: colorSchema === 'dark' ? 'black' : 'white',
     borderRadius: 20,
     padding: 20,
     shadowColor: '#000',

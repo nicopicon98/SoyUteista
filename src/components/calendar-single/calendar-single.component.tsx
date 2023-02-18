@@ -1,8 +1,9 @@
 import { MarkingProps } from 'react-native-calendars/src/calendar/day/marking';
-import { Dimensions, Pressable, View, Text, StyleSheet } from 'react-native';
+import { Dimensions, Pressable, View, Text, StyleSheet, Appearance } from 'react-native';
 import { DateData, DayState } from 'react-native-calendars/src/types';
 import { dayToID, isBeforeToday, isDayOfTheWeek } from '@src/utilities';
 import moment from 'moment';
+import { colores } from '@src/theme';
 
 interface Props {
 	date: (string & DateData);
@@ -14,7 +15,7 @@ interface Props {
 }
 
 const { width } = Dimensions.get('window');
-
+const colorSchema = Appearance.getColorScheme();
 export const CalendarSingleComponent =
 	({
 		date,
@@ -57,7 +58,7 @@ const styles = StyleSheet.create({
 		padding: width * 0.006,
 	},
 	textActive: {
-		color: 'black',
+		color: colorSchema === 'dark' ? 'white' : 'black' ,
 		fontWeight: 'bold',
 	},
 	textDisabled: {

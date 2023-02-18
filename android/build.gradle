@@ -2,7 +2,6 @@
 
 buildscript {
     ext {
-        buildToolsVersion = "30.0.2"
         minSdkVersion = 21
         compileSdkVersion = 33
         targetSdkVersion = 33
@@ -11,9 +10,11 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        jcenter()
     }
     dependencies {
         classpath('com.android.tools.build:gradle:7.4.1')
+        classpath("com.facebook.react:react-native-gradle-plugin")
         classpath('com.google.gms:google-services:4.3.14')
         classpath('com.google.firebase:firebase-crashlytics-gradle:2.9.2')
         // NOTE: Do not place your application dependencies here; they belong
@@ -39,6 +40,7 @@ allprojects {
             }
         }
         google()
+        jcenter()
         maven { url 'https://www.jitpack.io' }
     }
 }

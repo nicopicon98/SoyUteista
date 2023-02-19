@@ -1,9 +1,9 @@
-export interface Schedule {
+export interface IBienestarProfessionalSchedule {
   date: string;
-  franjas: Franja[]
+  franjas: IBienestarProfessionalFranjaSchedule[]
 }
 
-export interface Franja {
+export interface IBienestarProfessionalFranjaSchedule {
   id_horario: string;
   nombre: string;
 }

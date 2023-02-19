@@ -1,16 +1,15 @@
-import { colores } from '@src/theme';
-import React from 'react'
 import { StyleSheet, View, Text, useWindowDimensions, Dimensions, Appearance } from 'react-native';
 import { IMateriaHorario } from '../../models';
+import { colores } from '@src/theme';
 
-interface Props {
+interface IProps {
   materia: IMateriaHorario;
 }
 
 const {width} = Dimensions.get('window');
 const colorScheme = Appearance.getColorScheme();
 
-export const MateriaHorario = ({ materia }: Props) => {
+export const MateriaHorario = ({ materia }: IProps) => {
 
   const { width } = useWindowDimensions();
 
@@ -47,11 +46,9 @@ const styles = StyleSheet.create({
   },
   text: {
     color: colores.Cool_Gray_5_C,
-    // fontFamily: fonts.regular,
     fontSize: width*0.04
   },
   textHighlited: {
-    // fontFamily: fonts.regular,
     color: colorScheme === 'dark' ? 'white' : colores.Pantone_382_C,
     fontSize: width*0.04
   },

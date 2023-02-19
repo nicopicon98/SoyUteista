@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { mockFranjas } from '../data';
-import { Schedule } from '../models';
+import { IBienestarProfessionalSchedule } from '../models';
 
 export const useGetAvailSchedule = () => {
 
-  const [schedules, setSchedules] = useState<Schedule[]>([])
+  const [schedules, setSchedules] = useState<IBienestarProfessionalSchedule[]>([])
   const [isLoadingSchedules, setIsLoadingSchedules] = useState<boolean>(false);
 
   const fetchSchedulesByIdProfessional = async (user_id: string = "") => {

@@ -1,13 +1,13 @@
 import { useState, useEffect, useContext } from 'react'
-import { MateriaInterface } from '../models';
-import { API_KEY } from '@src/config/auth';
-import { AuthContext } from '@src/context/auth';
-import { getHorario } from '@src/services';
 import { useSnackbar } from '@src/context/snackbar';
+import { AuthContext } from '@src/context/auth';
+import { IMateriaHorario } from '../models';
+import { API_KEY } from '@src/config/auth';
+import { getHorario } from '@src/services';
 
 export const useHorario = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [materias, setMaterias] = useState<MateriaInterface[] | null>([]);
+  const [materias, setMaterias] = useState<IMateriaHorario[] | null>([]);
   const { authState: { user } } = useContext(AuthContext);
   const { showMessage } = useSnackbar();
 

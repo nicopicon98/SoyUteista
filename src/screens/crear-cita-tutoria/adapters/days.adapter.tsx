@@ -1,16 +1,16 @@
 import { ItemType } from "react-native-dropdown-picker";
+import { IDaysByAsignatura } from "@src/models";
 import { Capitalize } from "@src/utilities"
-import { DaysByAsignatura } from "@src/models";
 
-interface Params {
-  days: DaysByAsignatura[];
+interface IParams {
+  days: IDaysByAsignatura[];
   customIcon: JSX.Element
 }
 
 export const createDaysItemsAdapter =
-  ({ days, customIcon }: Params): ItemType<string>[] => {
+  ({ days, customIcon }: IParams): ItemType<string>[] => {
     return days.map(e => ({
-      label: `${e.dia}`,
+      label: `${Capitalize(e.dia)}`,
       value: `${e.dia}`,
       icon: () => customIcon
     }));

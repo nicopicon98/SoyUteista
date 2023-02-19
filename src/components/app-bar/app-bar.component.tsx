@@ -2,11 +2,11 @@ import { DrawerActions, useNavigation } from '@react-navigation/native';
 import { colores } from '@src/theme';
 import { Appbar } from 'react-native-paper';
 
-interface Props {
+interface IProps {
   title: string;
 }
 
-export const AppBarComponent = (props: Props) => {
+export const AppBarComponent = (props: IProps) => {
   const navigate = useNavigation();
   const openMenu = () => {
     navigate.dispatch(DrawerActions.openDrawer());

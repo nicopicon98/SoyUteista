@@ -1,14 +1,14 @@
-import React from 'react'
 import { Dimensions, FlatList, Image, Linking, ScrollView, Text, TouchableOpacity } from 'react-native'
 import { View } from 'react-native-animatable'
-import { Podcast } from '../models'
+import { IPodcast } from '../models'
 
 const screenSize = Dimensions.get('screen');
 
-interface Props {
-  podcast: Podcast[]
+interface IProps {
+  podcast: IPodcast[]
 }
-export const CardPodcast = ({ podcast }: Props) => {
+
+export const CardPodcast = ({ podcast }: IProps) => {
   return (
     <View style={{ flex: 1, alignItems: 'center' }}>
       <FlatList

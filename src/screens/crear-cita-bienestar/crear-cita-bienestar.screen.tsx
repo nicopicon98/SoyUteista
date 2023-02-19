@@ -1,7 +1,7 @@
 import { createProfessionalItemsAdapter, createScheduleItemAdapter } from "./adapters";
 import { errorHandlerCelular, fromDMYSlashtoYMDHyphen, fromYMDHyphentoDMYSlash } from "@src/utilities";
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
-import { SegmentedButtonsResponsive } from "./components/segmented-buttons";
+import { SegmentedButtonsCustom } from "./components/segmented-buttons";
 import { useGetAvailSchedule } from './hooks/use-get-avail-schedule.hook';
 import DropDownPicker, { ItemType } from "react-native-dropdown-picker";
 import { CustomCalendarComponent } from "./components/custom-calendar";
@@ -505,7 +505,7 @@ export const CrearCitaBienestarScreen = () => {
     </View>
   </Modal>
 
-  const segmentedButtons = <SegmentedButtonsResponsive
+  const segmentedButtons = <SegmentedButtonsCustom
     buttons={servicesButtonsFormatted}
     value={field}
     onValueChange={setField}

@@ -5,7 +5,7 @@ import { dayToID, isBeforeToday, isDayOfTheWeek } from '@src/utilities';
 import moment from 'moment';
 import { colores } from '@src/theme';
 
-interface Props {
+interface IProps {
 	date: (string & DateData);
 	dayWeek: string;
 	state: DayState;
@@ -22,7 +22,7 @@ export const CalendarSingleComponent =
 		dayWeek,
 		onPressDate,
 		marking,
-		onChangeDate }: Props) => {
+		onChangeDate }: IProps) => {
 		const checkIsBeforeToday = isBeforeToday(date.dateString);
 		const isDayWeekValid = dayWeek.length
 		const checkIsDayOfTheWeek = isDayWeekValid && isDayOfTheWeek(date.dateString, dayWeek);

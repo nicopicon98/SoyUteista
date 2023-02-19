@@ -1,10 +1,10 @@
 import { getAllProfessionalsByfield } from '@src/services/bienestar.service';
+import { IBienestarProfessional } from '../models';
 import { useEffect, useState } from 'react'
-import { Professional } from '../models';
 
 export const useGetProByField = () => {
 
-  const [professionals, setProfessionals] = useState<Professional[]>([])
+  const [professionals, setProfessionals] = useState<IBienestarProfessional[]>([])
   const [isLoadingProfessionals, setIsLoadingProfessionals] = useState<boolean>(false);
 
   const fetchProfessionalsByField = async (field: string = "odontologia") => {

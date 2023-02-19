@@ -1,22 +1,22 @@
-import { getExitoEscolarService } from '../../../services/exito-escolar.service';
-import { getPodcastService } from '../../../services/podcast.service';
-import { VideosInterface } from '../models/get-videos.model';
 import { useEffect, useState, useContext } from 'react';
-import { PodcastInterface } from '../models';
-import { API_KEY } from '@src/config/auth';
-import { AuthContext } from '@src/context/auth';
+import { getExitoEscolarService } from '@src/services';
 import { useSnackbar } from '@src/context/snackbar';
+import { getPodcastService } from '@src/services';
+import { AuthContext } from '@src/context/auth';
+import { API_KEY } from '@src/config/auth';
+import { IPodcastResp } from '../models';
+import { IVideosResp } from '../models';
 
 export const useVideosPodcast = () => {
   const { authState: { user } } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
-  const [podcast, setPodcast] = useState<PodcastInterface>({
+  const [podcast, setPodcast] = useState<IPodcastResp>({
     data: []
   });
 
   const {showMessage} = useSnackbar();
 
-  const [videos, setVideos] = useState<VideosInterface>({
+  const [videos, setVideos] = useState<IVideosResp>({
     data: []
   })
 

@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { getRevista } from '@src/services';
-import { RevistaResp } from '@src/models';
+import { IRevistaResp } from '@src/models';
 import { useSnackbar } from '@src/context/snackbar';
 
 export const useRevista = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [revistas, setRevistas] = useState<RevistaResp[]>([]);
+  const [revistas, setRevistas] = useState<IRevistaResp[]>([]);
   const { showMessage } = useSnackbar();
   const loadRevista = async () => {
     try {

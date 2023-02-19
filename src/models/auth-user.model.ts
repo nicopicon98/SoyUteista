@@ -1,4 +1,4 @@
-export interface UserAuthResponse {
+export interface IUserAuthResponse {
   acct: number;
   acr: string;
   aio: string;
@@ -29,10 +29,10 @@ export interface UserAuthResponse {
   uti: string;
   ver: string;
   wids: string[];
-  xms_st: XMSSt;
+  xms_st: IXMSSt;
   xms_tcdt: number;
 }
 
-export interface XMSSt {
+export interface IXMSSt {
   sub: string;
 }

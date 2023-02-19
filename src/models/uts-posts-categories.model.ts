@@ -1,4 +1,4 @@
-export interface UTSPostsCategories {
+export interface IUTSPostsCategories {
   id: number;
   fecha: string;
   titulo: string;

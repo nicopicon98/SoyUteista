@@ -1,11 +1,11 @@
-import { existsObject, isBeforeToday } from "@src/utilities";
+import { MarkingProps } from 'react-native-calendars/src/calendar/day/marking';
 import { Pressable, View, Text, Dimensions, StyleSheet } from 'react-native';
 import { DateData, DayState } from 'react-native-calendars/src/types';
-import { MarkingProps } from 'react-native-calendars/src/calendar/day/marking';
+import { existsObject, isBeforeToday } from "@src/utilities";
 
 const { width } = Dimensions.get("window")
 
-interface Props {
+interface IProps {
   date: (string & DateData);
   state: DayState;
   marking: MarkingProps;
@@ -14,7 +14,7 @@ interface Props {
   availableDates: { date: string }[];
 }
 export const CustomDay =
-  ({ date, onPressDate, marking, onChangeDate, availableDates }: Props) => {
+  ({ date, onPressDate, marking, onChangeDate, availableDates }: IProps) => {
 
     const validDates = existsObject(availableDates, "date", date.dateString)
     const checkIsBeforeToday = isBeforeToday(date.dateString)

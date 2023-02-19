@@ -1,16 +1,15 @@
-import React from 'react'
 import { Dimensions, FlatList, Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import CardNotification from './CardNotification'
 
-interface Props {
+interface IProps {
   notifications: any
 }
 
 const screenSize = Dimensions.get('screen')
-const FlatListNotification = ({ notifications }: Props) => {
+const FlatListNotification = ({ notifications }: IProps) => {
 
-  const { top, bottom } = useSafeAreaInsets()
+  const { top } = useSafeAreaInsets()
   return (<View style={{ flex: 1, marginTop: top }}>
     <Text style={{ fontSize: screenSize.fontScale * 26, color: 'black', marginHorizontal: screenSize.width * 0.02, marginTop: screenSize.height * 0.02 }}>Últimas notificaciones Institucionales</Text>
     <FlatList

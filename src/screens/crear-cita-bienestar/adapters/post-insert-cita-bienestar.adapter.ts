@@ -1,11 +1,11 @@
-interface Params {
+interface IParams {
   id_horario: string,
   userStudentEmail: string,
   userStudentCelphone: string;
 }
 
 export const insertCitaBienestarAdapter =
-  ({ id_horario, userStudentEmail, userStudentCelphone }: Params) => {
+  ({ id_horario, userStudentEmail, userStudentCelphone }: IParams) => {
     return {
       id_horario,
       student_celphone: userStudentCelphone,

@@ -7,11 +7,11 @@ import { GraphManager } from '@src/services';
 import { useEffect, useState } from 'react'
 import { ITutoriaResp } from '@src/models';
 
-interface Props {
+interface IProps {
   item: ITutoriaResp
 }
 
-export const Tutoria = ({ item }: Props) => {
+export const Tutoria = ({ item }: IProps) => {
   const imageLogo: string = "https://avatarairlines.com/wp-content/uploads/2020/05/Male-placeholder.jpeg";
   const [tutorPhoto, setTutorPhoto] = useState(imageLogo);
   const [modalVisible, setModalVisible] = useState(false);

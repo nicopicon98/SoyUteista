@@ -1,8 +1,8 @@
-export interface PodcastInterface {
-    data: Podcast[];
+export interface IPodcastResp {
+    data: IPodcast[];
 }
 
-export interface Podcast {
+export interface IPodcast {
     id_podcast: number;
     imagen:     string;
     titulo:     string;

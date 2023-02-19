@@ -1,5 +1,5 @@
-import { Carnet } from './';
-export interface User {
+import { ICarnet } from './';
+export interface IUser {
   userResult: number;
   userError: string;
   userFirstName: string;
@@ -7,5 +7,5 @@ export interface User {
   userEmail: string;
   userPhoto: string;
   userPhotoError: boolean;
-  userMoreInfo: Carnet;
+  userMoreInfo: ICarnet;
 };

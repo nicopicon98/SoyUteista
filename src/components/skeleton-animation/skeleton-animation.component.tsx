@@ -3,13 +3,13 @@ import { useRef, useEffect } from 'react'
 import { colores } from '@src/theme';
 
 
-interface SkeletonProps {
+interface IProps {
   variant?: 'box' | 'circle';
   width: string | number;
   height: string | number;
 }
 
-export const SkeletonAnimation = ({ width, height, variant = 'box' }: SkeletonProps) => {
+export const SkeletonAnimation = ({ width, height, variant = 'box' }: IProps) => {
 
   const opacity = useRef(new Animated.Value(0.3));
 

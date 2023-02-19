@@ -1,16 +1,16 @@
 import { Text, View, StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { UTSPostsCategories } from '@src/models';
+import { IUTSPostsCategories } from '@src/models';
 import { Linking } from 'react-native';
 import { colores, fonts } from '@src/theme';
 
-interface Props {
-  item: UTSPostsCategories;
+interface IProps {
+  item: IUTSPostsCategories;
 }
 
 const { width, height } = Dimensions.get('window');
 
-export const Noticia = ({ item }: Props) => {
+export const Noticia = ({ item }: IProps) => {
   return (
     <View style={styles.noticiaCard}>
       <TouchableOpacity

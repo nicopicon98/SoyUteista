@@ -1,10 +1,3 @@
-export interface TutorResp {
-  id_tutor: string;
-  nombre: string;
-  sede: string;
-  correo: string;
-}
-
 export interface ITutorInfoResp {
   sede: string;
   correo: string;

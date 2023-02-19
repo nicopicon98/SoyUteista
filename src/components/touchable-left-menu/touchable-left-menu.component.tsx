@@ -6,10 +6,10 @@ import { AuthContext } from '@src/context/auth';
 import { useContext } from 'react'
 import { Divider } from 'react-native-paper';
 
-type TouchableLeftMenuType = "signOut" | "navigate";
+type TTouchableLeftMenu = "signOut" | "navigate";
 
-interface TouchableLeftMenuProps {
-  type: TouchableLeftMenuType,
+interface IProps {
+  type: TTouchableLeftMenu,
   iconColor: string;
   iconSize: number;
   iconName: string;
@@ -30,7 +30,7 @@ export const TouchableLeftMenu = ({
   menuText,
   screenDestiny = "",
   navigation,
-  textStyles = styles.menuText, }: TouchableLeftMenuProps) => {
+  textStyles = styles.menuText, }: IProps) => {
   const { signOut } = useContext(AuthContext);
   return (
     <>

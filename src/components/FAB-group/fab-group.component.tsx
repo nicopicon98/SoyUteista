@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { FAB, Portal } from 'react-native-paper';
 import { colores } from '@src/theme';
-import { FabScreens } from '@src/models/fab-screens.model';
+import { IFabScreens } from '@src/models';
 import { Dimensions } from 'react-native';
 
-interface Props {
-  screens: FabScreens[]
+interface IProps {
+  screens: IFabScreens[]
 }
 const { width } = Dimensions.get("screen");
-export const FABGroup = ({ screens }: Props) => {
+export const FABGroup = ({ screens }: IProps) => {
   const [state, setState] = React.useState({ open: false });
 
   const onStateChange = ({ open }) => setState({ open });

@@ -6,14 +6,15 @@ import { colores } from '@src/theme';
 
 type TSnackbar = 'success' | 'warning' | 'danger' | 'info';
 
-interface SnackbarProps {
+interface ISnackbarContextProps {
   isVisible: boolean;
   showMessage: (msg: string, type: TSnackbar, duration?: number) => void;
   hideMessage: () => void;
 }
+
 const { height } = Dimensions.get("screen");
 // Create a context for the Snackbar provider
-const SnackbarContext = createContext({} as SnackbarProps);
+const SnackbarContext = createContext({} as ISnackbarContextProps);
 
 // Create a custom hook for consuming the Snackbar context
 export const useSnackbar = () => useContext(SnackbarContext);

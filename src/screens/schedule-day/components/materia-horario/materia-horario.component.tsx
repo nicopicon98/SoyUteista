@@ -1,10 +1,10 @@
 import { colores } from '@src/theme';
 import React from 'react'
 import { StyleSheet, View, Text, useWindowDimensions, Dimensions, Appearance } from 'react-native';
-import { MateriaInterface } from '../../models';
+import { IMateriaHorario } from '../../models';
 
 interface Props {
-  materia: MateriaInterface;
+  materia: IMateriaHorario;
 }
 
 const {width} = Dimensions.get('window');

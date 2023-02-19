@@ -1,17 +1,17 @@
-import { MateriaInterface } from "./";
+import { IMateriaHorario } from "./";
 
-export interface HorarioResp {
+export interface IHorarioResp {
   result: number;
-  data: Resp2;
+  data: IUserData;
 }
 
-export interface Resp2 {
+export interface IUserData {
   ID: number;
   CEDULA: string;
   NOMBRE: string;
   SEDE: string;
   NOMBRE_PROGRAMA: string;
   CORREO_INSTITUCIONAL: string;
-  MATERIAS: MateriaInterface[];
+  MATERIAS: IMateriaHorario[];
 }
 

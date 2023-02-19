@@ -1,4 +1,4 @@
-export interface ConvocatoriasResp {
+export interface IConvocatoriasResp {
   idConvocatoria: number;
   titulo: string;
   descripcion: string;

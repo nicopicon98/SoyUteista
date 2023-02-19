@@ -1,7 +1,7 @@
 import { IconSource } from "react-native-paper/lib/typescript/components/Icon";
 import { GestureResponderEvent, StyleProp, ViewStyle } from "react-native";
 
-export interface Service {
+export interface IBienestarService {
   value: string;
   icon?: IconSource;
   disabled?: boolean;

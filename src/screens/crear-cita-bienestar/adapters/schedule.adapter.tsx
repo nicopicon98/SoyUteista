@@ -3,12 +3,12 @@ import { ItemType } from "react-native-dropdown-picker";
 import  Icon  from "react-native-vector-icons/MaterialCommunityIcons";
 import { Schedule } from "../models"
 
-interface Params {
+interface IParams {
   schedule: Schedule;
 }
 
 export function createScheduleItemAdapter (
-      { schedule, }: Params): ItemType<string>[]{ 
+      { schedule, }: IParams): ItemType<string>[]{ 
 
   return schedule.franjas.map((e) => {
     const iconName = `clock-time-${numberToWords(e.nombre.slice(0,2))}`;

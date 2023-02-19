@@ -4,7 +4,7 @@ import { Image } from "react-native-elements";
 
 const { width } = Dimensions.get("window")
 
-interface Props {
+interface IProps {
   buttonsAction?: JSX.Element[] | JSX.Element;
   topImg?: ImageSourcePropType;
   hideDialog: () => void;
@@ -21,7 +21,7 @@ export const SimpleDialog = (
     dialogIsOpen,
     hideDialog,
     buttonsAction
-  }: Props
+  }: IProps
 ) => {
 
   return (

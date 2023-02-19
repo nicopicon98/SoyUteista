@@ -3,7 +3,7 @@ import { Modal, Text, StyleSheet, View, Pressable, Appearance, Dimensions } from
 import Icon from 'react-native-vector-icons/Ionicons';
 import { ITutoriaResp } from '@src/models';
 
-interface Props {
+interface IProps {
   modalVisible: boolean;
   setModalVisible: (visible: boolean) => void;
   infoTutoria: ITutoriaResp;
@@ -11,7 +11,7 @@ interface Props {
 
 const { width } = Dimensions.get("screen");
 
-export const TutoriaModal = ({ modalVisible, setModalVisible, infoTutoria }: Props) => {
+export const TutoriaModal = ({ modalVisible, setModalVisible, infoTutoria }: IProps) => {
   return (
     <Modal
       animationType="fade"

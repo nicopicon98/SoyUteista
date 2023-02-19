@@ -1,14 +1,14 @@
 import { ItemType } from "react-native-dropdown-picker";
+import { IBienestarProfessional } from "../models"
 import { Capitalize } from "@src/utilities"
-import { Professional } from "../models"
 
-interface Params {
-  professionals: Professional[];
+interface IParams {
+  professionals: IBienestarProfessional[];
   customIcon: JSX.Element
 }
 
 export const createProfessionalItemsAdapter =
-    ({professionals, customIcon}: Params): ItemType<string>[] => {
+    ({professionals, customIcon}: IParams): ItemType<string>[] => {
     return professionals.map(e => ({
       label: `${Capitalize(e.nombre)}`,
       value: `${e.id_usuario}`,

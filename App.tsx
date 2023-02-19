@@ -1,6 +1,5 @@
 import SpInAppUpdates, {IAUUpdateKind, StartUpdateOptions} from 'sp-react-native-in-app-updates';
-import { AlertNotificationRoot } from 'react-native-alert-notification';
-import { StackNavigator } from '@src/navigator/stack-navigator/stack.navigator';
+import { StackNavigator } from '@src/navigator/stack-navigator';
 import { useNotifications } from '@src/hooks/use-notifications';
 import { NavigationContainer } from '@react-navigation/native';
 import { Provider as PaperProvider } from 'react-native-paper';

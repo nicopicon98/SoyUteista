@@ -1,4 +1,4 @@
-export interface RevistaResp {
+export interface IRevistaResp {
   id_revista: number;
   edicion: string;
   date: string;

@@ -1,7 +1,7 @@
 import { IconSource } from "react-native-paper/lib/typescript/components/Icon";
 import { StyleProp, TextStyle, ViewStyle } from "react-native";
 
-export interface FabScreens {
+export interface IFabScreens {
   icon: IconSource;
   label?: string;
   color?: string;

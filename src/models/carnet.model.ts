@@ -1,10 +1,10 @@
-export interface CarnetResp {
+export interface ICarnetResp {
   result: number;
-  data: Carnet;
+  data: ICarnet;
   error: string;
 }
 
-export interface Carnet {
+export interface ICarnet {
   C_ESTP_ID: number;
   C_PEGE_DOCUMENTOIDENTIDAD: string;
   C_PENG_PRIMERAPELLIDO: string;

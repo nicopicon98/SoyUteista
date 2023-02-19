@@ -1,8 +1,8 @@
-export interface VideosInterface {
-    data: Video[];
+export interface IVideosResp {
+    data: IVideo[];
 }
 
-export interface Video {
+export interface IVideo {
     id_exito_escolar: number;
     url:              string;
 }

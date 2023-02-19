@@ -1,14 +1,13 @@
-import { UTSPostsCategories } from '@src/models';
+import { IUTSPostsCategories } from '@src/models';
 import { useState, useEffect } from 'react';
 import { getNoticias } from '@src/services';
 import { useSnackbar } from '@src/context/snackbar';
 
 export const useNoticias = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [noticias, setNoticias] = useState<UTSPostsCategories[]>([]);
+  const [noticias, setNoticias] = useState<IUTSPostsCategories[]>([]);
   const { showMessage } = useSnackbar();
   const loadNoticia = async () => {
-
     try {
       const rep = await getNoticias();
       setNoticias(rep.data);

@@ -1,9 +1,9 @@
-export interface DirectorioEscolar {
+export interface IDirectorioEscolarResp {
   dependencia: string;
-  infoDependencia: InfoDependencia[];
+  infoDependencia: IInfoDependencia[];
 }
 
-export interface InfoDependencia {
+export interface IInfoDependencia {
   dependenciaNombre: string;
   idContactoDependencia: number;
   nombre: string;

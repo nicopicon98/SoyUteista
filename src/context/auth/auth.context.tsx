@@ -1,27 +1,27 @@
 import React, { createContext, useEffect, useReducer } from 'react';
 import { AuthManager, getCarnet, GraphManager } from '@src/services';
 import { blobToBase64, Capitalize } from '@src/utilities';
-import { authReducer, AuthState } from './auth.reducer';
-import { UserAuthResponse } from '@src/models';
+import { authReducer, IAuthState } from './auth.reducer';
+import { IUserAuthResponse } from '@src/models';
 import { API_KEY } from '@src/config/auth';
-import jwt_decode from 'jwt-decode';
 import { useSnackbar } from '../snackbar';
+import jwt_decode from 'jwt-decode';
 
 //Lo que se pasara desde el arbol principal
-export interface AuthContextProps {
-  authState: AuthState;
+export interface IAuthContextProps {
+  authState: IAuthState;
   signIn: () => Promise<void>;
   signOut: () => Promise<void>;
 };
 
 //initial State
-const authInitialState: AuthState = {
+const authInitialState: IAuthState = {
   status: 'checking',
   user: null,
   token: null,
 }
 
-export const AuthContext = createContext({} as AuthContextProps);
+export const AuthContext = createContext({} as IAuthContextProps);
 
 export const AuthProvider = ({ children }: any) => {
 
@@ -81,11 +81,11 @@ export const AuthProvider = ({ children }: any) => {
   }
 
   //validate if student or not
-  const authValidatorRole = async (token: string): Promise<AuthState> => {
+  const authValidatorRole = async (token: string): Promise<IAuthState> => {
     let photo: string = "";
     let userPhotoError: boolean = false;
     let dataValue: any;
-    const user: UserAuthResponse = jwt_decode(token);
+    const user: IUserAuthResponse = jwt_decode(token);
     try {
       const { data } = await getCarnet(user.upn, API_KEY);
       dataValue = data;

@@ -1,7 +1,7 @@
 import { utsPostsCategoriesAPI } from "@src/api";
-import { UTSPostsCategories } from "@src/models";
+import { IUTSPostsCategories } from "@src/models";
 
 export const getAgendas = async () => {
-  const resp = await utsPostsCategoriesAPI.get<UTSPostsCategories[]>('/49/numberposts/12');
+  const resp = await utsPostsCategoriesAPI.get<IUTSPostsCategories[]>('/49/numberposts/12');
   return resp
 }

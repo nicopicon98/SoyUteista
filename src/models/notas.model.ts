@@ -1,20 +1,20 @@
-export interface NotasResp {
+export interface INotasResp {
     result: number;
-    data: Materias[];
+    data: IMaterias[];
     error: string;
 }
 
-export interface Materias {
+export interface IMaterias {
     materia: string;
-    infoMateria: InfoMateria[];
+    infoMateria: IInfoMateria[];
 }
 
-export interface InfoMateria {
-    corte: Corte;
-    infoCorte: InfoCorte[] | number;
+export interface IInfoMateria {
+    corte: ECorte;
+    infoCorte: IInfoCorte[] | number;
 }
 
-export interface InfoCorte {
+export interface IInfoCorte {
     N_ESTP_ID?: number;
     N_PEGE_DOCUMENTOIDENTIDAD?: string;
     N_PENG_PRIMERAPELLIDO?: string;
@@ -26,22 +26,22 @@ export interface InfoCorte {
     N_MATE_CODIGOMATERIA?: string;
     N_MATE_NOMBRE?: string;
     N_GRUP_NOMBRE?: string;
-    N_EVAC_DESCRIPCION?: Corte;
-    N_NOTA_DESCRIPCION: NNotaDescripcion;
+    N_EVAC_DESCRIPCION?: ECorte;
+    N_NOTA_DESCRIPCION: ENotaDescripcion;
     N_NOTA_PESO?: number;
     N_CALF_VALOR: number;
     N_DOCENTE?: string;
     N_EVAC_ID?: number;
 }
 
-export enum Corte {
+export enum ECorte {
     NotaFinal = "NOTA FINAL",
     PrimerCorte = "PRIMER CORTE",
     SegundoCorte = "SEGUNDO CORTE",
     TercerCorte = "TERCER CORTE",
 }
 
-export enum NNotaDescripcion {
+export enum ENotaDescripcion {
     Autoevaluación = "AUTOEVALUACIÓN",
     DefinitivaCorte = "DEFINITIVA CORTE",
     EvalulaciónDelCorte = "EVALULACIÓN DEL CORTE",

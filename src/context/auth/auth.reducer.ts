@@ -1,18 +1,18 @@
-import { User } from "@src/models";
+import { IUser } from "@src/models";
 
 
-export type AuthState = {
+export interface IAuthState {
   status: 'checking' | 'authenticated' | 'not-authenticated';
-  user: User | null;
+  user: IUser | null;
   token: string | null;
 }
 
 type AuthAction =
-  | { type: 'signIn', payload: { token: string, user: User } }
+  | { type: 'signIn', payload: { token: string, user: IUser } }
   | { type: 'notAuthenticated' } //esta accion se dispara revisando el token y falla
   | { type: 'logOut' }
 
-export const authReducer = (prevState: AuthState, action: AuthAction): AuthState => {
+export const authReducer = (prevState: IAuthState, action: AuthAction): IAuthState => {
   switch (action.type) {
     case 'signIn':
       return {

@@ -1,19 +1,19 @@
 import { Text, View, StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { ConvocatoriasResp } from '../../models';
+import { IConvocatoriasResp } from '../../models';
 import { Capitalize } from '@src/utilities';
 import { colores, fonts } from '@src/theme';
 import { Linking } from 'react-native';
 import moment from 'moment';
 import 'moment/locale/es';
 
-interface Props {
-  item: ConvocatoriasResp;
+interface IProps {
+  item: IConvocatoriasResp;
 }
 
 const { width, height } = Dimensions.get('window');
 
-export const Convocatoria = ({ item }: Props) => {
+export const Convocatoria = ({ item }: IProps) => {
   return (
     <View style={styles.noticiaCard}>
       <TouchableOpacity

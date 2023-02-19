@@ -1,19 +1,19 @@
 import { StyleSheet, TouchableOpacity, View, Text, Appearance, useWindowDimensions } from 'react-native';
 import { AnimatedSection, useCollapsible } from 'reanimated-collapsible-helpers';
-import { Corte, InfoMateria, InfoCorte } from '@src/models';
+import { ECorte, IInfoMateria, IInfoCorte } from '@src/models';
 import { colores } from '@src/theme';
 
-interface Props {
+interface IMateriaNotaProps {
 	materia: string;
-	infoMateria: InfoMateria[];
+	infoMateria: IInfoMateria[];
 }
 
-interface Props2 {
-	corte: Corte;
-	infoCorte: Array<InfoCorte> | number;
+interface IMateriaNotaInfo {
+	corte: ECorte;
+	infoCorte: Array<IInfoCorte> | number;
 }
 
-const MateriaNotaInfo = ({ corte, infoCorte }: Props2) => {
+const MateriaNotaInfo = ({ corte, infoCorte }: IMateriaNotaInfo) => {
 
 	const { width } = useWindowDimensions();
 
@@ -56,7 +56,7 @@ const MateriaNotaInfo = ({ corte, infoCorte }: Props2) => {
 	)
 }
 
-export const MateriaNota = ({ materia, infoMateria }: Props) => {
+export const MateriaNota = ({ materia, infoMateria }: IMateriaNotaProps) => {
 
 	const { animatedHeight, onPress, onLayout, state } = useCollapsible();
 	const colorScheme = Appearance.getColorScheme();

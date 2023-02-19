@@ -3,7 +3,7 @@ import { StyleSheet, Dimensions } from 'react-native';
 import { Calendar } from "react-native-calendars";
 import { colores } from "@src/theme";
 
-interface Props {
+interface IProps {
   markedDay: string;
   onPressDate: (data: string) => void;
   onChangeDate: (data: string) => void;
@@ -13,7 +13,7 @@ interface Props {
 const { width } = Dimensions.get("window");
 
 export const CustomCalendarComponent =
-  ({ markedDay, onPressDate, onChangeDate, availableDates }: Props) => {
+  ({ markedDay, onPressDate, onChangeDate, availableDates }: IProps) => {
     return (
       <Calendar
         style={{ width: width * 0.9 }}

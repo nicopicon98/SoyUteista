@@ -10,17 +10,6 @@ export interface ITutoriaResp {
   fecha_solicitud: string;
 }
 
-export interface CoursesAll {
-  id_curso: string;
-  curso: string;
-  nombre: string;
-}
-
-export interface CreateCitaResp {
-  result: number;
-  error: string;
-}
-
 export interface IBringCourseByTutor {
   id_asignatura: string;
   curso: string;

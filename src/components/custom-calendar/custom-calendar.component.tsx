@@ -1,6 +1,6 @@
+import { Dimensions, View, StyleSheet, Appearance } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import { CalendarSingleComponent } from '../calendar-single';
-import { Dimensions, View, StyleSheet, Appearance } from 'react-native';
 import { colores } from '@src/theme';
 import { Component } from 'react'
 
@@ -27,7 +27,7 @@ LocaleConfig.locales['es'] = {
 };
 LocaleConfig.defaultLocale = 'es';
 
-interface Props {
+interface IProps {
 	markedDay: string;
 	dayWeek: string;
 	onPressDate: (data: string) => void;
@@ -36,9 +36,9 @@ interface Props {
 
 const { width } = Dimensions.get('window');
 const colorSchema = Appearance.getColorScheme();
-export class CustomCalendarComponent extends Component<Props> {
+export class CustomCalendarComponent extends Component<IProps> {
 
-	constructor(props: Props) {
+	constructor(props: IProps) {
 		super(props);
 		this.state = {
 			isCurrentMonth: true

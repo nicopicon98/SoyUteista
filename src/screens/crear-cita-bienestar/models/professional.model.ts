@@ -1,4 +1,4 @@
-export interface Professional {
+export interface IBienestarProfessional {
   id_area:        number;
   nombre:         string;
   id_usuario:     string;

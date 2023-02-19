@@ -1,13 +1,13 @@
 import { API_KEY } from '@src/config/auth';
 import { AuthContext } from '@src/context/auth';
 import { getDirectorioEscolar } from '@src/services';
-import { DirectorioEscolar } from '@src/models';
+import { IDirectorioEscolarResp } from '@src/models';
 import { useState, useEffect, useContext } from 'react';
 import { useSnackbar } from '@src/context/snackbar';
 
 export const useDirectorioEscolar = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [directories, setDirectories] = useState<DirectorioEscolar[]>();
+  const [directories, setDirectories] = useState<IDirectorioEscolarResp[]>();
   const { authState: { user } } = useContext(AuthContext);
   const { showMessage } = useSnackbar();
 

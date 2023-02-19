@@ -1,4 +1,4 @@
-export interface MateriaInterface {
+export interface IMateriaHorario {
   CODIGO_MATERIA: string;
   NOMBRE_MATERIA: string;
   GRUPO: string;

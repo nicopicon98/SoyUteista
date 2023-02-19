@@ -40,13 +40,12 @@ export const LeftDrawerNavigator = () => {
   const [getData, setGetData] = useState(getDataMock);
 
   const enableChecker = (obj: IEnable[], screenStr: string) => {
-    // const exist = obj.find(e => e.nombre === screenStr);
-    // if (exist) {
-    //   const availability = obj.filter(e => e.nombre === screenStr)
-    //   return availability[0].habilitado
-    // }
-    // return 2 //doesn't exist
-    return 1
+    const exist = obj.find(e => e.nombre === screenStr);
+    if (exist) {
+      const availability = obj.filter(e => e.nombre === screenStr)
+      return availability[0].habilitado
+    }
+    return 2 //doesn't exist
   }
 
   const fetchEnabledScreens = async () => {

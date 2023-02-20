@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { colores } from '@src/theme/app.theme';
 import { blobToBase64 } from '@src/utilities';
 import { Image } from 'react-native-elements';
-import { GraphManager } from '@src/services';
+import { GraphManager, Tutorias } from '@src/services';
 import { useEffect, useState } from 'react'
 import { ITutoriaResp } from '@src/models';
 
@@ -12,7 +12,7 @@ interface IProps {
 }
 
 export const Tutoria = ({ item }: IProps) => {
-  const imageLogo: string = "https://avatarairlines.com/wp-content/uploads/2020/05/Male-placeholder.jpeg";
+  const imageLogo: { uri: string } = { uri: "https://avatarairlines.com/wp-content/uploads/2020/05/Male-placeholder.jpeg" };
   const [tutorPhoto, setTutorPhoto] = useState(imageLogo);
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -22,10 +22,8 @@ export const Tutoria = ({ item }: IProps) => {
 
   const getTutorPhoto = async () => {
     try {
-      const userImage: Blob = await GraphManager.getUserPhotoAsync(item.correo_tutor);
-      const answerBase64: any = await blobToBase64(userImage);
-      const photo: string[] = answerBase64.split(',');
-      setTutorPhoto('data:image/png;base64,' + photo[1]);
+      const tutorPhotoResp = await Tutorias.getUserPhoto(item.correo_tutor);
+      setTutorPhoto(tutorPhotoResp);
     } catch (error) {
       setTutorPhoto(imageLogo);
     }
@@ -44,7 +42,7 @@ export const Tutoria = ({ item }: IProps) => {
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={styles.subCardView}>
               <Image
-                source={{ uri: tutorPhoto }}
+                source={tutorPhoto}
                 resizeMode="contain"
                 style={{
                   borderRadius: 100,

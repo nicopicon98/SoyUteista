@@ -1,9 +1,8 @@
-import { API_KEY } from '@src/config/auth';
-import { AuthContext } from '@src/context/auth';
-import { getDirectorioEscolar } from '@src/services';
-import { IDirectorioEscolarResp } from '@src/models';
+import { DirectorioEscolarManager } from '@src/services';
 import { useState, useEffect, useContext } from 'react';
+import { IDirectorioEscolarResp } from '@src/models';
 import { useSnackbar } from '@src/context/snackbar';
+import { AuthContext } from '@src/context/auth';
 
 export const useDirectorioEscolar = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -13,8 +12,8 @@ export const useDirectorioEscolar = () => {
 
   const getDirectorios = async () => {
     try {
-      const directorioPromise = await getDirectorioEscolar(user?.userEmail!, API_KEY);
-      setDirectories(directorioPromise.data);
+      const directorioPromise = await DirectorioEscolarManager.getAll(user?.userEmail!);
+      setDirectories(directorioPromise);
       setIsLoading(false);
     } catch (error) {
       showMessage('En este momento estamos experimentando problemas con el servidor, intentalo mas tarde', 'warning')

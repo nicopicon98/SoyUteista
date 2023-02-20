@@ -1,15 +1,16 @@
-import { IUTSPostsCategories } from '@src/models';
+import { EUTSPostsCategories, IUTSPosts } from '@src/models';
 import { useState, useEffect } from 'react';
-import { getAgendas } from '@src/services';
+import { UTSPosts } from '@src/services';
 
 
 export const useAgendaInstitucional = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [agendas, setAgendas] = useState<IUTSPostsCategories[]>();
+  const [agendas, setAgendas] = useState<IUTSPosts[]>([]);
 
   const loadNoticia = async () => {
-    const rep = await getAgendas();
-    setAgendas(rep.data);
+    const utsPosts = new UTSPosts();
+    const resp = await utsPosts.getAll(EUTSPostsCategories.AGENDA, 12);
+    setAgendas(resp);
     setIsLoading(false);
   }
 

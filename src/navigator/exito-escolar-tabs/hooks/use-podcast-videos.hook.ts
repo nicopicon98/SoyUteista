@@ -1,30 +1,24 @@
 import { useEffect, useState, useContext } from 'react';
-import { getExitoEscolarService } from '@src/services';
+import { IPodcastsResp, IVideosResp } from '../models';
 import { useSnackbar } from '@src/context/snackbar';
-import { getPodcastService } from '@src/services';
 import { AuthContext } from '@src/context/auth';
+import { ExitoEscolar } from '@src/services';
 import { API_KEY } from '@src/config/auth';
-import { IPodcastResp } from '../models';
-import { IVideosResp } from '../models';
 
 export const useVideosPodcast = () => {
   const { authState: { user } } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
-  const [podcast, setPodcast] = useState<IPodcastResp>({
-    data: []
-  });
+  const [podcast, setPodcast] = useState<IPodcastsResp>({data: []});
 
-  const {showMessage} = useSnackbar();
+  const { showMessage } = useSnackbar();
 
-  const [videos, setVideos] = useState<IVideosResp>({
-    data: []
-  })
+  const [videos, setVideos] = useState<IVideosResp>({ data: [] })
 
   const fetchPodcast = async () => {
     try {
-      const rep = await Promise.all([getPodcastService(user!.userEmail, API_KEY), getExitoEscolarService(user!.userEmail, API_KEY)])
-      setPodcast(rep[0].data);
-      setVideos(rep[1].data);
+      const resp = await Promise.all([ExitoEscolar.getPodcasts(user!.userEmail), ExitoEscolar.getVideos(user!.userEmail)])
+      setPodcast(resp[0]);
+      setVideos(resp[1]);
       setIsLoading(false);
     } catch (error: any) {
       showMessage('Lo sentimos, ocurrio un error cargando la informacion, intenta mas tarde', 'warning')

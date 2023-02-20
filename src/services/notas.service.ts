@@ -1,7 +1,17 @@
 import { webserviceAPI } from "@src/api";
 import { INotasResp } from "@src/models";
 
-export const getNotas = async (email: string, API_KEY: string) => {
-  const rep = await webserviceAPI.get<INotasResp>(`/qualification/?email=${email}&key=${API_KEY}`);
-  return rep
+/**
+ * Class for fetching student grades data from the API.
+ */
+export class NotasEstudiante {
+  /**
+   * Retrieves student grades data for a given email address.
+   * @param email The email address to retrieve student grades data for.
+   * @returns A Promise that resolves to an INotasResp object.
+   */
+  public static getAll = async (email: string): Promise<INotasResp> => {
+    const resp = await webserviceAPI.get<INotasResp>(`/qualification/?email=${email}`);
+    return resp.data
+  }
 }

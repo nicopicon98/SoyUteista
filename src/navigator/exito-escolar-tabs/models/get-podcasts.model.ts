@@ -1,4 +1,4 @@
-export interface IPodcastResp {
+export interface IPodcastsResp {
     data: IPodcast[];
 }
 

@@ -1,21 +1,21 @@
-import { API_KEY } from '@src/config/auth';
-import { AuthContext } from '@src/context/auth';
-import { useSnackbar } from '@src/context/snackbar';
-import { getServiciosAcademicos } from '@src/services';
 import { useEffect, useState, useContext } from 'react';
-import { ConvocatoriasResp } from '../models';
+import { ServiciosAcademicos } from '@src/services';
+import { useSnackbar } from '@src/context/snackbar';
+import { AuthContext } from '@src/context/auth';
+import { IConvocatoriasResp } from '../models';
+import { API_KEY } from '@src/config/auth';
 
 export const useConvocatorias = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [convocatorias, setConvocatorias] = useState<ConvocatoriasResp[]>([]);
+  const [convocatorias, setConvocatorias] = useState<IConvocatoriasResp[]>([]);
   const { authState: { user } } = useContext(AuthContext);
 
-  const {showMessage} = useSnackbar();
+  const { showMessage } = useSnackbar();
 
   const getConvocatorias = async () => {
     try {
-      const resp = await getServiciosAcademicos(user?.userEmail!, API_KEY);
-      setConvocatorias(resp.data);
+      const resp = await ServiciosAcademicos.getAll(user?.userEmail!);
+      setConvocatorias(resp);
       setIsLoading(false);
     } catch (error) {
       showMessage('En este momento estamos experimentando problemas con el servidor, intentalo mas tarde', 'warning')

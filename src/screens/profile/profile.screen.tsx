@@ -38,11 +38,7 @@ export const ProfileScreen = () => {
         <View style={styles.separator}>
           <View style={styles.imageContainer}>
             <Image
-              source={{
-                uri: user!.userPhotoError
-                  ? user!.userPhoto
-                  : 'data:image/png;base64,' + user!.userPhoto,
-              }}
+              source={user!.userPhoto}
               resizeMode="cover"
               style={{
                 ...styles.profilePhoto,

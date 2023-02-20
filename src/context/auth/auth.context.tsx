@@ -1,9 +1,9 @@
-import React, { createContext, useEffect, useReducer } from 'react';
-import { AuthManager, getCarnet, GraphManager } from '@src/services';
-import { blobToBase64, Capitalize } from '@src/utilities';
+import { AuthManager, CarnetManager, User } from '@src/services';
+import { createContext, useEffect, useReducer } from 'react';
+import { ICarnetResp, IUserAuthResponse } from '@src/models';
 import { authReducer, IAuthState } from './auth.reducer';
-import { IUserAuthResponse } from '@src/models';
-import { API_KEY } from '@src/config/auth';
+import { ImageSourcePropType } from 'react-native';
+import { Capitalize } from '@src/utilities';
 import { useSnackbar } from '../snackbar';
 import jwt_decode from 'jwt-decode';
 
@@ -44,7 +44,6 @@ export const AuthProvider = ({ children }: any) => {
     if (!token) return dispatch({ type: 'notAuthenticated' })
     //Hay token
     try {
-      console.log(token);
       const rep = await authValidatorRole(token!);
       if (rep.user!.userResult !== 2 && rep.user!.userResult !== 69) {
         dispatch({ type: 'signIn', payload: { token: rep.token!, user: rep.user! } })
@@ -82,21 +81,17 @@ export const AuthProvider = ({ children }: any) => {
 
   //validate if student or not
   const authValidatorRole = async (token: string): Promise<IAuthState> => {
-    let photo: string = "";
-    let userPhotoError: boolean = false;
-    let dataValue: any;
+    let studentPhoto: ImageSourcePropType;
+    let dataValue: ICarnetResp;
     const user: IUserAuthResponse = jwt_decode(token);
+
     try {
-      const { data } = await getCarnet(user.upn, API_KEY);
+      const data = await CarnetManager.getCarnet(user.upn);
       dataValue = data;
-      const userImage: Blob = await GraphManager.getPhotoAsync();
-      const answerBase64: any = await blobToBase64(userImage);
-      const Fullphoto: string[] = answerBase64.split(',');
-      // console.log(Fullphoto)
-      photo = Fullphoto[1];
+      const studentPhotoResp = await User.getUserPhoto();
+      studentPhoto = studentPhotoResp;
     } catch (error) {
-      userPhotoError = true;
-      photo = "https://avatarairlines.com/wp-content/uploads/2020/05/Male-placeholder.jpeg";
+      studentPhoto = require('@src/resources/Images/male-placeholder.jpeg');
     }
 
     return {
@@ -108,8 +103,7 @@ export const AuthProvider = ({ children }: any) => {
         userFirstName: Capitalize(user.given_name),
         userFullName: Capitalize((user.name).replace(/\s+/g, ' ')),
         userEmail: user.upn,
-        userPhoto: photo,
-        userPhotoError,
+        userPhoto: studentPhoto,
         userMoreInfo: dataValue!.data
       }
     }

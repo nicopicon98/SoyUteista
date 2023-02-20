@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getRevista } from '@src/services';
+import { Revista } from '@src/services';
 import { IRevistaResp } from '@src/models';
 import { useSnackbar } from '@src/context/snackbar';
 
@@ -9,8 +9,8 @@ export const useRevista = () => {
   const { showMessage } = useSnackbar();
   const loadRevista = async () => {
     try {
-      const rep = await getRevista();
-      setRevistas(rep.data);
+      const resp = await Revista.getAll();
+      setRevistas(resp);
       setIsLoading(false);
     } catch (error) {
       showMessage('En este momento estamos experimentando problemas con el servidor, intentalo mas tarde', 'warning')

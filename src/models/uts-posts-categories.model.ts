@@ -1,4 +1,4 @@
-export interface IUTSPostsCategories {
+export interface IUTSPosts {
   id: number;
   fecha: string;
   titulo: string;
@@ -6,4 +6,9 @@ export interface IUTSPostsCategories {
   foto: string;
   descripcion: string;
   categoria: string;
+}
+
+export enum EUTSPostsCategories {
+  NOTICIAS = 2,
+  AGENDA = 49
 }

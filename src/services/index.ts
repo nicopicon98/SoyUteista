@@ -1,4 +1,3 @@
-export * from './agenda-institucional.service';
 export * from './auth-manager.service';
 export * from './bienestar.service';
 export * from './carnet.service';
@@ -9,9 +8,10 @@ export * from './first-time-bajo-rend.service';
 export * from './graph-manager.service';
 export * from './horario.service';
 export * from './notas.service';
-export * from './noticias.service';
-export * from './podcast.service';
+export * from './exito-escolar.service';
 export * from './revista.service';
 export * from './servicios-academicos.service';
 export * from './sharing-information.service';
 export * from './tutorias.service';
+export * from './user.service';
+export * from './uts-posts.service'

@@ -19,11 +19,7 @@ export const CustomDrawerContent = (props: CustomDrawerContentProps) => {
       <View style={GlobalStyles.profileView}>
         {/* Profile Image */}
         <Image
-          source={{
-            uri: props.userPhotoError
-              ? props.userPhoto
-              : 'data:image/png;base64,' + props.userPhoto,
-          }}
+          source={props.userPhoto}
           resizeMode="contain"
           style={GlobalStyles.profilePhoto}
         />

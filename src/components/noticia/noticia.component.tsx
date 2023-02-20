@@ -1,11 +1,11 @@
 import { Text, View, StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { IUTSPostsCategories } from '@src/models';
+import { IUTSPosts } from '@src/models';
 import { Linking } from 'react-native';
 import { colores, fonts } from '@src/theme';
 
 interface IProps {
-  item: IUTSPostsCategories;
+  item: IUTSPosts;
 }
 
 const { width, height } = Dimensions.get('window');

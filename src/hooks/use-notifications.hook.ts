@@ -12,7 +12,6 @@ export const useNotifications = () => {
 		});
 		await messaging().registerDeviceForRemoteMessages();
 		const token = await messaging().getToken();
-		console.log(token)
 		let displayNotification: Notification;
 		if (!photo) {
 			displayNotification = {
@@ -51,7 +50,6 @@ export const useNotifications = () => {
 
 	const getToken = async () => {
 		const token = await messaging().getToken();
-		console.log(token)
 	}
 
 	useEffect(() => {

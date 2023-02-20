@@ -8,7 +8,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Appearance, useWindowDimensions } from 'react-native';
 import { ModalBajoRend } from './components/modal-bajo-rend';
 import { SkeletonNews } from '@src/components/skeleton-news';
-import { fetchEnabledScreensService } from '@src/services';
+import { EnabledScreensService } from '@src/services';
 import { useNavigation } from '@react-navigation/native';
 import { useContext, useEffect, useState } from 'react';
 import { RevistaScreen } from '@src/screens/revista';
@@ -16,7 +16,7 @@ import { ProfileScreen } from '@src/screens/profile';
 import { FABGroup } from '@src/components/FAB-group';
 import { CarnetScreen } from '@src/screens/carnet';
 import { GradesScreen } from '@src/screens/grades';
-import { IEnable } from '@src/screens/temp/models';
+import { IEnable, IRespEnable } from '@src/screens/temp/models';
 import { useCheckBajoRendimiento } from './hooks';
 import { BienestarTabs } from '../bienestar-tabs';
 import { ScheduleTabs } from '../schedule-tabs';
@@ -37,7 +37,7 @@ export const LeftDrawerNavigator = () => {
   const { authState: { user } } = useContext(AuthContext);
 
   const [isLoading, setIsLoading] = useState(true);
-  const [getData, setGetData] = useState(getDataMock);
+  const [getData, setGetData] = useState<IEnable[]>(getDataMock);
 
   const enableChecker = (obj: IEnable[], screenStr: string) => {
     const exist = obj.find(e => e.nombre === screenStr);
@@ -49,7 +49,7 @@ export const LeftDrawerNavigator = () => {
   }
 
   const fetchEnabledScreens = async () => {
-    const resp = await fetchEnabledScreensService(user!.userEmail);
+    const resp = await EnabledScreensService.getAll(user!.userEmail, );
     setGetData(resp.data);
     setIsLoading(false);
   }
@@ -85,7 +85,6 @@ export const LeftDrawerNavigator = () => {
                 userEmail={user!.userEmail}
                 userPhoto={user!.userPhoto}
                 height={user!.userResult !== 1 ? height * 0.62 : height}
-                userPhotoError={user!.userPhotoError}
                 userResult={user!.userResult}
                 darkMode={colorScheme}
                 userFranDesc={user!.userMoreInfo.C_FRAN_DESCRIPCION}

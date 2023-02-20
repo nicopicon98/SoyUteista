@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react'
-import { getAllCourses } from '@src/services';
+import { Tutorias } from '@src/services';
 import { AuthContext } from '@src/context/auth';
 import { useSnackbar } from '@src/context/snackbar';
 
@@ -10,9 +10,9 @@ export const useFetchCourses = () => {
   
   const onLoadCursos = async () => {
     try {
-      const resp = await getAllCourses(user?.userMoreInfo?.C_UNID_NOMBRE);
+      const resp = await Tutorias.getAllCourses(user!.userMoreInfo?.C_UNID_NOMBRE);
       setIsLoadingCourses(false);
-      return resp.data
+      return resp
     } catch (error) {
       showMessage('En este momento estamos experimentando problemas con el servidor, intentalo mas tarde', 'warning')
     }   

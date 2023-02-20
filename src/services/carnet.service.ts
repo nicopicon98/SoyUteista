@@ -1,7 +1,17 @@
 import { ICarnetResp } from "@src/models";
 import { webserviceAPI } from "@src/api";
 
-export const getCarnet = async (email: string, API_KEY: string) => {
-  const rep = await webserviceAPI.get<ICarnetResp>(`/carnet/?email=${email}&key=${API_KEY}`);
-  return rep
+/**
+ * A class for retrieving carnet information from the web service.
+ */
+export class CarnetManager {
+  /**
+   * Retrieves the carnet information for a given email address.
+   * @param email The email address to retrieve carnet information for.
+   * @returns A Promise that resolves to an ICarnetResp object.
+   */
+  public static async getCarnet(email: string): Promise<ICarnetResp> {
+    const resp = await webserviceAPI.get<ICarnetResp>(`/carnet/?email=${email}`);
+    return resp.data;
+  }
 }

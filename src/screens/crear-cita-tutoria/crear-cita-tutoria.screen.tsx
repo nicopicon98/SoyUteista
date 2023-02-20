@@ -11,7 +11,6 @@ import { CustomCalendarComponent } from '@src/components/custom-calendar';
 import DropDownPicker, { ItemType } from "react-native-dropdown-picker";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { ActivityIndicator, TextInput } from "react-native-paper";
-import { getTutorPhoto, postInsertTutoria } from '@src/services';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { GraphError } from '@microsoft/microsoft-graph-client';
 import { ITutorInfoResp, NavigationProps } from "@src/models";
@@ -21,8 +20,9 @@ import { useEffect, useState, useContext } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useSnackbar } from '@src/context/snackbar';
 import { useFranjaByDiaAsignatura } from './hooks';
-import { Image } from 'react-native-elements';
 import { AuthContext } from '@src/context/auth';
+import { Image } from 'react-native-elements';
+import { Tutorias } from '@src/services';
 import { ICreateCita } from './models';
 import { colores } from "@src/theme";
 import moment from 'moment';
@@ -184,7 +184,6 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
   const onSelectDay = async (day: string) => {
     /** http request to fetch day */
     const resp = await onLoadFranjaByDiaAsignatura(id_course, day); //this changes schedule
-    console.log(resp, 'franjas')
     setFranjasItems(createFranjasItemsAdapter({ franjas: resp! }))
   }
 
@@ -206,7 +205,7 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
         // Only update state if new value differs from current
         return JSON.stringify(currentTutorInfo) !== JSON.stringify(tutorInfoResp) ? tutorInfoResp : currentTutorInfo;
       });
-      const tutorPhotoResp = await getTutorPhoto(tutorInfoResp.correo);
+      const tutorPhotoResp = await Tutorias.getUserPhoto(tutorInfoResp.correo);
       setTutorPhoto(currentTutorPhoto => {
         // Only update state if new value differs from current
         return currentTutorPhoto !== tutorPhotoResp ? tutorPhotoResp : currentTutorPhoto;
@@ -246,7 +245,7 @@ export const CrearCitaTutoriaScreen = ({ navigation }: NavigationProps) => {
       fecha_tutoria: data.fecha_tutoria
     }
     try {
-      const insertResp = await postInsertTutoria(obj);
+      const insertResp = await Tutorias.postInsertTutoria(obj);
       if (insertResp) {
         setClickInsertTutoria(false);
         setConfModalVisible(false);

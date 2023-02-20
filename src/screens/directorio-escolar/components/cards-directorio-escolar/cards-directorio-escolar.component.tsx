@@ -1,18 +1,19 @@
-import { View, Text, StyleSheet, Appearance, Dimensions, TouchableOpacity } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
-import { useDirectorioEscolar } from '../../hooks';
+import { View, Text, StyleSheet, Appearance, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { ScrollView } from 'react-native-gesture-handler';
 import { Capitalize, removeSpaces } from '@src/utilities';
+import { useDirectorioEscolar } from '../../hooks';
 
 import { ActivityIndicator, Divider, List } from 'react-native-paper';
 import { colores } from '@src/theme';
+import * as React from 'react';
 
 const { width } = Dimensions.get("screen");
 export const CardsDirectorioEscolar = () => {
   const { directories, isLoading } = useDirectorioEscolar();
   const colorScheme = Appearance.getColorScheme();
 
-  // console.log(JSON.stringify(directories, null, 2));
+
 
   return (
     <View style={{
@@ -21,11 +22,13 @@ export const CardsDirectorioEscolar = () => {
       padding: width * 0.03,
     }}>
       {isLoading
-        ? <ActivityIndicator style={{flex: 1, justifyContent: 'center', alignItems: 'center'}} />
+        ? <ActivityIndicator style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} />
         : <ScrollView>
-          {directories?.map((directory, index1) => {
+          {directories?.map((directory, _index) => {
             return (
-              <List.AccordionGroup>
+              <List.AccordionGroup
+                key={_index}
+              >
                 <List.Accordion
                   theme={{
                     colors: {
@@ -33,13 +36,15 @@ export const CardsDirectorioEscolar = () => {
                       background: colorScheme === 'dark' ? 'black' : 'white',
                     }
                   }}
-                  left={props => <List.Icon {...props} icon="folder" color={colorScheme === 'dark' ? 'white' : colores.Pantone_382_C } />}
+                  left={props => <List.Icon {...props} icon="folder" color={colorScheme === 'dark' ? 'white' : colores.Pantone_382_C} />}
                   title={directory.dependencia}
                   id="0">
                   {
-                    directory.infoDependencia.map((e, index) => {
+                    directory.infoDependencia.map((e, __index) => {
                       return (
-                        <>
+                        <React.Fragment
+                          key={__index}
+                        >
                           <List.Item
                             title={
                               <View>
@@ -63,7 +68,7 @@ export const CardsDirectorioEscolar = () => {
                             }
                           />
                           <Divider />
-                        </>
+                        </React.Fragment>
                       )
                     })
                   }
@@ -90,12 +95,12 @@ const InfoDependencia = ({ label, value, icon = "account" }: IInfoDependenciaPro
   return (
     <View style={{ flexDirection: 'row' }}>
       <Icon
-        color={colorScheme === 'dark' ? colores.White  : colores.Pantone_382_C }
+        color={colorScheme === 'dark' ? colores.White : colores.Pantone_382_C}
         size={width * 0.05}
         name={icon}
       />
       <Text>
-        <Text style={{ fontWeight: 'bold', color: colorScheme === 'dark' ? colores.Cool_Gray_5_C : colores.Pantone_382_C  }}>{label}: </Text>
+        <Text style={{ fontWeight: 'bold', color: colorScheme === 'dark' ? colores.Cool_Gray_5_C : colores.Pantone_382_C }}>{label}: </Text>
         {Capitalize(value)}
       </Text>
     </View>

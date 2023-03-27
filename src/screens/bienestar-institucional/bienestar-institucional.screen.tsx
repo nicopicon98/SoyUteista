@@ -1,8 +1,5 @@
-import { AppBarComponent } from "@src/components/app-bar"
-import { FABGroup } from "@src/components/FAB-group";
-import { screens } from "@src/utilities";
-import { View, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { screens } from "@src/utilities";
 
 export const BienestarInstitucionalScreen = () => {
   const navigation = useNavigation<any>();
@@ -10,7 +7,6 @@ export const BienestarInstitucionalScreen = () => {
   return (
     <>
       
-      {/* <FABGroup screens={bienestarFABScreen} /> */}
     </>
   )
 }

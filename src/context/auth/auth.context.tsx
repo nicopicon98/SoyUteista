@@ -86,10 +86,8 @@ export const AuthProvider = ({ children }: any) => {
     const user: IUserAuthResponse = jwt_decode(token);
 
     try {
-      const data = await CarnetManager.getCarnet(user.upn);
-      dataValue = data;
-      const studentPhotoResp = await User.getUserPhoto();
-      studentPhoto = studentPhotoResp;
+      dataValue = await CarnetManager.getCarnet(user.upn);
+      studentPhoto = await User.getUserPhoto();
     } catch (error) {
       studentPhoto = require('@src/resources/Images/male-placeholder.jpeg');
     }
@@ -107,7 +105,6 @@ export const AuthProvider = ({ children }: any) => {
         userMoreInfo: dataValue!.data
       }
     }
-
   }
 
   return (

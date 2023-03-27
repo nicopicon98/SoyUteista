@@ -6,6 +6,20 @@ export const screens = (navigation: any) => {
   const colorScheme = Appearance.getColorScheme();
   return [
     {
+      icon: 'calendar',
+      label: 'Horario',
+      style: { borderRadius: 100, backgroundColor: colorScheme === 'dark' ? 'white' : colores.Pantone_383_C },
+      color: colores.Pantone_382_C,
+      onPress: () => navigation.navigate('Horario'),
+    },
+    {
+      icon: 'star-shooting',
+      label: 'Notas Actuales',
+      style: { borderRadius: 100, backgroundColor: colorScheme === 'dark' ? 'white' : colores.Pantone_383_C },
+      color: colores.Pantone_382_C,
+      onPress: () => navigation.navigate('Notas'),
+    },
+    {
       icon: 'heart-flash',
       label: 'Bienestar',
       color: colores.Pantone_382_C,
@@ -18,7 +32,7 @@ export const screens = (navigation: any) => {
       style: { borderRadius: 100, backgroundColor: colorScheme === 'dark' ? 'white' : colores.Pantone_383_C },
       color: colores.Pantone_382_C,
       onPress: () => navigation.navigate('Tutorias'),
-    }
+    },
   ]
 }
 

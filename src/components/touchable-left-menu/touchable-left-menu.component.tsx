@@ -58,6 +58,6 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   menuText: {
-    fontSize: width * 0.05,
+    fontSize: width * 0.043,
   }
 });

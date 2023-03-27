@@ -6,6 +6,8 @@ export const tutoriasAPI: AxiosInstance = axios.create({
   timeout: 10000,
 })
 
+console.log("tutorias_env_url", PROD_UTS_TUTORIAS_API_BASE_URL)
+
 tutoriasAPI.interceptors.response.use(
   (response) => {
     return response

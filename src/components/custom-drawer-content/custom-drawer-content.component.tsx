@@ -112,6 +112,19 @@ export const CustomDrawerContent = (props: CustomDrawerContentProps) => {
             type="navigate"
             iconColor={colores.Cool_Gray_5_C}
             iconSize={30}
+            iconName="golf"
+            menuText="Tutorías"
+            screenDestiny="Tutorias"
+            navigation={props.navigation}
+          />
+        )}
+
+        {/* Exito Escolar  */}
+        {props.userResult === 1 && (
+          <TouchableLeftMenu
+            type="navigate"
+            iconColor={colores.Cool_Gray_5_C}
+            iconSize={30}
             iconName="happy"
             menuText="Exito Escolar"
             screenDestiny="ExitoEscolar"

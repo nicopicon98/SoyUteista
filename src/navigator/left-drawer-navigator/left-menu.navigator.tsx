@@ -24,10 +24,10 @@ import { TutoriasTabs } from '../tutorias-tabs';
 import { AuthContext } from '@src/context/auth';
 import { TempScreen } from '@src/screens/temp';
 import { HomeScreen } from '@src/screens/home';
-import { getDataMock } from './data/mockData';
 import { screens } from '@src/utilities';
 import { colores } from '@src/theme';
 import { View } from 'react-native';
+import { getDataMock } from './data/mockData';
 
 const Drawer = createDrawerNavigator();
 

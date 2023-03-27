@@ -6480,6 +6480,11 @@ react-native-codegen@^0.0.8:
     jscodeshift "^0.11.0"
     nullthrows "^1.1.1"
 
+react-native-device-info@10.3.0:
+  version "10.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-10.3.0.tgz#6bab64d84d3415dd00cc446c73ec5e2e61fddbe7"
+  integrity sha512-/ziZN1sA1REbJTv5mQZ4tXggcTvSbct+u5kCaze8BmN//lbxcTvWsU6NQd4IihLt89VkbX+14IGc9sVApSxd/w==
+
 react-native-device-info@^0.9.3:
   version "0.9.9"
   resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-0.9.9.tgz#42490719b8be2b8ffe689f3c74d56884ca05c0d7"
@@ -6489,11 +6494,6 @@ react-native-device-info@^10.0.2:
   version "10.0.2"
   resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-10.0.2.tgz#17cd96df277cca5a22fb80409527c181a08d4ed1"
   integrity sha512-6XY8EctYqNEX6EHDoHxz3yONOYxCHKrgEdStP7HZDYzFXb1JB5BFt7UbXDWrmihXUZDv06sBsjN26+Tp0EajXw==
-
-react-native-device-info@^8.1.2:
-  version "8.7.1"
-  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-8.7.1.tgz#fbb06f87dbbc4423abe713874699fb2e6e99fd15"
-  integrity sha512-cVMZztFa2Qn6qpQa601W61CtUwZQ1KXfqCOeltejAWEXmgIWivC692WGSdtGudj4upSi1UgMSaGcvKjfcpdGjg==
 
 react-native-dotenv@^3.4.7:
   version "3.4.7"
@@ -7375,12 +7375,12 @@ source-map@^0.7.3:
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.7.3.tgz#5302f8169031735226544092e64981f751750383"
   integrity sha512-CkCj6giN3S+n9qrYiBTX5gystlENnRW5jZeNLHpe6aue+SrHcG5VYwujhW9s4dY31mEGsxBDrHR6oI69fTXsaQ==
 
-sp-react-native-in-app-updates@^1.1.7:
-  version "1.1.7"
-  resolved "https://registry.yarnpkg.com/sp-react-native-in-app-updates/-/sp-react-native-in-app-updates-1.1.7.tgz#e233be398c704626e99d70e0953c4f8c79e232e5"
-  integrity sha512-ncEu6dhfXNCpn6qPETvdhSe4N6ViNTf5oUB9pct5i1+gSJOKuvXEmX7WG/xJrXEfFF0hkuDbJTPFWgzOIyb0Tw==
+sp-react-native-in-app-updates@^1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/sp-react-native-in-app-updates/-/sp-react-native-in-app-updates-1.3.1.tgz#4a8712ec9905ccbd35fa14f79d1ba2524987cdfb"
+  integrity sha512-01ivbKRoOGiQ50KCHs+qyj4+oxYrOTeus1zz+iHnmsa7aWqPyt53K+dAwzeuiMEEjOxbsV/JJNMh5QnXOqvKWA==
   dependencies:
-    react-native-device-info "^8.1.2"
+    react-native-device-info "10.3.0"
     react-native-siren "0.0.5"
     semver "7.2.1"
     underscore "1.12.1"
@@ -8329,11 +8329,6 @@ yargs@^16.1.1:
     string-width "^4.2.0"
     y18n "^5.0.5"
     yargs-parser "^20.2.2"
-
-yarn@^1.22.19:
-  version "1.22.19"
-  resolved "https://registry.yarnpkg.com/yarn/-/yarn-1.22.19.tgz#4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
-  integrity sha512-/0V5q0WbslqnwP91tirOvldvYISzaqhClxzyUKXYxs07yUILIs5jx/k6CFe8bvKSkds5w+eiOqta39Wk3WxdcQ==
 
 yocto-queue@^0.1.0:
   version "0.1.0"

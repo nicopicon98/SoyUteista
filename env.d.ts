@@ -9,4 +9,5 @@ declare module '@env' {
   export const PROD_UTS_WEBSERVICE_API_BASE_URL: string;
   export const X_WebServiceUTSAPI_Key: string;
   export const X_WebServiceUTSAPI_HOST: string;
+  export const REACT_APP_SECRET_KEY: string;
 }

@@ -136,8 +136,8 @@ android {
         applicationId "com.soyuteista"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion 33
-        versionCode 14
-        versionName "Tulkun 2.0.0"
+        versionCode 17
+        versionName "Berlin 1.0.1"
         manifestPlaceholders = [ appAuthRedirectScheme: 'app-uts-sistemas']
     }
     splits {

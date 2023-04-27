@@ -1,9 +1,7 @@
 import { MarkingProps } from 'react-native-calendars/src/calendar/day/marking';
 import { Dimensions, Pressable, View, Text, StyleSheet, Appearance } from 'react-native';
 import { DateData, DayState } from 'react-native-calendars/src/types';
-import { dayToID, isBeforeToday, isDayOfTheWeek } from '@src/utilities';
-import moment from 'moment';
-import { colores } from '@src/theme';
+import { isBeforeToday, isDayOfTheWeek } from '@src/utilities';
 
 interface IProps {
 	date: (string & DateData);

@@ -250,6 +250,7 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
 
   // Click on submit to open confirmation modal
   const onSubmitFirstPart = async () => {
+    console.log("click on first part")
     setIsLoadingBtnContinuar(true);
     try {
       const tutorInfoResp = await onLoadInfoTutor(
@@ -291,6 +292,8 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
 
   // Click on submit to insert tutoria
   const onSubmit = async (data: TFormData) => {
+    //click
+    console.log("click en crear tutorias")
     //we first set the loader so the user knows he clicked on it
     setClickInsertTutoria(true);
     //prepare the object to be sent
@@ -307,7 +310,7 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
       fecha_tutoria: data.fecha_tutoria,
     };
     try {
-      console.log(obj)
+      console.log(obj);
       const insertResp: IInsertTutoriaResponse =
         await Tutorias.postInsertTutoria(obj);
       if (!insertResp.success) {

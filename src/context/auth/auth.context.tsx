@@ -87,12 +87,12 @@ export const AuthProvider = ({ children }: any) => {
 
     try {
       dataValue = await CarnetManager.getCarnet(user.upn);
+      console.log(dataValue, "dataValue")
       studentPhoto = await User.getUserPhoto();
     } catch (error) {
       studentPhoto = require('@src/resources/Images/male-placeholder.jpeg');
     }
-
-    return {
+    const res = {
       ...state,
       token,
       user: {
@@ -105,6 +105,7 @@ export const AuthProvider = ({ children }: any) => {
         userMoreInfo: dataValue!.data
       }
     }
+    return res
   }
 
   return (

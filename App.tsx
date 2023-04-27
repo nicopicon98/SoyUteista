@@ -6,7 +6,8 @@ import {AuthProvider} from '@src/context/auth';
 import useLocalUpdate from './src/hooks/use-local-update.hook';
 import {useEffect} from 'react';
 import {CryptoHelper} from '@src/utilities/http-encryption.utility';
-import { REACT_APP_SECRET_KEY } from "@env"
+import {REACT_APP_SECRET_KEY} from '@env';
+import {PROD_UTS_WEBSERVICE_API_BASE_URL, X_WebServiceUTSAPI_Key} from '@env';
 
 export const AppState = ({
   children,
@@ -18,14 +19,6 @@ export const AppState = ({
 };
 const App = () => {
   const {renderUpdateModal, showUpdateModal} = useLocalUpdate();
-
-  useEffect(() => {
-    console.log("the secret key is", REACT_APP_SECRET_KEY)
-    // console.log('I mean to encrypt and descrypt', {data: 'xd'});
-    const encrypted = CryptoHelper.encrypt(JSON.stringify({data: 'xd'}));
-    console.log(encrypted, 'encrypted');
-    // console.log(JSON.parse(CryptoHelper.decrypt(encrypted)), 'decrypted');
-  }, []);
 
   return (
     <>

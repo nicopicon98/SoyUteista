@@ -1,7 +1,13 @@
-import moment from "moment";
+import moment from 'moment';
 
 export const isBeforeToday = (dateStr: string): boolean => {
-  const date = moment(dateStr).format()
-  const today = moment().startOf('day').format()
-  return date < today;
-}
+  const date = moment(dateStr);
+  const today = moment().startOf('day');
+  console.log(date.isSame(today, 'day'), date)
+  if (date.isSame(today, 'day')) {
+    console.log("entro", dateStr)
+    return true;
+  }
+
+  return date.isBefore(today);
+};

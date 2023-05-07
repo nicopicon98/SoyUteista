@@ -29,6 +29,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ActivityIndicator, TextInput} from 'react-native-paper';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {GraphError} from '@microsoft/microsoft-graph-client';
+import {ICreateCita, IInsertTutoriaResponse} from './models';
 import {ITutorInfoResp, NavigationProps} from '@src/models';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {CardTutorias} from '@src/components/card-tutorias';
@@ -39,9 +40,7 @@ import {useFranjaByDiaAsignatura} from './hooks';
 import {AuthContext} from '@src/context/auth';
 import {Image} from 'react-native-elements';
 import {Tutorias} from '@src/services';
-import {ICreateCita, IInsertTutoriaResponse} from './models';
 import {colores} from '@src/theme';
-import moment from 'moment';
 import axios from 'axios';
 
 export type TFormData = {
@@ -137,8 +136,6 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
 
   //Calendar
   const [markedDay, setMarkedDay] = useState('');
-  const formmattedMarkedDay = moment(markedDay);
-  if (markedDay.length > 0) formmattedMarkedDay.locale('es');
 
   //COURSES DROPDOWN FEATURES
   const [openCourses, setOpenCourses] = useState(false);
@@ -250,7 +247,7 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
 
   // Click on submit to open confirmation modal
   const onSubmitFirstPart = async () => {
-    console.log("click on first part")
+    console.log('click on first part');
     setIsLoadingBtnContinuar(true);
     try {
       const tutorInfoResp = await onLoadInfoTutor(
@@ -293,7 +290,7 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
   // Click on submit to insert tutoria
   const onSubmit = async (data: TFormData) => {
     //click
-    console.log("click en crear tutorias")
+    console.log('click en crear tutorias');
     //we first set the loader so the user knows he clicked on it
     setClickInsertTutoria(true);
     //prepare the object to be sent
@@ -356,7 +353,7 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
           maxWidth: width * 0.9,
           alignSelf: 'flex-start',
         }}>
-        A continuación elige un tutor
+        A continuación elige un curso
       </Text>
       <Controller
         control={control}
@@ -366,7 +363,7 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
         render={({field: {onChange, onBlur, value}}) => (
           <DropDownPicker
             addCustomItem={false}
-            placeholder={'Selecciona el profesional'}
+            placeholder={'Selecciona un curso'}
             listMode="MODAL"
             searchable
             searchTextInputProps={{

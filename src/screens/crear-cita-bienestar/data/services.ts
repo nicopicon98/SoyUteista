@@ -1,7 +1,8 @@
-import { Service } from '../models/services.model';
+import { ISegmentedService } from "@src/models"
+
 
 export const servicesFn = (fn: () => void) => {
-  const services: Service[] = [
+  const services: ISegmentedService[] = [
     {
       value: 'odontologia',
       label: 'Odontologia',

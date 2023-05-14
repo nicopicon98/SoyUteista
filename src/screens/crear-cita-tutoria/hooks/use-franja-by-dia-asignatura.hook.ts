@@ -8,11 +8,11 @@ export const useFranjaByDiaAsignatura = () => {
   const { showMessage } = useSnackbar();
   const [isLoadingFranjaByDiaAsignatura, setisLoadingFranjaByDiaAsignatura] = useState(false);
 
-  const onLoadFranjaByDiaAsignatura = async (id_course: string, day: string) => {
+  const onLoadFranjaByDiaAsignatura = async (id_course: string, day: string, modeTutorial: string = "PRESENCIAL") => {
 
     try {
       setisLoadingFranjaByDiaAsignatura(true);
-      const resp = await Tutorias.getFranjaByDayAsignatura(id_course, day, user!.userMoreInfo?.C_UNID_NOMBRE);
+      const resp = await Tutorias.getFranjaByDayAsignatura(id_course, day, user!.userMoreInfo?.C_UNID_NOMBRE, modeTutorial);
       setisLoadingFranjaByDiaAsignatura(false);
       return resp
     } catch (error) {

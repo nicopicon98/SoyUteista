@@ -6,8 +6,9 @@ export * from './fab-screens.model';
 export * from './navigation.model';
 export * from './notas.model';
 export * from './revista.model';
+export * from './segmented-service.model';
 export * from './tutor.model';
 export * from './tutoria.model';
+export * from './type-with-key.model';
 export * from './user.model';
 export * from './uts-posts-categories.model';
-export * from './type-with-key.model'

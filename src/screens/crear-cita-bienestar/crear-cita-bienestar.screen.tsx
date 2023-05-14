@@ -1,12 +1,12 @@
-import { createProfessionalItemsAdapter, createScheduleItemAdapter } from "./adapters";
 import { errorHandlerCelular, fromDMYSlashtoYMDHyphen, fromYMDHyphentoDMYSlash } from "@src/utilities";
+import { createProfessionalItemsAdapter, createScheduleItemAdapter } from "./adapters";
+import { StyleSheet, Text, Dimensions, View, Appearance } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
-import { SegmentedButtonsCustom } from "./components/segmented-buttons";
 import { useGetAvailSchedule } from './hooks/use-get-avail-schedule.hook';
+import { SegmentedButtonsCustom } from "./components/segmented-buttons";
 import DropDownPicker, { ItemType } from "react-native-dropdown-picker";
 import { CustomCalendarComponent } from "./components/custom-calendar";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { StyleSheet, Text, Dimensions, View, Appearance } from 'react-native';
 import { ActivityIndicator, TextInput } from "react-native-paper";
 import { CardBienestar } from "@src/components/card-bienestar";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -509,6 +509,7 @@ export const CrearCitaBienestarScreen = () => {
     buttons={servicesButtonsFormatted}
     value={field}
     onValueChange={setField}
+    maxWidthValue={0.3}
   />
 
   const loader = <ActivityIndicator color={colores.Pantone_383_C} />

@@ -22,6 +22,7 @@ import {
   useFetchTutores,
   useTutorInfo,
 } from './hooks';
+import {SegmentedButtonsCustom} from '../crear-cita-bienestar/components/segmented-buttons';
 import {Capitalize, errorHandlerCelular, isOneEmpty} from '@src/utilities';
 import {CustomCalendarComponent} from '@src/components/custom-calendar';
 import DropDownPicker, {ItemType} from 'react-native-dropdown-picker';
@@ -33,15 +34,16 @@ import {ICreateCita, IInsertTutoriaResponse} from './models';
 import {ITutorInfoResp, NavigationProps} from '@src/models';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {CardTutorias} from '@src/components/card-tutorias';
-import {useEffect, useState, useContext} from 'react';
 import {Controller, useForm} from 'react-hook-form';
 import {useSnackbar} from '@src/context/snackbar';
 import {useFranjaByDiaAsignatura} from './hooks';
 import {AuthContext} from '@src/context/auth';
 import {Image} from 'react-native-elements';
+import {useState, useContext} from 'react';
 import {Tutorias} from '@src/services';
 import {colores} from '@src/theme';
 import axios from 'axios';
+import {servicesFn} from './data';
 
 export type TFormData = {
   id_course: string;
@@ -58,6 +60,9 @@ const {width, height} = Dimensions.get('window');
 const colorSchema = Appearance.getColorScheme();
 
 export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
+  //SEGMENTED BUTTONS
+  const [modeTutorial, setModeTutorial] = useState('');
+
   // custom icons -> Optimization tip
   const [customTutoresIcon, setCustomTutoresIcon] = useState(
     <Icon
@@ -90,6 +95,7 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
   const [tutorInfo, setTutorInfo] = useState<ITutorInfoResp>();
   //CONDITIONAL RENDERING
   const [showDependentElements, setShowDependenElements] = useState(false);
+  const [showCourses, setShowCourses] = useState(false);
   //MODALS
   const [fullDateModalVisible, setFullDateModalVisible] = useState(false);
   const [confModalVisible, setConfModalVisible] = useState(false);
@@ -100,6 +106,7 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
   } = useContext(AuthContext);
 
   //CUSTOM HOOKS
+  //TODO: SHOW PRESENCIAL OR REMOTO AS THE FIRST THING
   const {onLoadCursos, isLoadingCourses} = useFetchCourses();
   const {onLoadDayByAsignatura, isLoadingDaysByAsignatura} =
     useDayByAsignatura();
@@ -175,8 +182,8 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
   };
 
   // Adaptig professionals to dropdown Items format
-  const onLoadCrearTutoriaScreen = async () => {
-    const resp = await onLoadCursos();
+  const onLoadCursosHandler = async (modeTutorial: string) => {
+    const resp = await onLoadCursos(modeTutorial);
     const newCoursesItems = createCoursesItemsAdapter({
       courses: resp!,
       customIcon: customCoursesIcon,
@@ -191,22 +198,7 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
     }
   };
 
-  // Click on pickers
-  /**
-   * Every time we dispatch this function, data from hook function onLoadDayByAsignatura
-   * will be retrieved and adapted to items, next, we update the status
-   * when setDayItems is called
-   */
-  const onSelectCourse = async (id_course: string) => {
-    const customIcon = (
-      <Icon name="calendar-today" color={colores.Pantone_382_C} size={25} />
-    );
-    /** http request to fetch day */
-    const resp = await onLoadDayByAsignatura(id_course); //this changes schedule
-    setDaysItems(createDaysItemsAdapter({days: resp!, customIcon}));
-    /** Show the rest */
-    setShowDependenElements(true);
-    //reset everything down there to 0
+  const emptyDependentElementsValue = () => {
     reset({
       ...control._formValues,
       day: '',
@@ -228,9 +220,32 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
     setFranjasItems([]);
   };
 
+  // Click on pickers
+  /**
+   * Every time we dispatch this function, data from hook function onLoadDayByAsignatura
+   * will be retrieved and adapted to items, next, we update the status
+   * when setDayItems is called
+   */
+  const onSelectCourse = async (id_course: string) => {
+    const customIcon = (
+      <Icon name="calendar-today" color={colores.Pantone_382_C} size={25} />
+    );
+    /** http request to fetch day */
+    const resp = await onLoadDayByAsignatura(id_course, modeTutorial); //this changes schedule
+    setDaysItems(createDaysItemsAdapter({days: resp!, customIcon}));
+    /** Show the rest */
+    setShowDependenElements(true);
+    //reset everything down there to 0
+    emptyDependentElementsValue();
+  };
+
   const onSelectDay = async (day: string) => {
     /** http request to fetch day */
-    const resp = await onLoadFranjaByDiaAsignatura(id_course, day); //this changes schedule
+    const resp = await onLoadFranjaByDiaAsignatura(
+      id_course,
+      day,
+      modeTutorial,
+    ); //this changes schedule
     setFranjasItems(createFranjasItemsAdapter({franjas: resp!}));
   };
 
@@ -239,7 +254,7 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
   };
 
   const onSelectSaveFullDateModal = async () => {
-    const resp = await onLoadTutores(franja, id_course, day);
+    const resp = await onLoadTutores(franja, id_course, day, modeTutorial);
     setTutoresItems(
       createTutorItemsAdapter({tutores: resp!, customIcon: customTutoresIcon}),
     );
@@ -327,19 +342,49 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
     }
   };
 
-  //Once the component is loaded, we proceed to adapt the professionals to dropdown Items format
-  //if courses change, the http request will be dispatched with the specific field
-  useEffect(() => {
-    onLoadCrearTutoriaScreen();
-  }, []);
+  const pressTutorialModeHandler = async function () {
+    //we empty the courses values
+    setOpenCourses(false);
+    setDropDownCourses('');
+    setCoursesItems([]);
+    //then empty the rest
+    setShowDependenElements(false);
+    emptyDependentElementsValue();
+    //get with this.value the actual value of the item
+    const _modeTutorial: string = this.value;
+    console.log(_modeTutorial);
+    await onLoadCursosHandler(_modeTutorial);
+    setShowCourses(true);
+  };
+
+  // Add pressTutorialModeHandler function to catch the mode type
+  const servicesButtonsFormatted = servicesFn(pressTutorialModeHandler);
 
   //VIEWS
-  const loader = (
-    <ActivityIndicator
-      style={{marginTop: width * 0.1}}
-      color={colorSchema === 'dark' ? 'white' : colores.Pantone_383_C}
-      size={width * 0.1}
-    />
+  const modeTutorialView = (
+    <>
+      <Text
+        style={{
+          maxWidth: width * 0.9,
+          alignSelf: 'flex-start',
+        }}>
+        Seleccione en que modalidad desea ser atendido:
+      </Text>
+      <View
+        style={{
+          justifyContent: 'flex-start',
+          alignItems: 'flex-start', // added this
+          width: width,
+          marginTop: width * 0.03,
+        }}>
+        <SegmentedButtonsCustom
+          buttons={servicesButtonsFormatted}
+          value={modeTutorial}
+          onValueChange={setModeTutorial}
+          maxWidthValue={1}
+        />
+      </View>
+    </>
   );
 
   const coursesView = (
@@ -378,15 +423,15 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
               onSelectCourse(value!);
             }}
             style={{
-              alignSelf: 'center',
+              alignSelf: 'flex-start', // Changed from 'center' to 'flex-start'
               width: '100%',
-              marginTop: width * 0.01,
+              marginTop: width * 0.03,
             }}
             listItemContainerStyle={{
               width: '100%',
               borderBottomWidth: 1,
             }}
-            containerStyle={styles.dropdownCommonContainer}
+            containerStyle={{...styles.dropdownCommonContainer}}
           />
         )}
         name="id_course"
@@ -407,16 +452,18 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
       <TouchableOpacity onPress={() => setFullDateModalVisible(true)}>
         <View
           style={{
-            ...styles.dropdownCommonContainer,
-            alignItems: 'center',
-            marginTop: width * 0.01,
+            width: width * 0.9,
+            display: 'flex',
+            alignItems: 'flex-start',
+            alignContent: 'flex-start',
+            justifyContent: 'flex-start',
           }}>
           <View
             style={{
               flexDirection: 'row',
               borderWidth: 1,
               borderRadius: 8,
-              alignItems: 'center',
+              justifyContent: 'flex-start',
               backgroundColor:
                 colorSchema === 'dark' ? colores.bgDark : 'white',
             }}>
@@ -789,6 +836,7 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
       style={{
         marginTop: width * 0.03,
         marginBottom: width * 0.05,
+        alignSelf: 'center',
       }}>
       <TouchableOpacity activeOpacity={0.75} onPress={onSubmitFirstPart}>
         <View style={{alignItems: 'center', marginTop: width * 0.02}}>
@@ -802,6 +850,15 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
         </View>
       </TouchableOpacity>
     </View>
+  );
+
+  // LOADER
+  const loader = (
+    <ActivityIndicator
+      style={{marginTop: width * 0.1}}
+      color={colorSchema === 'dark' ? 'white' : colores.Pantone_383_C}
+      size={width * 0.1}
+    />
   );
 
   // MODAL VIEWS
@@ -1195,40 +1252,41 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
     fecha_tutoria,
     id_tutor,
   );
+
   return (
-    <>
-      <CardTutorias>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <SafeAreaView style={styles.container}>
-            {isLoadingCourses ? loader : coursesView}
-            {showDependentElements ? (
-              isLoadingDaysByAsignatura ? (
-                loader
-              ) : (
-                <>
-                  {fullDateView}
-                  {tutoresView}
-                  {temaView}
-                  {commentsView}
-                </>
-              )
+    <CardTutorias>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <SafeAreaView style={styles.container}>
+          {modeTutorialView}
+          {showCourses ? isLoadingCourses ? loader : coursesView : <></>}
+          {showDependentElements ? (
+            isLoadingDaysByAsignatura ? (
+              loader
             ) : (
-              <></>
-            )}
-            {validateButtonSubmit ? submitBtnContinueView : <></>}
-            {fullDateModal}
-            {confModal}
-          </SafeAreaView>
-        </ScrollView>
-      </CardTutorias>
-    </>
+              <>
+                {fullDateView}
+                {tutoresView}
+                {temaView}
+                {commentsView}
+              </>
+            )
+          ) : (
+            <></>
+          )}
+          {validateButtonSubmit ? submitBtnContinueView : <></>}
+          {fullDateModal}
+          {confModal}
+        </SafeAreaView>
+      </ScrollView>
+    </CardTutorias>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: 'flex-start',
+    maxWidth: width,
   },
   buttonContinuar: {
     width: '100%',
@@ -1317,7 +1375,7 @@ const styles = StyleSheet.create({
   },
   dropdownCommonContainer: {
     width: width * 0.9,
-    alignSelf: 'center',
+    alignSelf: 'flex-start', // Changed from 'center' to 'flex-start'
   },
   centeredViewFinalModal: {
     flex: 1,

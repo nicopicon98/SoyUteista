@@ -1,36 +1,42 @@
-import { Dimensions, StyleSheet } from "react-native";
-import { SegmentedButtons } from "react-native-paper";
-import { arrToChunkArrOfArrs } from "@src/utilities";
-import { IBienestarService } from '../../models';
-import { Dispatch, SetStateAction } from "react";
+import {Dimensions, StyleSheet} from 'react-native';
+import {SegmentedButtons} from 'react-native-paper';
+import {arrToChunkArrOfArrs} from '@src/utilities';
+import {Dispatch, SetStateAction} from 'react';
+import {ISegmentedService} from '@src/models';
 
 interface IProps {
-  buttons: IBienestarService[];
+  buttons: ISegmentedService[];
   value: string;
   onValueChange: Dispatch<SetStateAction<string>>;
+  maxWidthValue: number;
 }
 
-const { width } = Dimensions.get("window")
-export const SegmentedButtonsCustom = ({ buttons, value, onValueChange }: IProps) => {
-
+const {width} = Dimensions.get('window');
+export const SegmentedButtonsCustom = ({
+  buttons,
+  value,
+  onValueChange,
+  maxWidthValue,
+}: IProps) => {
   const services = arrToChunkArrOfArrs(buttons, 3);
   const buttonsSegments = services.map((buttons, _) => {
-    return <SegmentedButtons
-      value={value}
-      key={_}
-      onValueChange={onValueChange}
-      buttons={buttons}
-      style={style.segmentedButtons}
-    />
-  })
+    return (
+      <SegmentedButtons
+        value={value}
+        key={_}
+        onValueChange={onValueChange}
+        buttons={buttons}
+        style={{...style.segmentedButtons, maxWidth: width * maxWidthValue}}
+      />
+    );
+  });
 
-  return <>{buttonsSegments}</>
-}
+  return <>{buttonsSegments}</>;
+};
 
 const style = StyleSheet.create({
   segmentedButtons: {
-    maxWidth: width * 0.3,
     justifyContent: 'center',
-    marginBottom: width * 0.02
-  }
-})
+    marginBottom: width * 0.02,
+  },
+});

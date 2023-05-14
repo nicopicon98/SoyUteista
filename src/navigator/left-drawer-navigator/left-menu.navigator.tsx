@@ -140,11 +140,12 @@ export const LeftDrawerNavigator = () => {
                 ? <Drawer.Screen name='Convocatorias' component={ConvocatoriasScreen} />
                 : <Drawer.Screen name='Convocatorias' component={TempScreen} />
             }
-            {
+            {/* {
               enableChecker(getData, 'Bienestar') == 1 || enableChecker(getData, 'Bienestar') == 2
                 ? <Drawer.Screen name='Bienestar' component={BienestarTabs} />
                 : <Drawer.Screen name='Bienestar' component={TempScreen} />
-            }
+            } */}
+            <Drawer.Screen name='Bienestar' component={BienestarTabs} />
             {
               enableChecker(getData, 'Tutorias') == 1 || enableChecker(getData, 'Tutorias') == 2
                 ? <Drawer.Screen name='Tutorias' component={TutoriasTabs} />

@@ -4,13 +4,14 @@ import { AuthContext } from '@src/context/auth';
 import { useSnackbar } from '@src/context/snackbar';
 
 export const useFetchCourses = () => {
-  const [isLoadingCourses, setIsLoadingCourses] = useState(true);
+  const [isLoadingCourses, setIsLoadingCourses] = useState(false);
   const { authState: { user } } = useContext(AuthContext)
   const { showMessage } = useSnackbar();
   
-  const onLoadCursos = async () => {
+  const onLoadCursos = async (modeTutorial: string) => {
     try {
-      const resp = await Tutorias.getAllCourses(user!.userMoreInfo?.C_UNID_NOMBRE);
+      setIsLoadingCourses(true);
+      const resp = await Tutorias.getAllCourses(user!.userMoreInfo?.C_UNID_NOMBRE, modeTutorial);
       setIsLoadingCourses(false);
       return resp
     } catch (error) {

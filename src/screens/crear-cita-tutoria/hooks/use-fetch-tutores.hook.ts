@@ -8,10 +8,10 @@ export const useFetchTutores = () => {
   const { authState: { user } } = useContext(AuthContext)
   const { showMessage } = useSnackbar();
 
-  const onLoadTutores = async (franja: string, id_curso: string, day: string) => {
+  const onLoadTutores = async (franja: string, id_curso: string, day: string, modeTutorial : string = "PRESENCIAL") => {
     try {
       setIsLoadingTutor(true);
-      const resp = await Tutorias.getAllTutors(id_curso, day, franja, user!.userMoreInfo.C_UNID_NOMBRE);
+      const resp = await Tutorias.getAllTutors(id_curso, day, franja, user!.userMoreInfo.C_UNID_NOMBRE, modeTutorial);
       setIsLoadingTutor(false);
       return resp
     } catch (error) {

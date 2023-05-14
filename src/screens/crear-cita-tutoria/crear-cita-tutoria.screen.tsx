@@ -453,17 +453,15 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
         <View
           style={{
             width: width * 0.9,
-            display: 'flex',
-            alignItems: 'flex-start',
-            alignContent: 'flex-start',
-            justifyContent: 'flex-start',
+            alignItems: 'center',
+            justifyContent: 'center'
           }}>
           <View
             style={{
               flexDirection: 'row',
               borderWidth: 1,
               borderRadius: 8,
-              justifyContent: 'flex-start',
+              alignItems: 'center',
               backgroundColor:
                 colorSchema === 'dark' ? colores.bgDark : 'white',
             }}>

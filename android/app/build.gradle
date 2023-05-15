@@ -136,8 +136,8 @@ android {
         applicationId "com.soyuteista"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion 33
-        versionCode 17
-        versionName "Berlin 1.0.1"
+        versionCode 18
+        versionName "Salvation 1.1.0"
         manifestPlaceholders = [ appAuthRedirectScheme: 'app-uts-sistemas']
     }
     splits {

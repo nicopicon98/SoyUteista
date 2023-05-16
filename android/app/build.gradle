@@ -126,6 +126,7 @@ def enableHermes = project.ext.react.get("enableHermes", false);
  */
 def nativeArchitectures = project.getProperties().get("reactNativeDebugArchitectures")
 
+apply from: "../../node_modules/@sentry/react-native/sentry.gradle"
 android {
     ndkVersion rootProject.ext.ndkVersion
 
@@ -136,7 +137,7 @@ android {
         applicationId "com.soyuteista"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion 33
-        versionCode 18
+        versionCode 21
         versionName "Salvation 1.1.0"
         manifestPlaceholders = [ appAuthRedirectScheme: 'app-uts-sistemas']
     }

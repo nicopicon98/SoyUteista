@@ -1,13 +1,15 @@
+import useLocalUpdate from './src/hooks/use-local-update.hook';
 import {StackNavigator} from '@src/navigator/stack-navigator';
 import {NavigationContainer} from '@react-navigation/native';
 import {Provider as PaperProvider} from 'react-native-paper';
 import {SnackbarProvider} from '@src/context/snackbar';
 import {AuthProvider} from '@src/context/auth';
-import useLocalUpdate from './src/hooks/use-local-update.hook';
+import * as Sentry from '@sentry/react-native';
 import {useEffect} from 'react';
-import {CryptoHelper} from '@src/utilities/http-encryption.utility';
-import {REACT_APP_SECRET_KEY} from '@env';
-import {PROD_UTS_WEBSERVICE_API_BASE_URL, X_WebServiceUTSAPI_Key} from '@env';
+
+Sentry.init({
+  dsn: 'https://73769704cb3c420d9ba224c87dde4ac8@o4505185706639360.ingest.sentry.io/4505185708736512',
+});
 
 export const AppState = ({
   children,
@@ -19,6 +21,19 @@ export const AppState = ({
 };
 const App = () => {
   const {renderUpdateModal, showUpdateModal} = useLocalUpdate();
+
+  // Manejo de errores globales
+  useEffect(() => {
+    const globalErrorHandler = (error: any, isFatal?: boolean) => {
+      Sentry.captureException(error);
+    };
+
+    ErrorUtils.setGlobalHandler(globalErrorHandler);
+
+    return () => {
+      ErrorUtils.setGlobalHandler(ErrorUtils.getGlobalHandler()); // Restablecer el controlador de errores global al original
+    };
+  }, []);
 
   return (
     <>

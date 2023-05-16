@@ -39,7 +39,7 @@ export const CitasTutoriasScreen = () => {
         {
           !isLoading && tutorias!.length === 0 &&
           (<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginBottom: height * 0.08 }}>
-            <Text style={{ color: colorScheme === 'dark' ? 'white' : 'black' }}>Aun no tienes tutorias agendadas</Text>
+            <Text style={{ color: colorScheme === 'dark' ? 'white' : 'black' }}>Aun no tienes tutorías agendadas</Text>
           </View>)
         }
       </View>

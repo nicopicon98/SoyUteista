@@ -317,6 +317,7 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
       comentarios: data.comments,
       tema: data.tema,
       fecha_tutoria: data.fecha_tutoria,
+      modalidad: modeTutorial,
     };
     try {
       const insertResp: IInsertTutoriaResponse =
@@ -454,7 +455,7 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
           style={{
             width: width * 0.9,
             alignItems: 'center',
-            justifyContent: 'center'
+            justifyContent: 'center',
           }}>
           <View
             style={{
@@ -976,8 +977,8 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
                   style={{
                     fontWeight: 'bold',
                     fontSize: width * 0.04,
-                    textAlign: 'justify',
                     width: '100%',
+                    textAlign: 'center'
                   }}>
                   Por favor confirma que los datos a continuación sean
                   correctos:
@@ -1111,22 +1112,26 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
                     <Text style={{fontWeight: '700'}}>Modalidad:</Text>
                   </View>
                   <View style={{width: '50%'}}>
-                    <Text style={{fontWeight: '400'}}>Virtual/Presencial</Text>
+                    <Text style={{fontWeight: '400'}}>{modeTutorial}</Text>
                   </View>
                 </View>
-                {/* Sede */}
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    width: '100%',
-                  }}>
-                  <View style={{width: '50%', justifyContent: 'center'}}>
-                    <Text style={{fontWeight: '700'}}>Lugar:</Text>
+                {/* Lugar */}
+                {modeTutorial == 'PRESENCIAL' ? (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      width: '100%',
+                    }}>
+                    <View style={{width: '50%', justifyContent: 'center'}}>
+                      <Text style={{fontWeight: '700'}}>Sede:</Text>
+                    </View>
+                    <View style={{width: '50%'}}>
+                      <Text style={{fontWeight: '400'}}>{tutorInfo?.sede}</Text>
+                    </View>
                   </View>
-                  <View style={{width: '50%'}}>
-                    <Text style={{fontWeight: '400'}}>{tutorInfo?.sede}</Text>
-                  </View>
-                </View>
+                ) : (
+                  <></>
+                )}
                 {/* Ubicacion */}
                 <View
                   style={{
@@ -1139,7 +1144,9 @@ export const CrearCitaTutoriaScreen = ({navigation}: NavigationProps) => {
                   </View>
                   <View style={{width: '50%'}}>
                     <Text style={{fontWeight: '400'}}>
-                      {`${tutorInfo?.ubicacion} ${tutorInfo?.nombre_lugar}`}
+                      {modeTutorial == 'PRESENCIAL'
+                        ? `${tutorInfo?.ubicacion} ${tutorInfo?.nombre_lugar}`
+                        : 'Recuerda, esta tutoría será virtual. Te enviaremos un enlace para la reunión en la fecha y hora seleccionadas. Revisa tu correo para más detalles.'}
                     </Text>
                   </View>
                 </View>

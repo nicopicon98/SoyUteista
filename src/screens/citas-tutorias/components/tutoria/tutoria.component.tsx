@@ -1,24 +1,26 @@
-import { TutoriaModal } from '@src/components/tutoria-modal/tutoria-modal.component';
-import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
-import { colores } from '@src/theme/app.theme';
-import { blobToBase64 } from '@src/utilities';
-import { Image } from 'react-native-elements';
-import { GraphManager, Tutorias } from '@src/services';
-import { useEffect, useState } from 'react'
-import { ITutoriaResp } from '@src/models';
+import {TutoriaModal} from '@src/components/tutoria-modal/tutoria-modal.component';
+import {View, Text, StyleSheet, TouchableWithoutFeedback} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {Image} from 'react-native-elements';
+import {useEffect, useState} from 'react';
+import {ITutoriaResp} from '@src/models';
+import {Tutorias} from '@src/services';
+import {colores} from '@src/theme';
 
 interface IProps {
-  item: ITutoriaResp
+  item: ITutoriaResp;
 }
 
-export const Tutoria = ({ item }: IProps) => {
-  const imageLogo: { uri: string } = { uri: "https://avatarairlines.com/wp-content/uploads/2020/05/Male-placeholder.jpeg" };
+export const Tutoria = ({item}: IProps) => {
+  const imageLogo: {uri: string} = {
+    uri: 'https://avatarairlines.com/wp-content/uploads/2020/05/Male-placeholder.jpeg',
+  };
   const [tutorPhoto, setTutorPhoto] = useState(imageLogo);
   const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     getTutorPhoto();
-  }, [])
+  }, []);
 
   const getTutorPhoto = async () => {
     try {
@@ -27,7 +29,7 @@ export const Tutoria = ({ item }: IProps) => {
     } catch (error) {
       setTutorPhoto(imageLogo);
     }
-  }
+  };
 
   return (
     <View>
@@ -36,10 +38,9 @@ export const Tutoria = ({ item }: IProps) => {
         setModalVisible={setModalVisible}
         infoTutoria={item}
       />
-      <TouchableWithoutFeedback
-        onPress={() => setModalVisible(true)}>
+      <TouchableWithoutFeedback onPress={() => setModalVisible(true)}>
         <View style={styles.mainCardView}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <View style={styles.subCardView}>
               <Image
                 source={tutorPhoto}
@@ -51,7 +52,7 @@ export const Tutoria = ({ item }: IProps) => {
                 }}
               />
             </View>
-            <View style={{ marginLeft: 12 }}>
+            <View style={{marginLeft: 12}}>
               <Text
                 style={{
                   fontSize: 14,
@@ -61,13 +62,12 @@ export const Tutoria = ({ item }: IProps) => {
                 }}>
                 {item.nombre_tutor}
               </Text>
-              <View
-                style={{ marginTop: 2, borderWidth: 0, width: '100%' }}>
+              <View style={{marginTop: 2, borderWidth: 0, width: '100%'}}>
                 <Text
                   style={{
                     color: 'gray',
                     fontSize: 12,
-                    textTransform: 'capitalize'
+                    textTransform: 'capitalize',
                   }}>
                   {item.nombre_asignatura}
                 </Text>
@@ -75,7 +75,7 @@ export const Tutoria = ({ item }: IProps) => {
                   style={{
                     color: 'gray',
                     fontSize: 12,
-                    textTransform: 'capitalize'
+                    textTransform: 'capitalize',
                   }}>
                   {item.dia} - {item.franja_nombre}
                 </Text>
@@ -83,7 +83,7 @@ export const Tutoria = ({ item }: IProps) => {
                   style={{
                     color: 'gray',
                     fontSize: 12,
-                    textTransform: 'lowercase'
+                    textTransform: 'lowercase',
                   }}>
                   {item.correo_tutor}
                 </Text>
@@ -92,26 +92,30 @@ export const Tutoria = ({ item }: IProps) => {
           </View>
           <View
             style={{
-              height: 25,
-              backgroundColor: colores.Pantone_382_C,
-              borderWidth: 0,
-              width: 25,
               marginLeft: -26,
               alignItems: 'center',
               justifyContent: 'center',
               borderRadius: 50,
             }}>
-            <Text style={{ color: 'white' }}>
-              {item.estado}
-            </Text>
+            {item.remoto === '0' ? (
+              <Icon
+                name="human-male-board"
+                size={30}
+                color={colores.Pantone_382_C}
+              />
+            ) : (
+              <Icon
+                name="laptop"
+                size={30}
+                color={colores.Pantone_382_C}
+              />
+            )}
           </View>
         </View>
       </TouchableWithoutFeedback>
     </View>
-  )
-}
-
-
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -123,8 +127,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'white',
     borderRadius: 15,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 0 },
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 0},
     shadowOpacity: 1,
     shadowRadius: 8,
     elevation: 8,

@@ -9,4 +9,5 @@ export interface ICreateCita {
   comentarios: string;
   tema: string;
   fecha_tutoria: string;
+  modalidad: string;
 }

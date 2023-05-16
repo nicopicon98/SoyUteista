@@ -1,4 +1,4 @@
-import { ISegmentedService } from "@src/screens/crear-cita-bienestar/models/services.model"
+import { ISegmentedService } from "@src/models"
 
 export const arrToChunkArrOfArrs =
   (arr: ISegmentedService[], perChunk: number): Array<ISegmentedService[]> => {

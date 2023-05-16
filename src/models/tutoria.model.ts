@@ -8,6 +8,7 @@ export interface ITutoriaResp {
   lugar: string;
   tema: string;
   fecha_solicitud: string;
+  remoto: string;
 }
 
 export interface IBringCourseByTutor {

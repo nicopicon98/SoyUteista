@@ -1,10 +1,10 @@
 import { numberToWords } from "@src/utilities/number-to-words.utility";
 import { ItemType } from "react-native-dropdown-picker";
 import  Icon  from "react-native-vector-icons/MaterialCommunityIcons";
-import { Schedule } from "../models"
+import { IBienestarProfessionalSchedule } from "../models";
 
 interface IParams {
-  schedule: Schedule;
+  schedule: IBienestarProfessionalSchedule;
 }
 
 export function createScheduleItemAdapter (

@@ -1,6 +1,6 @@
-import { getAllProfessionalsByfield } from '@src/services/bienestar.service';
 import { IBienestarProfessional } from '../models';
 import { useEffect, useState } from 'react'
+import { ProfessionalManager } from '@src/services/bienestar.service';
 
 export const useGetProByField = () => {
 
@@ -9,8 +9,8 @@ export const useGetProByField = () => {
 
   const fetchProfessionalsByField = async (field: string = "odontologia") => {
     setIsLoadingProfessionals(true)
-    const resp = await getAllProfessionalsByfield(field, "npiconj@uts.edu.co");
-    setProfessionals(resp.data)
+    const resp = await ProfessionalManager.getAllByField(field, "npiconj@uts.edu.co");
+    setProfessionals(resp)
     setIsLoadingProfessionals(false)
   }
 

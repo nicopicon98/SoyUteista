@@ -6,4 +6,5 @@ export interface ITutorInfoResp {
   ubicacion: string;
   nombre_lugar: string;
   id_tutor: string;
+  remoto:string;
 }

@@ -1,9 +1,10 @@
 import { StyleSheet, View, ActivityIndicator, ImageBackground, Text, useWindowDimensions } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
+import { AuthContext } from '@src/context/auth';
+import * as Sentry from '@sentry/react-native';
 import { Image } from 'react-native-elements';
 import { useContext, useState } from 'react';
-import { AuthContext } from '@src/context/auth';
 import { colores } from '@src/theme';
 
 

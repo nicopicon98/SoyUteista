@@ -1,10 +1,10 @@
 import { Dimensions, FlatList, View } from 'react-native'
 import { WebView } from 'react-native-webview';
-import { Video } from '../models'
+import { IVideo } from '../models';
 
 const screenSize = Dimensions.get('screen');
 interface IProps {
-  videos: Video[]
+  videos: IVideo[]
 }
 
 export const CardVideo = ({ videos }: IProps) => {

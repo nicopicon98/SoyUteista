@@ -1,4 +1,4 @@
-import {TutoriaModal} from '@src/components/tutoria-modal/tutoria-modal.component';
+import {TutoriaModal} from '@src/components/custom-modals/tutoria/tutoria-modal.component';
 import {View, Text, StyleSheet, TouchableWithoutFeedback} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Image} from 'react-native-elements';
@@ -12,10 +12,10 @@ interface IProps {
 }
 
 export const Tutoria = ({item}: IProps) => {
-  const imageLogo: {uri: string} = {
+  const imageTutor: {uri: string} = {
     uri: 'https://avatarairlines.com/wp-content/uploads/2020/05/Male-placeholder.jpeg',
   };
-  const [tutorPhoto, setTutorPhoto] = useState(imageLogo);
+  const [tutorPhoto, setTutorPhoto] = useState(imageTutor);
   const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export const Tutoria = ({item}: IProps) => {
       const tutorPhotoResp = await Tutorias.getUserPhoto(item.correo_tutor);
       setTutorPhoto(tutorPhotoResp);
     } catch (error) {
-      setTutorPhoto(imageLogo);
+      setTutorPhoto(imageTutor);
     }
   };
 

@@ -10,5 +10,6 @@ export * from './segmented-service.model';
 export * from './tutor.model';
 export * from './tutoria.model';
 export * from './type-with-key.model';
+export * from './boot-app-basic-info.model';
 export * from './user.model';
 export * from './uts-posts-categories.model';

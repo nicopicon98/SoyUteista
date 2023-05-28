@@ -8,10 +8,11 @@ export * from './first-time-bajo-rend.service';
 export * from './graph-manager.service';
 export * from './horario.service';
 export * from './notas.service';
-export * from './exito-escolar.service';
 export * from './revista.service';
 export * from './servicios-academicos.service';
 export * from './sharing-information.service';
 export * from './tutorias.service';
+export * from './update-checker.service';
 export * from './user.service';
-export * from './uts-posts.service'
+export * from './uts-posts-api.service';
+export * from './uts-posts.service';

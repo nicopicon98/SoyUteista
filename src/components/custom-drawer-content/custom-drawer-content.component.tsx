@@ -1,13 +1,20 @@
-import { DrawerContentScrollView } from '@react-navigation/drawer';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
-import { TouchableLeftMenu } from '../touchable-left-menu';
-import { CustomDrawerContentProps } from '@src/models';
-import { colores, GlobalStyles } from '@src/theme';
-import { Image } from 'react-native-elements';
+import {DrawerContentScrollView} from '@react-navigation/drawer';
+import {View, Text, StyleSheet, Dimensions} from 'react-native';
+import {TouchableLeftMenu} from '../touchable-left-menu';
+import {CustomDrawerContentProps} from '@src/models';
+import {colores, GlobalStyles} from '@src/theme';
+import {AuthContext} from '@src/context/auth';
+import {Image} from 'react-native-elements';
+import {useContext} from 'react';
 
-const { width, height } = Dimensions.get("screen");
+const {width, height} = Dimensions.get('screen');
 
 export const CustomDrawerContent = (props: CustomDrawerContentProps) => {
+  const {
+    authState: {user},
+  } = useContext(AuthContext);
+  const customHeight = user!.userResult !== 1 ? height * 0.62 : height
+
   return (
     <DrawerContentScrollView
       {...props}
@@ -19,7 +26,7 @@ export const CustomDrawerContent = (props: CustomDrawerContentProps) => {
       <View style={GlobalStyles.profileView}>
         {/* Profile Image */}
         <Image
-          source={props.userPhoto}
+          source={user!.userPhoto}
           resizeMode="contain"
           style={GlobalStyles.profilePhoto}
         />
@@ -29,10 +36,10 @@ export const CustomDrawerContent = (props: CustomDrawerContentProps) => {
             ...GlobalStyles.profileUserName,
             marginTop: 10,
           }}>
-          {props.userName}
+          {user!.userFullName}
         </Text>
         {/* Profile Email */}
-        <Text style={GlobalStyles.profileEmail}>{props.userEmail}</Text>
+        <Text style={GlobalStyles.profileEmail}>{user!.userEmail}</Text>
       </View>
 
       {/* Menu */}
@@ -53,7 +60,7 @@ export const CustomDrawerContent = (props: CustomDrawerContentProps) => {
         />
 
         {/* Perfil */}
-        {props.userResult === 1 && (
+        {user!.userResult === 1 && (
           <TouchableLeftMenu
             type="navigate"
             iconColor={colores.Cool_Gray_5_C}
@@ -66,7 +73,7 @@ export const CustomDrawerContent = (props: CustomDrawerContentProps) => {
         )}
 
         {/* Carnet */}
-        {props.userResult === 1 && (
+        {user!.userResult === 1 && (
           <TouchableLeftMenu
             type="navigate"
             iconColor={colores.Cool_Gray_5_C}
@@ -79,8 +86,8 @@ export const CustomDrawerContent = (props: CustomDrawerContentProps) => {
         )}
 
         {/* Horario */}
-        {props.userResult === 1 &&
-          props.userFranDesc.toLowerCase() !== 'virtual' && (
+        {user!.userResult === 1 &&
+          user!.userMoreInfo.C_FRAN_DESCRIPCION.toLowerCase() !== 'virtual' && (
             <TouchableLeftMenu
               type="navigate"
               iconColor={colores.Cool_Gray_5_C}
@@ -93,8 +100,8 @@ export const CustomDrawerContent = (props: CustomDrawerContentProps) => {
           )}
 
         {/* Notas actuales */}
-        {props.userResult === 1 &&
-          props.userFranDesc.toLowerCase() !== 'virtual' && (
+        {user!.userResult === 1 &&
+          user!.userMoreInfo.C_FRAN_DESCRIPCION.toLowerCase() !== 'virtual' && (
             <TouchableLeftMenu
               type="navigate"
               iconColor={colores.Cool_Gray_5_C}
@@ -107,7 +114,7 @@ export const CustomDrawerContent = (props: CustomDrawerContentProps) => {
           )}
 
         {/* Exito Escolar  */}
-        {props.userResult === 1 && (
+        {user!.userResult === 1 && (
           <TouchableLeftMenu
             type="navigate"
             iconColor={colores.Cool_Gray_5_C}
@@ -120,7 +127,7 @@ export const CustomDrawerContent = (props: CustomDrawerContentProps) => {
         )}
 
         {/* Exito Escolar  */}
-        {props.userResult === 1 && (
+        {user!.userResult === 1 && (
           <TouchableLeftMenu
             type="navigate"
             iconColor={colores.Cool_Gray_5_C}
@@ -133,7 +140,7 @@ export const CustomDrawerContent = (props: CustomDrawerContentProps) => {
         )}
 
         {/* Directorio Institucional  */}
-        {props.userResult === 1 && (
+        {user!.userResult === 1 && (
           <TouchableLeftMenu
             type="navigate"
             iconColor={colores.Cool_Gray_5_C}
@@ -145,7 +152,7 @@ export const CustomDrawerContent = (props: CustomDrawerContentProps) => {
           />
         )}
         {/* Convocatorias */}
-        {props.userResult === 1 && (
+        {user!.userResult === 1 && (
           <TouchableLeftMenu
             type="navigate"
             iconColor={colores.Cool_Gray_5_C}
@@ -189,7 +196,7 @@ export const CustomDrawerContent = (props: CustomDrawerContentProps) => {
         />
 
         {/* Logo */}
-        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+        <View style={{justifyContent: 'center', alignItems: 'center'}}>
           <Image
             source={require('@resources/Images/Logo-UTS-1.png')}
             resizeMode="contain"
@@ -205,16 +212,15 @@ export const CustomDrawerContent = (props: CustomDrawerContentProps) => {
         style={{
           backgroundColor: colores.Pantone_382_C,
           width: '100%',
-          borderWidth: props.height! * 0.00001,
-          height: props.height! * 0.1,
+          borderWidth: customHeight * 0.00001,
+          height: customHeight * 0.1,
         }}
       />
 
       {/*End Menu */}
     </DrawerContentScrollView>
   );
-
-}
+};
 
 const styles = StyleSheet.create({
   menuGlobalContainer: {

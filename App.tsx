@@ -8,6 +8,7 @@ import {AuthProvider} from '@src/context/auth';
 import {useBootBasicInfo} from '@src/hooks';
 import {DialogMaintenance} from '@src/components/custom-dialogs/maintenance';
 import {DialogCampaign} from '@src/components/custom-dialogs/campaign';
+import { PROD_UTS_WEBSERVICE_API_BASE_URL } from '@env';
 
 const CheckForUpdates = () => {
   const {
@@ -18,6 +19,8 @@ const CheckForUpdates = () => {
     hideMaintenanceDialog,
     hideUpdateAppDialog,
   } = useBootBasicInfo();
+
+  console.log(PROD_UTS_WEBSERVICE_API_BASE_URL, "env")
 
   return (
     <>

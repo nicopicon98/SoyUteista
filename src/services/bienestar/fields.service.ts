@@ -1,5 +1,8 @@
 import {webserviceAPI} from '@src/api/web-service.api';
-import {IFieldsReq, IFieldsResp} from '@src/screens/crear-cita-bienestar/models';
+import {
+  IFieldsReq,
+  IFieldsResp,
+} from '@src/screens/crear-cita-bienestar/models';
 /**
  * The ProfessionalManager class provides methods for fetching professional and schedule data from the server.
  */
@@ -15,11 +18,12 @@ export class FieldsManager {
    */
   public static getAllByCampus = async ({
     id_campus,
-  }: IFieldsReq): Promise<void> => {
-    // const resp = await webserviceAPI.get(
-    //   `/bienestar/professionals-by-field/?field=${field}&email=${email}`,
-    // );
-    return Promise.resolve();
+  }: IFieldsReq): Promise<IFieldsResp> => {
+    console.log({id_campus})
+    const resp = await webserviceAPI.post(
+      `/bienestar/get-all-fields-by-campus`,
+      {id_campus},
+    );
+    return resp.data;
   };
-
 }

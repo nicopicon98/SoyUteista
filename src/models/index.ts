@@ -1,4 +1,5 @@
 export * from './auth-user.model';
+export * from './boot-app-basic-info.model';
 export * from './carnet.model';
 export * from './custom-drawer-content.model';
 export * from './directorio-escolar.model';
@@ -10,6 +11,6 @@ export * from './segmented-service.model';
 export * from './tutor.model';
 export * from './tutoria.model';
 export * from './type-with-key.model';
-export * from './boot-app-basic-info.model';
+export * from './professional-schedule.model';
 export * from './user.model';
 export * from './uts-posts-categories.model';

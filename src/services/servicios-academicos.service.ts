@@ -11,7 +11,7 @@ export class ServiciosAcademicos {
    * @returns A Promise that resolves to an AxiosResponse containing an array of IConvocatoriasResp objects.
    */
   public static async getAll(email: string): Promise<IConvocatoriasResp[]> {
-    const resp = await webserviceAPI.get<IConvocatoriasResp[]>(`/convocatorias/?email=${email}`);
+    const resp = await webserviceAPI.get<IConvocatoriasResp[]>(`/soyuteista/convocatorias/?email=${email}`);
     return resp.data;
   }
 }

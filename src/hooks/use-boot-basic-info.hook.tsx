@@ -16,7 +16,7 @@ const initialCommonDialog = {
   is_open: false,
 };
 
-export const useCheckForUpdates = () => {
+export const useBootBasicInfo = () => {
   const [updateDialog, setUpdateDialog] =
     useState<ICommonDialog>(initialCommonDialog);
   const [campaignDialog, setCampaignDialog] =

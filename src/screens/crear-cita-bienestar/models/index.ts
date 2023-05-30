@@ -1,2 +1,1 @@
-export * from './professional.model';
-export * from './schedule.model';
+export * from './fields.model';

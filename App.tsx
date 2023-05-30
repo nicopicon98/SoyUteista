@@ -5,7 +5,7 @@ import {Provider as PaperProvider} from 'react-native-paper';
 import {SnackbarProvider} from '@src/context/snackbar';
 import {useSentryGlobalErrors} from '@src/hooks';
 import {AuthProvider} from '@src/context/auth';
-import {useCheckForUpdates} from '@src/hooks';
+import {useBootBasicInfo} from '@src/hooks';
 import {DialogMaintenance} from '@src/components/custom-dialogs/maintenance';
 import {DialogCampaign} from '@src/components/custom-dialogs/campaign';
 
@@ -17,7 +17,7 @@ const CheckForUpdates = () => {
     hideCampaignDialog,
     hideMaintenanceDialog,
     hideUpdateAppDialog,
-  } = useCheckForUpdates();
+  } = useBootBasicInfo();
 
   return (
     <>
@@ -51,7 +51,6 @@ export const AppState = ({
 };
 const App = () => {
   useSentryGlobalErrors();
-
   return (
     <>
       <NavigationContainer>

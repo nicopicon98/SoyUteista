@@ -12,18 +12,11 @@ interface Props {
   hideDialog: () => void;
 }
 
-export const DialogBajoRend = ({dialogIsOpen, showDialog, hideDialog} : Props) => {
-
-  const subscription$ = sharingInformationService.getSubject();
+export const DialogBajoRend = ({
+  dialogIsOpen,
+  hideDialog,
+}: Props) => {
   const {navigate} = useNavigation<any>();
-
-  useEffect(() => {
-    subscription$.subscribe(data => {
-      //data by default is true
-      if (data) return showDialog();
-      hideDialog();
-    });
-  }, []);
 
   const buttonOnPressHandler = () => {
     navigate('Tutorias');

@@ -11,7 +11,7 @@ export class ExitoEscolar {
    * @returns A Promise that resolves to an AxiosResponse containing an IPodcastResp object.
    */
   public static getPodcasts = async (email: string): Promise<IPodcastsResp> => {
-    const resp = await webserviceAPI.get<IPodcastsResp>(`/podcast/?email=${email}`);
+    const resp = await webserviceAPI.get<IPodcastsResp>(`/soyuteista/podcast/?email=${email}`);
     return resp.data;
   }
 
@@ -21,7 +21,7 @@ export class ExitoEscolar {
    * @returns A Promise that resolves to an IVideosResp object.
    */
   public static getVideos = async (email: string): Promise<IVideosResp> => {
-    const resp = await webserviceAPI.get<IVideosResp>(`/exito-escolar/?email=${email}`);
+    const resp = await webserviceAPI.get<IVideosResp>(`/soyuteista/exito-escolar/?email=${email}`);
     return resp.data
   }
 }

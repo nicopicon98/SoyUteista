@@ -8,13 +8,3 @@ export const webserviceAPI = axios.create({
     'X-WebServiceUTSAPI-Key': X_WebServiceUTSAPI_Key,
   },
 });
-
-// webserviceAPI.interceptors.request.use(
-//   config => {
-//     console.log('Request headers:', config.headers);
-//     return config;
-//   },
-//   error => {
-//     return Promise.reject(error);
-//   },
-// );

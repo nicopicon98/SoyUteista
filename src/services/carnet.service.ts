@@ -11,7 +11,8 @@ export class CarnetManager {
    * @returns A Promise that resolves to an ICarnetResp object.
    */
   public static async getCarnet(email: string): Promise<ICarnetResp> {
-    const resp = await webserviceAPI.get<ICarnetResp>(`/carnet/?email=${email}`);
+    const resp = await webserviceAPI.get<ICarnetResp>(`/soyuteista/carnet/?email=${email}`);
+    console.log(resp, "from carnet")
     return resp.data;
   }
 }

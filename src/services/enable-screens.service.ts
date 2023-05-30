@@ -11,7 +11,7 @@ export class EnabledScreensService {
    * @returns A Promise that resolves to an array of IRespEnable objects.
    */
   public static async getAll(email: string): Promise<IRespEnable> {
-    const resp = await webserviceAPI.get<IRespEnable>(`/enabled-modules/?email=${email}`);
+    const resp = await webserviceAPI.get<IRespEnable>(`/soyuteista/enabled-modules/?email=${email}`);
     return resp.data;
   }
 }

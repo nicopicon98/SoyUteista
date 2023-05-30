@@ -1,5 +1,6 @@
 export * from './auth-manager.service';
-export * from './bienestar.service';
+export * from './bienestar/fields.service';
+export * from './boot-basic-info.service';
 export * from './carnet.service';
 export * from './directorio-escolar.service';
 export * from './enable-screens.service';
@@ -12,7 +13,6 @@ export * from './revista.service';
 export * from './servicios-academicos.service';
 export * from './sharing-information.service';
 export * from './tutorias.service';
-export * from './update-checker.service';
 export * from './user.service';
 export * from './uts-posts-api.service';
 export * from './uts-posts.service';

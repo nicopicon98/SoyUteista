@@ -28,10 +28,10 @@ export class BootBasicInfo {
     phone_version: string;
   }): Promise<IAPPBootBasicInfo> => {
     const resp = await webserviceAPI.post<IAPPBootBasicInfo>(
-      `get-app-basic-inf`,
+      `/soyuteista/get-app-basic-info`,
       obj,
     );
-    console.log("version received", resp.data)
+    console.log('version received', resp.data);
     return resp.data;
   };
 }

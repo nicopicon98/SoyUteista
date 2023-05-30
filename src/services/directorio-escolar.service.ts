@@ -12,7 +12,7 @@ export class DirectorioEscolarManager {
    * @returns A Promise that resolves to an array of IDirectorioEscolarResp objects.
    */
   public static async getAll(email: string): Promise<IDirectorioEscolarResp[]> {
-    const resp = await webserviceAPI.get<IDirectorioEscolarResp[]>(`/dependencias/?email=${email}`);
+    const resp = await webserviceAPI.get<IDirectorioEscolarResp[]>(`/soyuteista/dependencias/?email=${email}`);
     return resp.data;
   }
 }

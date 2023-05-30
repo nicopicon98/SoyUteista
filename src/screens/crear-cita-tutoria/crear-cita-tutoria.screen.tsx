@@ -22,7 +22,6 @@ import {
   useFetchTutores,
   useTutorInfo,
 } from './hooks';
-import {SegmentedButtonsCustom} from '../crear-cita-bienestar/components/segmented-buttons';
 import {Capitalize, errorHandlerCelular, isOneEmpty} from '@src/utilities';
 import {CustomCalendarComponent} from '@src/components/custom-calendar';
 import DropDownPicker, {ItemType} from 'react-native-dropdown-picker';
@@ -44,6 +43,7 @@ import {Tutorias} from '@src/services';
 import {colores} from '@src/theme';
 import axios from 'axios';
 import {servicesFn} from './data';
+import { SegmentedButtonsCustom } from '../crear-cita-bienestar/components/segmented-buttons';
 
 export type TFormData = {
   id_course: string;

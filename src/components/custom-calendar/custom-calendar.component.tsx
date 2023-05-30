@@ -4,7 +4,6 @@ import { CalendarSingleComponent } from '../calendar-single';
 import { colores } from '@src/theme';
 import { Component } from 'react'
 
-
 LocaleConfig.locales['es'] = {
 	monthNames: [
 		'Enero',

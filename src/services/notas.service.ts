@@ -11,7 +11,7 @@ export class NotasEstudiante {
    * @returns A Promise that resolves to an INotasResp object.
    */
   public static getAll = async (email: string): Promise<INotasResp> => {
-    const resp = await webserviceAPI.get<INotasResp>(`/qualification/?email=${email}`);
+    const resp = await webserviceAPI.get<INotasResp>(`/soyuteista/qualification/?email=${email}`);
     return resp.data
   }
 }

@@ -11,7 +11,7 @@ export class HorarioEstudiante {
    * @returns A Promise that resolves to an IHorarioResp object.
    */
   public static getHorario = async (email: string): Promise<IHorarioResp> => {
-    const resp = await webserviceAPI.get<IHorarioResp>(`/schedule/?email=${email}`);
+    const resp = await webserviceAPI.get<IHorarioResp>(`/soyuteista/schedule/?email=${email}`);
     return resp.data;
   }
 }

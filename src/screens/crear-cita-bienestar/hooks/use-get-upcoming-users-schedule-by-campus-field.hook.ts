@@ -2,31 +2,30 @@ import {ProfessionalScheduleManager} from '@src/services/bienestar';
 import {ItemType} from 'react-native-dropdown-picker';
 import {useState} from 'react';
 import {IProfessionalSchedule} from '@src/models';
+import {scheduleToAvailableDates} from '../adapters/schedule-to-available-dates.adapter';
 
 export const useGetUpcomingUsersScheduleByCampusField = () => {
   const [upcomingUsersScheduleRaw, setUpcomingUsersScheduleRaw] =
     useState<IProfessionalSchedule[]>();
-  const [upcomingUsersSchedule, setUpcomingUsersSchedule] = useState<
-    ItemType<string>[]
-  >([]);
+  const [upcomingUsersScheduleMapped, setUpcomingUsersScheduleMapped] =
+    useState<string[]>([]);
   const [isLoadingUspcomingUsersSchedule, setIsLoadingUpcomingUsersSchedule] =
     useState<boolean>(true);
 
-  const fetchAllFieldsByCampus = async (id_campus_field: string) => {
-    console.log(id_campus_field, "from hook")
+  const fetchAllUpcomingUsersSchedule = async (id_campus_field: string) => {
+    setIsLoadingUpcomingUsersSchedule(true); // Set loading state to true before fetching
     const resp = await ProfessionalScheduleManager.getAllUpcomingByCampusField({
       id_campus_field,
     });
-    console.log(resp, "from hook");
     setUpcomingUsersScheduleRaw(resp.data);
-    // setFields(fieldsToItems(resp.data));
-    setIsLoadingUpcomingUsersSchedule(false);
+    setUpcomingUsersScheduleMapped(scheduleToAvailableDates(resp.data));
+    setIsLoadingUpcomingUsersSchedule(false); // Set loading state to false after fetching
   };
 
   return {
     upcomingUsersScheduleRaw,
-    upcomingUsersSchedule,
+    upcomingUsersScheduleMapped,
     isLoadingUspcomingUsersSchedule,
-    fetchAllFieldsByCampus,
+    fetchAllUpcomingUsersSchedule,
   };
 };

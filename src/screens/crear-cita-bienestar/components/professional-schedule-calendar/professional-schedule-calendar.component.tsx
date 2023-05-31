@@ -7,17 +7,17 @@ import {TBienestarFormData} from '../../models';
 import {ScheduleCalendar} from '../schedule-calendar';
 
 interface IProps {
-  scheduleData: IProfessionalSchedule[];
   markedDay: string;
   control: Control<TBienestarFormData, any>;
   onPressDate: (date: string) => void;
+  upcomingUsersScheduleMapped: string[];
 }
 
 export const ProfessionalScheduleCalendar: React.FC<IProps> = ({
-  scheduleData,
   markedDay,
   onPressDate,
   control,
+  upcomingUsersScheduleMapped
 }) => {
   return (
     <Controller
@@ -30,6 +30,7 @@ export const ProfessionalScheduleCalendar: React.FC<IProps> = ({
           markedDay={markedDay} 
           onChangeDate={onChange}
           onPressDate={onPressDate}
+          upcomingUsersScheduleMapped={upcomingUsersScheduleMapped}
           />
       )}
       name="date"

@@ -12,7 +12,6 @@ export class CarnetManager {
    */
   public static async getCarnet(email: string): Promise<ICarnetResp> {
     const resp = await webserviceAPI.get<ICarnetResp>(`/soyuteista/carnet/?email=${email}`);
-    console.log(resp, "from carnet")
     return resp.data;
   }
 }

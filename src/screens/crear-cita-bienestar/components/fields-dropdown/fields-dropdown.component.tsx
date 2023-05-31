@@ -30,6 +30,7 @@ export const FieldsDropdown = ({
         style={{
           maxWidth: width * 0.9,
           alignSelf: 'flex-start',
+          marginBottom: width*0.02
         }}>
         A continuación elige un area de la salud
       </Text>
@@ -41,7 +42,7 @@ export const FieldsDropdown = ({
         render={({field: {onChange, onBlur, value}}) => (
           <DropDownPicker
             addCustomItem={false}
-            placeholder={'Selecciona un curso'}
+            placeholder={'Selecciona un area de la salud'}
             listMode="MODAL"
             searchable
             searchTextInputProps={{

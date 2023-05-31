@@ -20,8 +20,6 @@ const CheckForUpdates = () => {
     hideUpdateAppDialog,
   } = useBootBasicInfo();
 
-  console.log(PROD_UTS_WEBSERVICE_API_BASE_URL, "env")
-
   return (
     <>
       <StackNavigator />

@@ -19,7 +19,6 @@ export class FieldsManager {
   public static getAllByCampus = async ({
     id_campus,
   }: IFieldsReq): Promise<IFieldsResp> => {
-    console.log({id_campus})
     const resp = await webserviceAPI.post(
       `/bienestar/get-all-fields-by-campus`,
       {id_campus},

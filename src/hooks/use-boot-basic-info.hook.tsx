@@ -60,9 +60,7 @@ export const useBootBasicInfo = () => {
     let isCancelled = false;
     const checkForUpdates = async () => {
       try {
-        console.log(DeviceInfo);
         const phone_version: string = DeviceInfo.getVersion();
-        console.log('current celphone version', phone_version);
         const response: IAPPBootBasicInfo = await BootBasicInfo.getAll({
           phone_version,
         });

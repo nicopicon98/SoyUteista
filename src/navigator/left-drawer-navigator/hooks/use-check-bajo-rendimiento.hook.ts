@@ -14,7 +14,7 @@ export const useCheckBajoRendimiento = () => {
   const bajoRendimientoChecker = useCallback(async () => {
     const token = await BajoRendManager.getFirstTimeAsync();
     if (!token) {
-      console.log(user!.userMoreInfo.C_ESTP_PROMEDIOGENERAL)
+      console.log(user!.userMoreInfo.C_ESTP_PROMEDIOGENERAL, "recuerda, este es mi promedio")
       if (user!.userMoreInfo.C_ESTP_PROMEDIOGENERAL < 3.5) {
         setDialogIsOpen(true);
       }

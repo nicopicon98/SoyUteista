@@ -31,7 +31,6 @@ export const AuthProvider = ({ children }: any) => {
 
   useEffect(() => {
     checkToken();
-    // console.log("Desde AuthContext");
   }, [])
 
   //Revisamos aca en el context si ya tiene token
@@ -39,7 +38,6 @@ export const AuthProvider = ({ children }: any) => {
     //Nos traemos el token del async storage
     const token = await AuthManager.getAccessTokenAsync();
     //Lo pintamos
-    // console.log(tokenReceived);
     //No token, no autenticado
     if (!token) return dispatch({ type: 'notAuthenticated' })
     //Hay token
@@ -75,7 +73,7 @@ export const AuthProvider = ({ children }: any) => {
       await AuthManager.signOutAsync();
       dispatch({ type: 'logOut' });
     } catch (error) {
-      // console.log(error);
+      console.log(error);
     }
   }
 
@@ -87,7 +85,6 @@ export const AuthProvider = ({ children }: any) => {
 
     try {
       dataValue = await CarnetManager.getCarnet(user.upn);
-      console.log(dataValue, "dataValue")
       studentPhoto = await User.getUserPhoto();
     } catch (error) {
       studentPhoto = require('@src/resources/Images/male-placeholder.jpeg');

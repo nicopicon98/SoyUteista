@@ -41,7 +41,6 @@ webserviceAPI.interceptors.response.use(
   },
   error => {
     // Handle errors globally here if needed
-    console.log(error);
     return Promise.reject(error);
   },
 );

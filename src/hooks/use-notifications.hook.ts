@@ -62,7 +62,6 @@ export const useNotifications = () => {
 				//No es necesario
 			});
 		messaging().onMessage(async remoteMessage => {
-			console.log("desde aqui")
 			const body = remoteMessage.notification?.body;
 			const title = remoteMessage.notification?.title;
 			const image = remoteMessage.notification?.android?.imageUrl
@@ -72,7 +71,6 @@ export const useNotifications = () => {
 			await AsyncStorage.setItem('notifications', JSON.stringify(addingNotification));
 		})
 		messaging().setBackgroundMessageHandler(async remoteMessage => {
-			console.log("o desde aqui yo que se")
 			const body = remoteMessage.notification?.body;
 			const title = remoteMessage.notification?.title;
 			const image = remoteMessage.notification?.android?.imageUrl

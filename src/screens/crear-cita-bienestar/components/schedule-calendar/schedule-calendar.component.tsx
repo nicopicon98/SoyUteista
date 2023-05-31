@@ -8,12 +8,14 @@ interface IProps {
   markedDay: string;
   onPressDate: (data: string) => void;
   onChangeDate: (data: string) => void;
+  upcomingUsersScheduleMapped: string[]
 }
 const {width} = Dimensions.get('window');
 export const ScheduleCalendar = ({
   markedDay,
   onChangeDate,
   onPressDate,
+  upcomingUsersScheduleMapped
 }: IProps) => {
   const colorSchema = Appearance.getColorScheme();
   return (
@@ -22,7 +24,7 @@ export const ScheduleCalendar = ({
         theme={{
           calendarBackground: colorSchema === 'dark' ? 'black' : 'white',
         }}
-        style={{backgroundColor: colorSchema === 'dark' ? 'black' : 'white'}}
+        style={{backgroundColor: colorSchema === 'dark' ? 'black' : 'white', width: width *0.9}}
         markingType={'custom'}
         hideExtraDays={true}
         showTodayButton={true}
@@ -42,6 +44,7 @@ export const ScheduleCalendar = ({
               marking={marking!}
               onChangeDate={onChangeDate}
               state={state!}
+              upcomingUsersScheduleMapped={upcomingUsersScheduleMapped}
             />
           );
         }}
@@ -51,31 +54,6 @@ export const ScheduleCalendar = ({
 };
 
 const styles = StyleSheet.create({
-  buttonClose: {
-    position: 'absolute',
-    right: 10,
-    top: 10,
-    zIndex: 1000,
-  },
-  buttonGuardar: {
-    backgroundColor: colores.Pantone_383_C,
-    paddingVertical: width * 0.015,
-    paddingHorizontal: width * 0.02,
-    borderRadius: 100,
-  },
-  buttonGuardarText: {
-    fontSize: width * 0.04,
-    color: 'white',
-  },
-  buttonGuardarContentChild: {
-    width: width * 0.19,
-    zIndex: 2000,
-  },
-  buttonGuardarContent: {
-    flexDirection: 'row-reverse',
-    right: width * 0.03,
-    top: width * 0.02,
-  },
   markedStylesContainer: {
     backgroundColor: colores.Pantone_383_C,
     borderRadius: 100,

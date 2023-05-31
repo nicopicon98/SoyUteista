@@ -21,7 +21,6 @@ export class AuthManager {
       await AsyncStorage.setItem('refreshToken', result.refreshToken);
       await AsyncStorage.setItem('expireTime', result.accessTokenExpirationDate);
     } catch (error) {
-      console.log(error, 'sign in async');
       throw new Error('There was a problem with the sign in process.');
     }
   };

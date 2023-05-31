@@ -1,27 +1,30 @@
-import DropDownPicker, { ItemType } from 'react-native-dropdown-picker';
+import DropDownPicker, {ItemType} from 'react-native-dropdown-picker';
 import {Appearance, useWindowDimensions} from 'react-native';
 import {Control, Controller} from 'react-hook-form';
-import { TBienestarFormData } from '../../models';
+import {TBienestarFormData} from '../../models';
 import {Text} from 'react-native-paper';
 import {useState} from 'react';
-import { colores } from '@src/theme';
+import {colores} from '@src/theme';
 
 interface Props {
   control: Control<TBienestarFormData, any>;
-  openFields: boolean;
-  setOpenFields: React.Dispatch<React.SetStateAction<boolean>>;
+  openProfessionals: boolean;
+  setOpenProfessionals: React.Dispatch<React.SetStateAction<boolean>>;
   items: ItemType<string>[];
-  onClickFieldItem: (value: string) => Promise<void>;
+  onClickProfessionalItem: (value: string) => void;
+  dropDownProfessionals: string;
+  setDropDownProfessionals: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export const FieldsDropdown = ({
+export const ProfessionalsDropdown = ({
   control,
-  openFields,
-  setOpenFields,
+  openProfessionals,
+  setOpenProfessionals,
   items,
-  onClickFieldItem
+  onClickProfessionalItem,
+  dropDownProfessionals,
+  setDropDownProfessionals,
 }: Props) => {
-  const [dropDownFields, setDropDownFields] = useState('');
   const colorSchema = Appearance.getColorScheme();
   const {width} = useWindowDimensions();
 
@@ -31,10 +34,11 @@ export const FieldsDropdown = ({
         style={{
           maxWidth: width * 0.9,
           alignSelf: 'flex-start',
-          marginBottom: width*0.02,
-          color: colores.Pantone_382_C
+          marginBottom: width * 0.02,
+          marginTop: width * 0.05,
+          color: colores.Pantone_382_C,
         }}>
-        A continuación elige un area de la salud
+        Por ultimo, elige el profesional:
       </Text>
       <Controller
         control={control}
@@ -52,18 +56,18 @@ export const FieldsDropdown = ({
             }}
             theme={colorSchema === 'dark' ? 'DARK' : 'LIGHT'}
             searchPlaceholder="Ingresa un area de la salud..."
-            open={openFields}
-            value={dropDownFields}
+            open={openProfessionals}
+            value={dropDownProfessionals}
             items={items}
-            setOpen={setOpenFields}
-            setValue={setDropDownFields}
+            setOpen={setOpenProfessionals}
+            setValue={setDropDownProfessionals}
             listItemContainerStyle={{
               width: '100%',
               borderBottomWidth: 1,
             }}
             onSelectItem={({value}) => {
               onChange(value);
-              onClickFieldItem(value!);
+              onClickProfessionalItem(value!);
             }}
           />
         )}

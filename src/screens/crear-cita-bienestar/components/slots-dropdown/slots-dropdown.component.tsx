@@ -1,27 +1,29 @@
-import DropDownPicker, { ItemType } from 'react-native-dropdown-picker';
+import DropDownPicker, {ItemType} from 'react-native-dropdown-picker';
 import {Appearance, useWindowDimensions} from 'react-native';
 import {Control, Controller} from 'react-hook-form';
-import { TBienestarFormData } from '../../models';
+import {TBienestarFormData} from '../../models';
 import {Text} from 'react-native-paper';
 import {useState} from 'react';
-import { colores } from '@src/theme';
+import {colores} from '@src/theme';
 
 interface Props {
   control: Control<TBienestarFormData, any>;
-  openFields: boolean;
-  setOpenFields: React.Dispatch<React.SetStateAction<boolean>>;
+  openSlots: boolean;
+  setOpenSlots: React.Dispatch<React.SetStateAction<boolean>>;
+  setDropDownSlots: React.Dispatch<React.SetStateAction<string>>;
+  dropDownSlots: string
   items: ItemType<string>[];
-  onClickFieldItem: (value: string) => Promise<void>;
+  onClickSlotItem: (v: string) => void;
 }
 
-export const FieldsDropdown = ({
+export const SlotsDropdown = ({
   control,
-  openFields,
-  setOpenFields,
+  openSlots,
+  setOpenSlots,
   items,
-  onClickFieldItem
-}: Props) => {
-  const [dropDownFields, setDropDownFields] = useState('');
+  onClickSlotItem,
+  dropDownSlots, setDropDownSlots
+}:Props) => {
   const colorSchema = Appearance.getColorScheme();
   const {width} = useWindowDimensions();
 
@@ -31,10 +33,11 @@ export const FieldsDropdown = ({
         style={{
           maxWidth: width * 0.9,
           alignSelf: 'flex-start',
-          marginBottom: width*0.02,
-          color: colores.Pantone_382_C
+          marginBottom: width * 0.02,
+          marginTop: width * 0.03,
+          color: colores.Pantone_382_C,
         }}>
-        A continuación elige un area de la salud
+        Ahora, elige una franja horaria:
       </Text>
       <Controller
         control={control}
@@ -44,30 +47,30 @@ export const FieldsDropdown = ({
         render={({field: {onChange, onBlur, value}}) => (
           <DropDownPicker
             addCustomItem={false}
-            placeholder={'Selecciona un area de la salud'}
+            placeholder={'Selecciona una franja horaria'}
             listMode="MODAL"
             searchable
             searchTextInputProps={{
               maxLength: 25,
             }}
             theme={colorSchema === 'dark' ? 'DARK' : 'LIGHT'}
-            searchPlaceholder="Ingresa un area de la salud..."
-            open={openFields}
-            value={dropDownFields}
+            searchPlaceholder="Ingresa una franja horaria"
+            open={openSlots}
+            value={dropDownSlots}
             items={items}
-            setOpen={setOpenFields}
-            setValue={setDropDownFields}
+            setOpen={setOpenSlots}
+            setValue={setDropDownSlots}
             listItemContainerStyle={{
               width: '100%',
               borderBottomWidth: 1,
             }}
             onSelectItem={({value}) => {
               onChange(value);
-              onClickFieldItem(value!);
+              onClickSlotItem(value!);
             }}
           />
         )}
-        name="id_campus_field"
+        name="id_time_slot"
       />
     </>
   );

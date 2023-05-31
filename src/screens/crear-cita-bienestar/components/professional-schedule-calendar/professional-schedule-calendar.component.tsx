@@ -1,10 +1,10 @@
-import {Calendar, LocaleConfig} from 'react-native-calendars';
-import {scheduleDataToCalendarFormat} from '../../adapters/';
 import {Controller, Control} from 'react-hook-form';
-import {IProfessionalSchedule} from '@src/models';
-import React, {useState, useEffect} from 'react';
 import {TBienestarFormData} from '../../models';
-import {ScheduleCalendar} from '../schedule-calendar';
+import {View} from 'react-native-animatable';
+import {Dimensions, Text} from 'react-native';
+import React from 'react';
+import {colores} from '@src/theme';
+import { ScheduleCalendar } from '../schedule-calendar';
 
 interface IProps {
   markedDay: string;
@@ -13,11 +13,12 @@ interface IProps {
   upcomingUsersScheduleMapped: string[];
 }
 
+const {width} = Dimensions.get('window');
 export const ProfessionalScheduleCalendar: React.FC<IProps> = ({
   markedDay,
   onPressDate,
   control,
-  upcomingUsersScheduleMapped
+  upcomingUsersScheduleMapped,
 }) => {
   return (
     <Controller
@@ -26,12 +27,17 @@ export const ProfessionalScheduleCalendar: React.FC<IProps> = ({
         required: true,
       }}
       render={({field: {onChange, onBlur, value}}) => (
-        <ScheduleCalendar 
-          markedDay={markedDay} 
-          onChangeDate={onChange}
-          onPressDate={onPressDate}
-          upcomingUsersScheduleMapped={upcomingUsersScheduleMapped}
+        <View style={{marginLeft: -10}}>
+          <Text style={{color: colores.Pantone_382_C, marginTop: width * 0.05}}>
+            Ahora, elige una de las siguientes fechas
+          </Text>
+          <ScheduleCalendar
+            markedDay={markedDay}
+            onChangeDate={onChange}
+            onPressDate={onPressDate}
+            upcomingUsersScheduleMapped={upcomingUsersScheduleMapped}
           />
+        </View>
       )}
       name="date"
     />

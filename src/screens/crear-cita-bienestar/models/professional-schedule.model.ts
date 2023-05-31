@@ -20,5 +20,6 @@ export interface IProfessionalTimeSlot {
 
 export interface TimeSlot {
   id_time_slot: number;
+  name_time_slot: string;
   id_user_time_slot_date: number;
 }

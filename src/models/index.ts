@@ -11,6 +11,6 @@ export * from './segmented-service.model';
 export * from './tutor.model';
 export * from './tutoria.model';
 export * from './type-with-key.model';
-export * from './professional-schedule.model';
+export * from '../screens/crear-cita-bienestar/models/professional-schedule.model';
 export * from './user.model';
 export * from './uts-posts-categories.model';

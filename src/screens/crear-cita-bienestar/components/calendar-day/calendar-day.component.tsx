@@ -29,10 +29,8 @@ export const CalendarDay = ({
   onChangeDate,
 }: IProps) => {
   const isAvailable =
-    isBeforeToday(date.dateString) &&
+    !isBeforeToday(date.dateString) &&
     upcomingUsersScheduleMapped.includes(date.dateString);
-  console.log(upcomingUsersScheduleMapped, 'upcomingUsersScheduleMapped');
-  console.log(date.dateString, 'date.dateString');
   return (
     <>
       {isAvailable ? (

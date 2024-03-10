@@ -20,6 +20,7 @@ const CheckForUpdates = () => {
     hideUpdateAppDialog,
   } = useBootBasicInfo();
 
+  console.log(updateDialog, campaignDialog, maintenanceDialog)
   return (
     <>
       <StackNavigator />

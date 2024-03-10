@@ -12,6 +12,8 @@ export const StackNavigator = () => {
   const {authState} = useContext(AuthContext);
   const {updateDialog, campaignDialog, maintenanceDialog} = useBootBasicInfo();
 
+  console.log(authState.status, 'authState.status');
+
   useEffect(() => {
     setTimeout(() => {
       setLoadingSplash(false);

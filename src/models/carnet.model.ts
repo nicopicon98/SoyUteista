@@ -1,6 +1,6 @@
 export interface ICarnetResp {
   result: number;
-  data: ICarnet;
+  data: ICarnet[];
   error: string;
 }
 

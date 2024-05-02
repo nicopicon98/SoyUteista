@@ -8,4 +8,5 @@ export interface IUser {
   userEmail: string;
   userPhoto: ImageSourcePropType;
   userMoreInfo: ICarnet;
+  userMoreInfo2: ICarnet[];
 };
